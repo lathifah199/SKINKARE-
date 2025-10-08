@@ -20,7 +20,7 @@
       </button>
 
       <!-- Track artikel -->
-      <div class="overflow-hidden mx-12">
+      <div class="overflow-hidden mx-10">
         <div id="artikel-container" class="flex transition-transform duration-500 ease-in-out gap-6">
           <!-- Artikel akan dimuat lewat HTML -->
           <div class="article-card bg-[#D5E8E3] rounded-2xl shadow p-4 flex flex-col items-center">
