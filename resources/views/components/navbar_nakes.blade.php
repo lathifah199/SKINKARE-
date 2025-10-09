@@ -10,9 +10,9 @@
 
     <!-- Menu Desktop -->
     <div class="hidden md:flex text-white items-center space-x-20">
-      <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Beranda</a>
-      <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Pertumbuhan Anak</a>
-      <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Informasi Kesehatan</a>
+      <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Periksa Anak</a>
+      <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Data Anak</a>
+      <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Data Orangtua</a>
     </div>
 
     <!-- Burger + Profil -->
@@ -37,7 +37,7 @@
         <div id="userDropdown"
           class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg border border-gray-200 z-[9999]">
           <div class="px-5 py-4 bg-gradient-to-r from-[#E9B9C5] to-[#219FE3] text-white rounded-t-lg">
-            <div class="font-bold text-lg">Selamat Datang,</div>
+            <div class="font-bold text-lg">Selamat Datang Tenaga Kesehatan,</div>
             <div class="text-sm">
               @if(Auth::guard('')->check())
               <p><strong>Nama:</strong> {{ Auth::guard('penyewa')->user()->nama_penyewa }}</p>
@@ -60,9 +60,9 @@
   <!-- Menu Mobile -->
   <div id="mobile-menu"
     class="hidden md:hidden flex flex-col items-center bg-white shadow-md space-y-2 py-4 transition-all duration-300">
-    <a href="#" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Beranda</a>
-    <a href="#" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Pertumbuhan Anak</a>
-    <a href="#" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Informasi Kesehatan</a>
+    <a href="#" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Periksa Anak</a>
+    <a href="#" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Data Anak</a>
+    <a href="#" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Data Orangtua</a>
   </div>
 </nav>
 

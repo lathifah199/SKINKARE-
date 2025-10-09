@@ -1,8 +1,8 @@
 <footer class="bg-[#E9B9C5] py-4 text-left text-white">
   <div class="max-w-[1200px] mx-auto flex flex-col items-start gap-3 px-4">
-    <h2 class="font-semibold text-xl tracking-wide">SKINKARE</h2>
+    <h2 class="font-bold text-xl tracking-wide">SKINKARE</h2>
 
-    <p class="text-base leading-relaxed">
+    <p class="font-medium leading-relaxed">
       Email: skinkare@gmail.com<br>
       No. HP: 0812-3456-7890<br>
       Media Sosial:

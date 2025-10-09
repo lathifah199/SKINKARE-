@@ -1,7 +1,7 @@
-<!-- Bagian Artikel Kesehatan -->
-<section id="Artikel" class="py-16 bg-white shadow-lg">
+<!-- Bagian informasi Kesehatan -->
+<section id="informasi" class="py-16 bg-white shadow-lg">
   <div class="max-w-7xl mx-auto px-4">
-    <h2 class="text-2xl font-bold text-[#53AFA2] mb-12 text-center tracking-wide">ARTIKEL KESEHATAN</h2>
+    <h2 class="text-xl font-bold text-[#53AFA2] mb-12 text-center tracking-wide">INFORMASI KESEHATAN</h2>
 
     <!-- Container tombol navigasi -->
     <div class="relative">
@@ -19,33 +19,33 @@
         </svg>
       </button>
 
-      <!-- Track artikel -->
+      <!-- Track informasi -->
       <div class="overflow-hidden mx-10">
-        <div id="artikel-container" class="flex transition-transform duration-500 ease-in-out gap-6">
-          <!-- Artikel akan dimuat lewat HTML -->
+        <div id="informasi-container" class="flex transition-transform duration-500 ease-in-out gap-6">
+          <!-- informasi akan dimuat lewat HTML -->
           <div class="article-card bg-[#D5E8E3] rounded-2xl shadow p-4 flex flex-col items-center">
-            <img src="{{ asset('images/artikel/keuangan.png') }}" alt="Artikel" class="w-40 rounded-xl mb-3">
+            <img src="{{ asset('images/informasi/keuangan.png') }}" alt="informasi" class="w-40 rounded-xl mb-3">
             <h3 class="text-[#3C4A47] font-semibold text-sm text-center mb-1">Solusi Keuangan untuk Ibu dan Bayi</h3>
             <p class="text-xs text-gray-700 font-medium text-center mb-1">Tabulin (Tabungan Ibu Hamil)</p>
             <p class="text-xs text-gray-600 text-center">Pahami pentingnya menyiapkan tabungan demi mencegah stunting.</p>
           </div>
 
           <div class="article-card bg-[#E9B9C5] rounded-2xl shadow p-4 flex flex-col items-center">
-            <img src="{{ asset('images/artikel/makanan.png') }}" alt="Artikel" class="w-40 rounded-xl mb-3">
+            <img src="{{ asset('images/informasi/makanan.png') }}" alt="informasi" class="w-40 rounded-xl mb-3">
             <h3 class="text-[#3C4A47] font-semibold text-sm text-center mb-1">Nutrisi Seimbang untuk Anak</h3>
             <p class="text-xs text-gray-700 font-medium text-center mb-1">Penuhi kebutuhan gizi harian</p>
             <p class="text-xs text-gray-600 text-center">Pastikan anak mendapatkan nutrisi cukup dari makanan bergizi.</p>
           </div>
 
           <div class="article-card bg-[#B9E9DD] rounded-2xl shadow p-4 flex flex-col items-center">
-            <img src="{{ asset('images/artikel/tidur.png') }}" alt="Artikel" class="w-40 rounded-xl mb-3">
+            <img src="{{ asset('images/informasi/tidur.png') }}" alt="informasi" class="w-40 rounded-xl mb-3">
             <h3 class="text-[#3C4A47] font-semibold text-sm text-center mb-1">Pentingnya Waktu Tidur Anak</h3>
             <p class="text-xs text-gray-700 font-medium text-center mb-1">Kualitas tidur dan tumbuh kembang</p>
             <p class="text-xs text-gray-600 text-center">Tidur cukup membantu meningkatkan daya tahan tubuh anak.</p>
           </div>
 
           <div class="article-card bg-[#FBE7E8] rounded-2xl shadow p-4 flex flex-col items-center">
-            <img src="{{ asset('images/artikel/bermain.png') }}" alt="Artikel" class="w-40 rounded-xl mb-3">
+            <img src="{{ asset('images/informasi/bermain.png') }}" alt="informasi" class="w-40 rounded-xl mb-3">
             <h3 class="text-[#3C4A47] font-semibold text-sm text-center mb-1">Peran Bermain untuk Anak</h3>
             <p class="text-xs text-gray-700 font-medium text-center mb-1">Belajar sambil bermain</p>
             <p class="text-xs text-gray-600 text-center">Aktivitas bermain membantu stimulasi otak dan sosial anak.</p>
@@ -60,8 +60,8 @@
 </section>
 
 <style>
-  /* Ukuran dan layout kartu artikel */
-  #artikel-container .article-card {
+  /* Ukuran dan layout kartu informasi */
+  #informasi-container .article-card {
     min-width: 300px;
     max-width: 300px;
     flex-shrink: 0;
@@ -87,7 +87,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   let currentSlide = 0;
   let slidesToShow = 3;
-  const track = document.getElementById('artikel-container');
+  const track = document.getElementById('informasi-container');
   const dotsContainer = document.getElementById('dots-article');
   const cards = document.querySelectorAll('.article-card');
   const totalArticles = cards.length;
