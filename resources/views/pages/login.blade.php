@@ -45,7 +45,7 @@
       <label for="nama" class="block font-semibold text-gray-700 mb-1 ml-2">Nama Pengguna</label>
       <div class="relative">
         <input type="text" id="nama" name="nama" placeholder="Masukkan nama pengguna"
-          class="w-full py-3 pl-5 pr-12 rounded-full bg-[#ffffff]-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
+          class="w-full py-3 pl-5 pr-12 rounded-full bg-[#ffffff]-800 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
         <i class='bx bxs-user absolute top-1/2 right-4 transform -translate-y-1/2 text-black text-xl'></i>
       </div>
     </div>
@@ -54,7 +54,7 @@
       <label for="kata_sandi" class="block font-semibold text-gray-700 mb-1 ml-2">Kata Sandi</label>
       <div class="relative">
         <input type="password" id="kata_sandi" name="kata_sandi" placeholder="Masukkan kata sandi"
-          class="w-full py-3 pl-5 pr-12 rounded-full bg-[#ffffff]-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
+          class="w-full py-3 pl-5 pr-12 rounded-full bg-[#ffffff]-800 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
         <i class='bx bxs-lock absolute top-1/2 right-4 transform -translate-y-1/2 text-black text-xl'></i>
       </div>
     </div>

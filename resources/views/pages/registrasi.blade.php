@@ -36,42 +36,42 @@
   <!-- Nama Pengguna -->
   <div class="mb-4 relative">
     <input type="text" name="nama" value="{{ old('nama') }}" placeholder="Nama  Lengkap"
-      class="w-full px-5 py-3 rounded-full bg-[#ffffff]-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
+      class="w-full px-5 py-3 rounded-full bg-[#ffffff]-800 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
     <i class="fa-solid fa-user-circle absolute right-4 top-1/2 transform -translate-y-1/2 text-black"></i>
   </div>
 
   <!-- Email -->
   <div class="mb-4 relative">
     <input type="email" name="email" value="{{ old('email') }}" placeholder="Email"
-      class="w-full px-5 py-3 rounded-full bg-[#ffffff]-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
+      class="w-full px-5 py-3 rounded-full bg-[#ffffff]-800 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
     <i class="fa-solid fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-black"></i>
   </div>
 
   <!-- Nomor Telepon -->
   <div class="mb-4 relative">
     <input type="text" name="no_hp" value="{{ old('no_hp') }}" placeholder="Nomor Hp"
-      class="w-full px-5 py-3 rounded-full bg-[#ffffff]-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
+      class="w-full px-5 py-3 rounded-full bg-[#ffffff]-800 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
     <i class="fa-solid fa-phone absolute right-4 top-1/2 transform -translate-y-1/2 text-black"></i>
   </div>
 
   <!-- alamat -->
   <div class="mb-4 relative">
     <input type="text" name="alamat" value="{{ old('alamat') }}" placeholder="Alamat"
-      class="w-full px-5 py-3 rounded-full bg-[#ffffff]-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
+      class="w-full px-5 py-3 rounded-full bg-[#ffffff]-800 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
     <i class="fa-solid fa-map-pin absolute right-4 top-1/2 transform -translate-y-1/2 text-black"></i>
   </div>
 
   <!-- Kata Sandi -->
   <div class="mb-6 relative">
     <input type="password" name="kata_sandi" placeholder="Kata Sandi"
-      class="w-full px-5 py-3 rounded-full bg-[#ffffff]-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
+      class="w-full px-5 py-3 rounded-full bg-[#ffffff]-800 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
     <i class="fa-solid fa-lock absolute right-4 top-1/2 transform -translate-y-1/2 text-black"></i>
   </div>
 
   <!-- Konfirmasi Kata Sandi -->
 <div class="mb-6 relative">
   <input type="password" name="kata_sandi_confirmation" placeholder="Konfirmasi Kata Sandi"
-    class="w-full px-5 py-3 rounded-full bg-[#ffffff]-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
+    class="w-full px-5 py-3 rounded-full bg-[#ffffff]-800 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
   <i class="fa-solid fa-lock absolute right-4 top-1/2 transform -translate-y-1/2 text-black"></i>
 </div>
 
