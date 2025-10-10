@@ -26,3 +26,7 @@ Route::post('/logout', [RegisController::class, 'logout'])->name('logout');
 
 Route::get('/registrasi', [RegisController::class, 'showRegisterForm'])->name('register.form');
 Route::post('/registrasi', [RegisController::class, 'registrasi'])->name('registrasi');
+
+Route::get('/halaman_nakes', function () {
+    return view('pages.halaman_nakes');
+})->name('halaman_nakes');;
