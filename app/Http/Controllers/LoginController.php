@@ -13,6 +13,6 @@ class LoginController extends Controller
     
      public function login(Request $request)
     {
-        return redirect()->route('halaman_orangtua');
+        return redirect()->route('halaman_orang_tua');
     }
 }
