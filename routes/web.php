@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DataWaliController;
+use App\Http\Controllers\DataAnakController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -30,3 +33,10 @@ Route::post('/registrasi', [RegisController::class, 'registrasi'])->name('regist
 Route::get('/halaman_nakes', function () {
     return view('pages.halaman_nakes');
 })->name('halaman_nakes');;
+
+
+Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali.index');
+Route::get('/data-wali/{id}', [DataWaliController::class, 'show'])->name('data-wali.show');
+Route::get('/data-anak', [DataAnakController::class, 'index'])->name('data-anak.index');
+
+
