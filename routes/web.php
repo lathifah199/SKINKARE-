@@ -3,8 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisController;
 use App\Http\Controllers\LoginController;
+<<<<<<< Updated upstream
 use App\Http\Controllers\DataWaliController;
 use App\Http\Controllers\DataAnakController;
+=======
+use App\Http\Controllers\OrangTuaController;
+use App\Http\Controllers\AnakController;
+>>>>>>> Stashed changes
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,9 +39,14 @@ Route::get('/halaman_nakes', function () {
     return view('pages.halaman_nakes');
 })->name('halaman_nakes');;
 
+<<<<<<< Updated upstream
 
 Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali.index');
 Route::get('/data-wali/{id}', [DataWaliController::class, 'show'])->name('data-wali.show');
 Route::get('/data-anak', [DataAnakController::class, 'index'])->name('data-anak.index');
 
 
+=======
+Route::get('/tambah-data-anak', [AnakController::class, 'create'])->name('tambah.data.anak');
+Route::post('/tambah-data-anak', [AnakController::class, 'store'])->name('anak.store');
+>>>>>>> Stashed changes
