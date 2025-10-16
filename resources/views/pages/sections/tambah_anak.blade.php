@@ -18,8 +18,10 @@
     </div>
 
     <!-- Tambah Anak -->
-    <div class="bg-white w-40 h-24 rounded-2xl shadow-md flex flex-col justify-center items-center border border-[#53AFA2] hover:bg-[#B9E9DD] transition">
+    <a href="{{ route('tambah.data.anak') }}">
+  <div class="bg-white w-40 h-24 rounded-2xl shadow-md flex flex-col justify-center items-center border border-[#53AFA2] hover:bg-[#B9E9DD] transition">
       <div class="bg-[#53AFA2] text-white w-8 h-8 flex items-center justify-center rounded-full mb-1">+</div>
       <p class="text-sm text-[#53AFA2] font-semibold">Tambah Anak</p>
-    </div>
+  </div>
+    </a>
   </div>

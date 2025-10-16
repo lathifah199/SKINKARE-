@@ -10,7 +10,9 @@
 
     <!-- Menu Desktop -->
     <div class="hidden md:flex text-white items-center space-x-20">
-      <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Beranda</a>
+      <a href="{{ route('halaman_orang_tua') }}" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">
+        Beranda
+      </a>
       <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Pertumbuhan Anak</a>
       <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Informasi Kesehatan</a>
     </div>
