@@ -45,7 +45,7 @@
           </div>
 
           <div class="article-card bg-[#FBE7E8] rounded-2xl shadow p-4 flex flex-col items-center">
-            <img src="{{ asset('images/informasi/bermain.png') }}" alt="informasi" class="w-40 rounded-xl mb-3">
+            <img src="{{ asset('images/informasi/lingkungan.png') }}" alt="informasi" class="w-40 rounded-xl mb-3">
             <h3 class="text-[#3C4A47] font-semibold text-sm text-center mb-1">Peran Bermain untuk Anak</h3>
             <p class="text-xs text-gray-700 font-medium text-center mb-1">Belajar sambil bermain</p>
             <p class="text-xs text-gray-600 text-center">Aktivitas bermain membantu stimulasi otak dan sosial anak.</p>
