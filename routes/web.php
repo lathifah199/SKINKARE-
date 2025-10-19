@@ -9,6 +9,7 @@ use App\Http\Controllers\OrangTuaController;
 use App\Http\Controllers\AnakController;
 use App\Http\Controllers\ScanController;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -40,11 +41,19 @@ Route::get('/halaman_nakes', function () {
     return view('pages.halaman_nakes');
 })->name('halaman_nakes');;
 
+
 Route::get('/scan_tinggi', [ScanController::class, 'index'])->name('scan_tinggi');
 Route::get('/scan_berat', [ScanController::class, 'berat'])->name('scan_berat');
 Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali.index');
 Route::get('/data-wali/{id}', [DataWaliController::class, 'show'])->name('data-wali.show');
 Route::get('/data-anak', [DataAnakController::class, 'index'])->name('data-anak.index');
+Route::get('/tambah-data-anak', [AnakController::class, 'create'])->name('tambah.data.anak');
+Route::post('/tambah-data-anak', [AnakController::class, 'store'])->name('anak.store');
+
+Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali.index');
+Route::get('/data-wali/{id}', [DataWaliController::class, 'show'])->name('data-wali.show');
+Route::get('/data-anak', [DataAnakController::class, 'index'])->name('data-anak.index');
+
 Route::get('/tambah-data-anak', [AnakController::class, 'create'])->name('tambah.data.anak');
 Route::post('/tambah-data-anak', [AnakController::class, 'store'])->name('anak.store');
 
