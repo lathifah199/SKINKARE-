@@ -51,15 +51,52 @@
     <div class="w-full bg-green-100 rounded-t-3xl py-4 px-6 text-center">
         <h2 class="text-lg font-semibold text-gray-700 mb-3">Tinggi Badan :</h2>
         <div class="flex flex-col sm:flex-row justify-center gap-3">
-            <a href="{{ route('scan_berat') }}" class="bg-pink-400 hover:bg-pink-500 text-white px-6 py-2 rounded-full transition">
+            <a href="{{ route('hasil_scan') }}" onclick="openPopup()" class="bg-pink-400 hover:bg-pink-500 text-white px-6 py-2 rounded-full transition">
                 Lanjut
             </a>
-            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-full transition">
+            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-full transition"onclick="window.history.back()">
                 Kembali
             </button>
         </div>
     </div>
+    <!-- Popup -->
+    <div id="popup" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-lg p-6 w-80 text-center">
+            <p class="text-gray-800 mb-4">Hasil Scan Tinggi anak anda adalah</p>
+            <input 
+                type="text" 
+                placeholder="Berat badan anak" 
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 text-center focus:ring focus:ring-purple-300"
+            />
+            <p class="text-gray-700 mb-4">Apakah anda ingin melakukan Input manual?</p>
+            <div class="flex justify-center gap-3">
+                <a href="{{ route('scan_berat') }}" 
+                class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-full">
+                Scan berat badan
+                </a>
+                <a href="{{ route('input_manual') }}" 
+                class="bg-pink-300 hover:bg-pink-400 text-white px-4 py-2 rounded-full">
+                Input Manual
+                </a>
+            </div>
+            <button 
+                onclick="closePopup()"
+                class="mt-4 text-sm text-gray-500 hover:text-gray-700 underline">
+                Tutup
+            </button>
+        </div>
+    </div>
 
+    <script>
+        function openPopup() {
+            document.getElementById('popup').classList.remove('hidden');
+            document.getElementById('popup').classList.add('flex');
+        }
+        function closePopup() {
+            document.getElementById('popup').classList.add('hidden');
+            document.getElementById('popup').classList.remove('flex');
+        }
+    </script>
 </div>
 
 {{-- Script preview foto --}}

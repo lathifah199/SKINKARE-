@@ -14,4 +14,13 @@ class ScanController extends Controller
     {
         return view ('pages.scan_berat');
     }
+    public function hasilScan()
+    {
+        return view('pages.hasil_scan');
+    }
+
+    public function inputManual()
+    {
+        return view('pages.input_manual');
+    }
 }

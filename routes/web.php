@@ -43,13 +43,14 @@ Route::get('/halaman_nakes', function () {
 
 
 Route::get('/scan_tinggi', [ScanController::class, 'index'])->name('scan_tinggi');
+Route::get('/hasil_scan', [ScanController::class, 'hasilScan'])->name('hasil_scan');
 Route::get('/scan_berat', [ScanController::class, 'berat'])->name('scan_berat');
 Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali.index');
 Route::get('/data-wali/{id}', [DataWaliController::class, 'show'])->name('data-wali.show');
 Route::get('/data-anak', [DataAnakController::class, 'index'])->name('data-anak.index');
 Route::get('/tambah-data-anak', [AnakController::class, 'create'])->name('tambah.data.anak');
 Route::post('/tambah-data-anak', [AnakController::class, 'store'])->name('anak.store');
-
+Route::get('/input_manual', [ScanController::class, 'inputManual'])->name('input_manual');
 Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali.index');
 Route::get('/data-wali/{id}', [DataWaliController::class, 'show'])->name('data-wali.show');
 Route::get('/data-anak', [DataAnakController::class, 'index'])->name('data-anak.index');
