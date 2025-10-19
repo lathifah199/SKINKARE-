@@ -49,7 +49,7 @@
 
     {{-- Bagian bawah --}}
     <div class="w-full bg-green-100 rounded-t-3xl py-4 px-6 text-center">
-        <h2 class="text-lg font-semibold text-gray-700 mb-3">Tinggi Badan :</h2>
+        <h2 class="text-lg font-semibold text-gray-700 mb-3">Berat Badan :</h2>
         <div class="flex flex-col sm:flex-row justify-center gap-3">
             <button class="bg-pink-400 hover:bg-pink-500 text-white px-6 py-2 rounded-full transition">
                 Lanjut
