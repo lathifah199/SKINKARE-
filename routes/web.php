@@ -41,4 +41,7 @@ Route::get('/data-wali/{id}', [DataWaliController::class, 'show'])->name('data-w
 Route::get('/data-anak', [DataAnakController::class, 'index'])->name('data-anak.index');
 
 Route::get('/tambah-data-anak', [AnakController::class, 'create'])->name('tambah.data.anak');
+
 Route::post('/tambah-data-anak', [AnakController::class, 'store'])->name('anak.store');
+Route::post('/tambah-data-anak', [AnakController::class, 'store'])->name('anak.store');
+
