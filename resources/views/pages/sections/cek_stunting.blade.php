@@ -5,9 +5,9 @@
         Lindungi Si Kecil Dari Stunting
       </h2>
       <p class="text-gray-600 text-xs mb-3">Scan di sini</p>
-      <button class="bg-[#E9B9C5] text-white px-4 py-1 rounded-full text-sm hover:bg-[#d49aad]">
+      <a href="{{ route('scan_tinggi') }}"  class="bg-[#E9B9C5] text-white px-4 py-1 rounded-full text-sm hover:bg-[#d49aad]">
         Scan
-      </button>
+      </a>
     </div>
   </div>
 </section>
