@@ -58,3 +58,6 @@ Route::get('/data-anak', [DataAnakController::class, 'index'])->name('data-anak.
 Route::get('/tambah-data-anak', [AnakController::class, 'create'])->name('tambah.data.anak');
 Route::post('/tambah-data-anak', [AnakController::class, 'store'])->name('anak.store');
 
+Route::get('/pertumbuhan', function () {
+    return view('pages.pertumbuhan');
+})->name('pertumbuhan');;
