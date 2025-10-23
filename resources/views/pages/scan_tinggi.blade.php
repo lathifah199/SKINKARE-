@@ -51,7 +51,7 @@
     <div class="w-full bg-green-100 rounded-t-3xl py-4 px-6 text-center">
         <h2 class="text-lg font-semibold text-gray-700 mb-3">Tinggi Badan :</h2>
         <div class="flex flex-col sm:flex-row justify-center gap-3">
-            <a href="{{ route('hasil_scan') }}" onclick="openPopup()" class="bg-pink-400 hover:bg-pink-500 text-white px-6 py-2 rounded-full transition">
+            <a href="{{ route('scan_berat') }}" onclick="openPopup()" class="bg-pink-400 hover:bg-pink-500 text-white px-6 py-2 rounded-full transition">
                 Lanjut
             </a>
             <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-full transition"onclick="window.history.back()">

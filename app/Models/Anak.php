@@ -13,6 +13,13 @@ class Anak extends Model
         'nama_lengkap',
         'jenis_kelamin',
         'umur',
-        'ttl',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'tinggi_badan',
+        'berat_badan',
+        'hasil_deteksi',
+        'nama_wali',
+        'alamat',
+        'foto',
     ];
 }
