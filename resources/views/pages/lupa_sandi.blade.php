@@ -1,10 +1,11 @@
 @extends('layouts.login')
 
-@section('title', 'Login')
+@section('title', 'Lupa kata sandi')
 
 @section('content')
 <div class="bg-[#E9B9C5] p-8 rounded-2xl shadow-lg w-full max-w-md">
-  <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Masuk</h2>
+  <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Lupa kata sandi?</h2>
+  <h6 class="text-sm font-medium text-center mb-6 text-gray-700">Masukkan email dan kata sandi baru anda</h6>
 
   @if($errors->any())
   <div class="mb-4 bg-red-100 text-red-700 px-4 py-3 rounded-lg">
@@ -39,14 +40,14 @@
   </div>
 @endif
 
-  <form method="POST" action="{{ route('login.submit') }}">
+  <form method="POST" action="{{ route('lupaSandi.submit') }}">
     @csrf
-    <div class="mb-4">
-      <label for="nama" class="block font-semibold text-gray-700 mb-1 ml-2">Nama Pengguna</label>
+    <div class="mb-6">
+      <label for="email" class="block font-semibold text-gray-700 mb-1 ml-2">Email</label>
       <div class="relative">
-        <input type="text" id="nama" name="nama" placeholder="Masukkan nama pengguna"
+        <input type="email" name="email" value="{{ old('email') }}" placeholder="Email"
           class="w-full py-3 pl-5 pr-12 rounded-full bg-[#ffffff]-800 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
-        <i class='bx bxs-user absolute top-1/2 right-4 transform -translate-y-1/2 text-black text-xl'></i>
+        <i class="fa-solid fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-black"></i>
       </div>
     </div>
 
@@ -59,17 +60,17 @@
       </div>
     </div>
 
-    <button type="submit"
-      class="w-full bg-[#53AFA2]  text-white font-semibold py-3 rounded-full hover:bg-gray-900 transition">Masuk</button>
+    <div class="mb-6">
+      <label for="kata_sandi" class="block font-semibold text-gray-700 mb-1 ml-2">Konfirmasi Kata Sandi</label>
+      <div class="relative">
+        <input type="password" id="kata_sandi" name="kata_sandi" placeholder="Konfirmasi kata sandi"
+          class="w-full py-3 pl-5 pr-12 rounded-full bg-[#ffffff]-800 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
+        <i class='bx bxs-lock absolute top-1/2 right-4 transform -translate-y-1/2 text-black text-xl'></i>
+      </div>
+    </div>
 
-    <div class="text-center mt-4 text-sm text-gray-800">
-      Lupa Kata Sandi?
-      <a href="{{ route('lupa_sandi') }}" class="hover:underline font-medium">Klik disini</a>
-    </div>
-    <div class="text-center text-sm text-gray-800 mt-2">
-      Belum punya akun?
-      <a href="{{ route('registrasi') }}" class="font-medium hover:underline">Klik di sini</a>
-    </div>
+    <button type="submit"
+      class="w-full bg-[#53AFA2]  text-white font-semibold py-3 rounded-full hover:bg-gray-900 transition">Simpan</button>
   </form>
 </div>
 @endsection

@@ -17,8 +17,14 @@
 </div>
 @endif
 
-<!-- Error Popup -->
-@if ($errors->any())
+
+
+
+<!-- Form Registrasi -->
+<form action="{{ route('registrasi') }}" method="POST" class="bg-[#E9B9C5] p-8 rounded-2xl shadow-xl w-full max-w-md text-center backdrop-blur-sm">
+  @csrf
+  <!-- Error Popup -->
+  @if ($errors->any())
     <div class="bg-red-200 text-red-800 p-2 mb-4 rounded">
         <ul>
             @foreach ($errors->all() as $error)
@@ -26,11 +32,7 @@
             @endforeach
         </ul>
     </div>
-@endif
-
-<!-- Form Registrasi -->
-<form action="{{ route('registrasi') }}" method="POST" class="bg-[#E9B9C5] p-8 rounded-2xl shadow-xl w-full max-w-md text-center backdrop-blur-sm">
-  @csrf
+  @endif
   <h2 class="text-2xl font-bold text-gray-800 mb-6">Registrasi</h2>
 
   <!-- Nama Pengguna -->

@@ -1,5 +1,5 @@
 <!-- === NAVBAR PROFIL === -->
-<div class="bg-white p-4 flex items-center justify-between rounded-b-3xl shadow">
+<div class="bg-[#E9B9C5] p-4 flex items-center justify-between rounded-b-3xl shadow">
   <!-- Kiri: Tombol Back + Profil Anak -->
   <div class="flex items-center space-x-3">
     <!-- Tombol Back -->
