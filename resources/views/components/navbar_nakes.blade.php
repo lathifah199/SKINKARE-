@@ -3,16 +3,18 @@
     <!-- Logo -->
     <div class="flex items-center space-x-2">
       <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-[45px] w-auto">
+      <a href="halaman_nakes">
       <h1 class="text-white font-bold text-xl sm:text-2xl tracking-wider drop-shadow-sm">
         SKINKARE
       </h1>
+      </a>
     </div>
 
     <!-- Menu Desktop -->
     <div class="hidden md:flex text-white items-center space-x-20">
-      <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Periksa Anak</a>
-      <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Data Anak</a>
-      <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Data Orangtua</a>
+      <a href="tambah-data-anak" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Periksa Anak</a>
+      <a href="data-anak" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Data Anak</a>
+      <a href="data-wali" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Data Orangtua</a>
     </div>
 
     <!-- Burger + Profil -->
@@ -60,9 +62,9 @@
   <!-- Menu Mobile -->
   <div id="mobile-menu"
     class="hidden md:hidden flex flex-col items-center bg-white shadow-md space-y-2 py-4 transition-all duration-300">
-    <a href="#" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Periksa Anak</a>
-    <a href="#" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Data Anak</a>
-    <a href="#" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Data Orangtua</a>
+    <a href="tambah-data-anak" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Periksa Anak</a>
+    <a href="data-anak" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Data Anak</a>
+    <a href="data-wali.index" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Data Orangtua</a>
   </div>
 </nav>
 

@@ -3,18 +3,23 @@
     <!-- Logo -->
     <div class="flex items-center space-x-2">
       <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-[45px] w-auto">
+      <a href="halaman_orangtua">
       <h1 class="text-white font-bold text-xl sm:text-2xl tracking-wider drop-shadow-sm">
         SKINKARE
       </h1>
+      </a>
     </div>
 
     <!-- Menu Desktop -->
     <div class="hidden md:flex text-white items-center space-x-20">
-      <a href="{{ route('halaman_orang_tua') }}" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">
+      <a href="halaman_orangtua" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">
         Beranda
       </a>
-      <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Pertumbuhan Anak</a>
-      <a href="#" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Informasi Kesehatan</a>
+      <a href="pertumbuhan" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Pertumbuhan Anak</a>
+      <a href="#informasi" 
+        class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">
+        Informasi Kesehatan
+      </a>
     </div>
 
     <!-- Burger + Profil -->
@@ -62,9 +67,12 @@
   <!-- Menu Mobile -->
   <div id="mobile-menu"
     class="hidden md:hidden flex flex-col items-center bg-white shadow-md space-y-2 py-4 transition-all duration-300">
-    <a href="#" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Beranda</a>
-    <a href="#" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Pertumbuhan Anak</a>
-    <a href="#" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Informasi Kesehatan</a>
+    <a href="halaman_orangtua" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Beranda</a>
+    <a href="pertumbuhan" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Pertumbuhan Anak</a>
+    <a href="#informasi"
+        class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">
+        Informasi Kesehatan
+    </a>
   </div>
 </nav>
 
