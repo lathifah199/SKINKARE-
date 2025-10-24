@@ -77,15 +77,15 @@
 <!-- === MENU MOBILE === -->
 <div id="mobile-menu"
   class="hidden md:hidden flex flex-col items-center bg-white shadow-md space-y-2 py-4 transition-all duration-300">
-  <a href="#"
+  <a href="tambah-data-anak"
     class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">
     Periksa Anak
   </a>
-  <a href="#"
+  <a href="data-anak"
     class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">
     Data Anak
   </a>
-  <a href="#"
+  <a href="data-wali"
     class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">
     Data Orangtua
   </a>
