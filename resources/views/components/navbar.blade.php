@@ -47,9 +47,9 @@
             <div class="font-bold text-lg">Selamat Datang,</div>
             <div class="text-sm">
               @if(Auth::guard('')->check())
-              <p><strong>Nama:</strong> {{ Auth::guard('penyewa')->user()->nama_penyewa }}</p>
-              <p><strong>Email:</strong> {{ Auth::guard('penyewa')->user()->email }}</p>
-              <p><strong>No HP:</strong> {{ Auth::guard('penyewa')->user()->nomor_telepon }}</p>
+              <p><strong>Nama:</strong> {{ Auth::guard('orangtua')->user()->nama }}</p>
+              <p><strong>Email:</strong> {{ Auth::guard('orangtua')->user()->email }}</p>
+              <p><strong>No HP:</strong> {{ Auth::guard('orangtua')->user()->no_hp }}</p>
               @endif
             </div>
           </div>

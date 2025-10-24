@@ -41,6 +41,29 @@ class RegisController extends Controller
 
         return redirect()->route('halaman_orang_tua')->with('success', 'Login berhasil!');
     }
+    public function showLupaSandiForm()
+    {
+        return view('pages.lupa_sandi');
+    }
+    
+    public function showLupaSandi(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string',
+            'kata_sandi' => 'required|string'
+        ]);
+
+        $orangtua = Orangtua::where('email', $request->email)->first();
+
+        if (!$orangtua) {
+            return back()->withErrors(['email' => 'Email pengguna tidak ditemukan.']);
+        }
+
+        if (!Hash::check($request->kata_sandi, $orangtua->kata_sandi)) {
+            return back()->withErrors(['kata_sandi' => 'Kata sandi salah.']);
+        }
+        return redirect()->route('login')->with('success', 'reset berhasil!');
+    }
 
     public function showRegisterForm()
     {

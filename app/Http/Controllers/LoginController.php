@@ -15,4 +15,8 @@ class LoginController extends Controller
     {
         return redirect()->route('halaman_orang_tua');
     }
+    public function lupaSandi(Request $request)
+    {
+        return redirect()->route('lupa_sandi');
+    }
 }
