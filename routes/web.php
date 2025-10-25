@@ -5,7 +5,7 @@ use App\Http\Controllers\RegisController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DataWaliController;
 use App\Http\Controllers\DataAnakController;
-use App\Http\Controllers\OrangTuaController;
+use App\Http\Controllers\OrangtuaController;
 use App\Http\Controllers\AnakController;
 use App\Http\Controllers\ScanController;
 use App\Http\Controllers\BarcodeController;
@@ -58,3 +58,6 @@ Route::get('/barcode/hasil/{id}', [BarcodeController::class, 'showBarcode'])->na
 Route::get('/barcode/detail/{id}', [BarcodeController::class, 'showDetail'])->name('barcode.detail');
 // Tombol download QR
 Route::get('/barcode/download/{id}', [BarcodeController::class, 'download'])->name('barcode.download');
+
+// ======================= PROFIL PENGGUNA =======================
+Route::view('/profil', 'pages.profil')->name('profil');

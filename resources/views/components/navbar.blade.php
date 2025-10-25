@@ -55,7 +55,7 @@
           </div>
 
           <div class="py-2 px-2 bg-white rounded-b-lg">
-            <a href="#" class="block w-full text-sm font-medium text-white bg-blue-950 px-4 py-2 rounded mb-2 text-center">Edit Profil</a>
+            <a href="profil" class="block w-full text-sm font-medium text-white bg-blue-950 px-4 py-2 rounded mb-2 text-center">Lihat Profil</a>
             <a href="#" onclick="confirmLogout(event)"
               class="block w-full text-sm font-medium text-white bg-red-800 px-4 py-2 rounded text-center">Keluar</a>
           </div>
