@@ -11,13 +11,13 @@
     <!-- Menu Desktop (tengah) -->
     <div class="hidden md:flex flex-1 justify-center">
       <div class="flex items-center space-x-12 text-white font-medium">
-        <a href="halaman_orangtua" class="px-4 py-2 rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">
+        <a href="halamanbf" class="px-4 py-2 rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">
           Beranda
         </a>
         <a href="login" class="px-4 py-2 rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">
           Pertumbuhan Anak
         </a>
-        <a href="#informasi" class="px-4 py-2 rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">
+        <a href="informasiortubf" class="px-4 py-2 rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">
           Informasi Kesehatan
         </a>
       </div>
@@ -52,10 +52,9 @@
       <button id="close-sidebar" class="text-white text-2xl font-bold">&times;</button>
     </div>
 <nav class="flex flex-col space-y-4 mt-4 px-6">
-  <a href="halaman_orangtua" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Beranda</a>
-  <a href="pertumbuhan" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Pertumbuhan Anak</a>
-  <a href="#riwayat" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Riwayat</a>
-  <a href="profil" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Profil</a>
+  <a href="halamanbf" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Beranda</a>
+  <a href="login" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Pertumbuhan Anak</a>
+  <a href="informasiortubf" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Informasi Kesehatan</a>
 </nav>
 
   </div>
