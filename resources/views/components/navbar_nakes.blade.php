@@ -12,6 +12,9 @@
 
     <!-- Menu Desktop -->
     <div class="hidden md:flex text-white items-center space-x-20">
+        <a href="halaman_nakes" class="px-4 py-2 rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">
+          Beranda
+        </a>
       <a href="tambah-data-anak" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Periksa Anak</a>
       <a href="data-anak" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Data Anak</a>
       <a href="data-wali" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Data Orangtua</a>
@@ -38,7 +41,7 @@
 
         <div id="userDropdown"
           class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg border border-gray-200 z-[9999]">
-          <div class="px-5 py-4 bg-gradient-to-r from-[#E9B9C5] to-[#219FE3] text-white rounded-t-lg">
+          <div class="px-5 py-4 bg-gradient-to-r from-[#9fc4bb] to-[#147375] text-white rounded-t-lg">
             <div class="font-bold text-lg">Selamat Datang Tenaga Kesehatan,</div>
             <div class="text-sm">
               @if(Auth::guard('')->check())
@@ -62,6 +65,7 @@
   <!-- Menu Mobile -->
   <div id="mobile-menu"
     class="hidden md:hidden flex flex-col items-center bg-white shadow-md space-y-2 py-4 transition-all duration-300">
+     <a href="halaman_nakes" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Periksa Anak</a>
     <a href="tambah-data-anak" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Periksa Anak</a>
     <a href="data-anak" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Data Anak</a>
     <a href="data-wali.index" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Data Orangtua</a>

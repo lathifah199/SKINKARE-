@@ -3,23 +3,16 @@
     <!-- Logo -->
     <div class="flex items-center space-x-2">
       <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-[45px] w-auto">
-      <a href="halaman_orangtua">
-      <h1 class="text-white font-bold text-xl sm:text-2xl tracking-wider drop-shadow-sm">
-        SKINKARE
-      </h1>
-      </a>
+        <h1 class="text-white font-bold text-xl sm:text-2xl tracking-wider drop-shadow-sm">
+          SKINKARE
+        </h1>
     </div>
 
     <!-- Menu Desktop -->
     <div class="hidden md:flex text-white items-center space-x-20">
-      <a href="halaman_orangtua" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">
-        Beranda
-      </a>
-      <a href="pertumbuhan" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">Pertumbuhan Anak</a>
-      <a href="#informasi" 
-        class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition duration-300">
-        Informasi Kesehatan
-      </a>
+      <a href="halaman_orangtua" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Beranda</a>
+      <a href="pertumbuhan" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Pertumbuhan Anak</a>
+      <a href="#informasi" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Informasi Kesehatan</a>
     </div>
 
     <!-- Burger + Profil -->
@@ -43,8 +36,8 @@
 
         <div id="userDropdown"
           class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg border border-gray-200 z-[9999]">
-          <div class="px-5 py-4 bg-gradient-to-r from-[#E9B9C5] to-[#219FE3] text-white rounded-t-lg">
-            <div class="font-bold text-lg">Selamat Datang,</div>
+          <div class="px-5 py-4 bg-gradient-to-r from-[#E9B9C5] to-[#be6178] text-white rounded-t-lg">
+            <div class="font-bold text-lg">Selamat Datang, </div>
             <div class="text-sm">
               @if(Auth::guard('')->check())
               <p><strong>Nama:</strong> {{ Auth::guard('orangtua')->user()->nama }}</p>
@@ -64,50 +57,71 @@
     </div>
   </div>
 
-  <!-- Menu Mobile -->
-  <div id="mobile-menu"
-    class="hidden md:hidden flex flex-col items-center bg-white shadow-md space-y-2 py-4 transition-all duration-300">
-    <a href="halaman_orangtua" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Beranda</a>
-    <a href="pertumbuhan" class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Pertumbuhan Anak</a>
-    <a href="#informasi"
-        class="block w-full text-center py-2 text-gray-800 hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">
-        Informasi Kesehatan
-    </a>
-  </div>
+  <!-- Overlay -->
+  <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-40 z-[999]"></div>
+
+  <!-- Sidebar Mobile -->
+  <div id="sidebar"
+    class="fixed top-0 left-0 h-full w-64 bg-[#E9B9C5] shadow-lg transform -translate-x-full transition-transform duration-300 z-[1000]">
+    <div class="flex justify-between items-center px-4 py-4">
+      <h2 class="text-white font-bold text-xl">SKINKARE</h2>
+      <button id="close-sidebar" class="text-white text-2xl font-bold">&times;</button>
+    </div>
+<nav class="flex flex-col space-y-4 mt-4 px-6">
+  <a href="halaman_orangtua" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Beranda</a>
+  <a href="pertumbuhan" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Pertumbuhan Anak</a>
+  <a href="#riwayat" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Riwayat</a>
+  <a href="profil" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Profil</a>
 </nav>
 
+  </div>
+</nav>
 <script>
   const burgerBtn = document.getElementById('burger-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const closeSidebar = document.getElementById('close-sidebar');
+
   const dropdownBtn = document.getElementById('dropdownUserButton');
   const dropdownMenu = document.getElementById('userDropdown');
 
-  // === BURGER MENU ===
+  // === BURGER MENU (SIDEBAR) ===
   burgerBtn.addEventListener('click', (e) => {
-    e.stopPropagation(); // biar gak langsung ketutup
-    mobileMenu.classList.toggle('hidden');
-    dropdownMenu.classList.add('hidden'); // tutup dropdown kalau burger dibuka
+    e.stopPropagation();
+    sidebar.classList.remove('-translate-x-full');
+    overlay.classList.remove('hidden');
+    dropdownMenu.classList.add('hidden'); // tutup dropdown kalau buka sidebar
+  });
+
+  closeSidebar.addEventListener('click', () => {
+    sidebar.classList.add('-translate-x-full');
+    overlay.classList.add('hidden');
+  });
+
+  overlay.addEventListener('click', () => {
+    sidebar.classList.add('-translate-x-full');
+    overlay.classList.add('hidden');
+    dropdownMenu.classList.add('hidden'); // tutup dropdown juga kalau klik overlay
   });
 
   // === PROFIL DROPDOWN ===
   dropdownBtn.addEventListener('click', (e) => {
-    e.stopPropagation(); // cegah auto-close
+    e.stopPropagation();
     dropdownMenu.classList.toggle('hidden');
-    mobileMenu.classList.add('hidden'); // tutup burger kalau buka dropdown
+    sidebar.classList.add('-translate-x-full');
+    overlay.classList.add('hidden');
   });
 
-  // === TUTUP JIKA KLIK DI LUAR NAV / MENU ===
+  // === AUTO CLOSE PROFIL DROPDOWN SAAT KLIK DI LUAR ===
   document.addEventListener('click', (e) => {
-    const klikDiluarBurger = !mobileMenu.classList.contains('hidden') &&
-      !mobileMenu.contains(e.target) &&
-      !burgerBtn.contains(e.target);
-
-    const klikDiluarDropdown = !dropdownMenu.classList.contains('hidden') &&
+    const klikDiluarDropdown =
+      !dropdownMenu.classList.contains('hidden') &&
       !dropdownMenu.contains(e.target) &&
       !dropdownBtn.contains(e.target);
 
-    if (klikDiluarBurger) mobileMenu.classList.add('hidden');
-    if (klikDiluarDropdown) dropdownMenu.classList.add('hidden');
+    if (klikDiluarDropdown) {
+      dropdownMenu.classList.add('hidden');
+    }
   });
 
   // === LOGOUT KONFIRMASI ===

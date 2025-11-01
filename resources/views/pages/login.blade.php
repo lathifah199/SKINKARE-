@@ -1,94 +1,110 @@
-@extends('layouts.login')
+
+ @extends('layouts.login')
 
 @section('title', 'Login')
 
 @section('content')
-<div class="bg-[#E9B9C5] p-8 rounded-2xl shadow-lg w-full max-w-md">
-  <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Masuk</h2>
-
-  @if($errors->any())
-  <div class="mb-4 bg-red-100 text-red-700 px-4 py-3 rounded-lg">
-    <ul class="text-sm list-disc list-inside">
-      @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-@endif
-
-@if(session('success'))
-<div id="popupSuccess" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
-  <div class="bg-white text-gray-800 px-6 py-4 rounded-full shadow-lg flex items-center gap-3 animate-fadeIn border border-gray-200">
-    <i class="fa-solid fa-circle-check text-green-600 text-lg"></i>
-    <span class="text-sm">{{ session('success') }}</span>
-    <button onclick="document.getElementById('popupSuccess').remove()" 
-      class="ml-3 text-gray-500 hover:text-gray-800 text-sm">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-  </div>
+<div class="bg-[#E9B9C5]/75 backdrop-blur-md p-8 rounded-2xl shadow-lg w-full max-w-md">
+        <!-- Gambar di tengah -->
+      <div class="flex justify-center mb-1">
+  <img src="{{ asset('images/logo.png') }}" alt="login" class="w-[70px] h-[70px] object-contain">
 </div>
-@endif
+       <h2 class="text-2xl font-bold text-center mb-1 text-gray-800">Selamat Datang di SKINKARE</h2>
+<h6 class="text-sm font-medium text-center mb-8 text-gray-700">Silakan melakukan login terlebih dahulu</h6>
+        {{-- Pesan Error --}}
+        @if($errors->any())
+            <div class="mb-4 bg-red-50 border border-red-300 text-red-700 px-5 py-3 rounded-xl shadow-sm">
+                <ul class="text-sm space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li><i class="fa-solid fa-circle-exclamation mr-2"></i>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-@if($errors->any())
-  <div class="mb-4 bg-red-100 text-red-700 px-4 py-3 rounded-lg">
-    <ul class="text-sm list-disc list-inside">
-      @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-@endif
+        {{-- Pesan Sukses --}}
+        @if(session('success'))
+            <div id="popupSuccess" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+                <div class="bg-white text-gray-800 px-6 py-3 rounded-full shadow-lg flex items-center gap-3 animate-fadeIn border border-[#53AFA2]">
+                    <i class="fa-solid fa-circle-check text-[#53AFA2] text-lg"></i>
+                    <span class="text-sm">{{ session('success') }}</span>
+                    <button onclick="document.getElementById('popupSuccess').remove()" 
+                        class="ml-2 text-gray-500 hover:text-gray-700 text-sm">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+        @endif
 
-  <form method="POST" action="{{ route('login.submit') }}">
-    @csrf
-    <div class="mb-4">
-      <label for="nama" class="block font-semibold text-gray-700 mb-1 ml-2">Nama Pengguna</label>
-      <div class="relative">
-        <input type="text" id="nama" name="nama" placeholder="Masukkan nama pengguna"
-          class="w-full py-3 pl-5 pr-12 rounded-full bg-[#ffffff]-800 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
-        <i class='bx bxs-user absolute top-1/2 right-4 transform -translate-y-1/2 text-black text-xl'></i>
-      </div>
+        {{-- Form Login --}}
+        <form method="POST" action="{{ route('login.submit') }}">
+            @csrf
+            {{-- Nama Pengguna --}}
+            <div class="mb-6">
+                
+                <div class="relative">
+                    <input type="text" id="nama" name="nama" placeholder="Masukkan nama pengguna"
+                        class="w-full py-3 pl-5 pr-12 rounded-full bg-white text-black placeholder-gray-400 border border-gray-300 focus:border-[#53AFA2] focus:ring-2 focus:ring-[#53AFA2]">
+                    <i class='bx bxs-user absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 text-xl'></i>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                
+                <div class="relative">
+                    <input type="password" id="kata_sandi" name="kata_sandi" placeholder="Masukkan kata sandi"
+                        class="w-full py-3 pl-5 pr-12 rounded-full bg-white text-black placeholder-gray-400 border border-gray-300 focus:border-[#53AFA2] focus:ring-2 focus:ring-[#53AFA2]">
+                    
+                    {{-- Tombol lihat sandi --}}
+                    <button type="button" id="togglePassword"
+                        class="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 hover:text-[#53AFA2] focus:outline-none">
+                        <i id="eyeIcon" class='bx bx-show text-2xl'></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit"
+                class="w-1/2 mx-auto flex justify-center text-xl bg-[#53AFA2] hover:bg-[#469488] text-white font-semibold py-3 rounded-full transition-all duration-300 shadow-md hover:shadow-lg">
+                Masuk
+            </button>
+
+            <div class="text-center mt-4 text-sm text-gray-800">
+                Lupa kata sandi? 
+                <a href="{{ route('lupa_sandi') }}" class="text-black font-bold font-medium hover:underline">Klik di sini</a>
+            </div>
+            <div class="text-center text-sm text-gray-800 mt-2">
+                Belum punya akun? 
+                <a href="{{ route('registrasi') }}" class="text-black font-bold font-medium hover:underline">Daftar di sini</a>
+            </div>
+        </form>
     </div>
-
-    <div class="mb-6">
-      <label for="kata_sandi" class="block font-semibold text-gray-700 mb-1 ml-2">Kata Sandi</label>
-      <div class="relative">
-        <input type="password" id="kata_sandi" name="kata_sandi" placeholder="Masukkan kata sandi"
-          class="w-full py-3 pl-5 pr-12 rounded-full bg-[#ffffff]-800 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600">
-        <i class='bx bxs-lock absolute top-1/2 right-4 transform -translate-y-1/2 text-black text-xl'></i>
-      </div>
-    </div>
-
-    <button type="submit"
-      class="w-full bg-[#53AFA2]  text-white font-semibold py-3 rounded-full hover:bg-gray-900 transition">Masuk</button>
-
-    <div class="text-center mt-4 text-sm text-gray-800">
-      Lupa Kata Sandi?
-      <a href="{{ route('lupa_sandi') }}" class="hover:underline font-medium">Klik disini</a>
-    </div>
-    <div class="text-center text-sm text-gray-800 mt-2">
-      Belum punya akun?
-      <a href="{{ route('registrasi') }}" class="font-medium hover:underline">Klik di sini</a>
-    </div>
-  </form>
 </div>
-@endsection
-@section('scripts')
-<style>
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-out;
-}
-</style>
+
 <script>
-  setTimeout(() => {
-    const popup = document.getElementById('popupSuccess');
-    if (popup) popup.remove();
-  }, 3000); // Auto close setelah 3 detik
+    // Auto-hide popup success
+    setTimeout(() => {
+        const popup = document.getElementById('popupSuccess');
+        if (popup) popup.remove();
+    }, 3000);
+
+    // Fungsi toggle password
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('kata_sandi');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    togglePassword.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        
+        // Ganti ikon mata
+        if (isPassword) {
+            eyeIcon.classList.remove('bx-show');
+            eyeIcon.classList.add('bx-hide');
+        } else {
+            eyeIcon.classList.remove('bx-hide');
+            eyeIcon.classList.add('bx-show');
+        }
+    });
 </script>
+
 @endsection
-
-
