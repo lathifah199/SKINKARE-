@@ -12,7 +12,7 @@
     <div class="hidden md:flex text-white items-center space-x-20">
       <a href="halaman_orangtua" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Beranda</a>
       <a href="pertumbuhan" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Pertumbuhan Anak</a>
-      <a href="#informasi" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Informasi Kesehatan</a>
+      <a href="informasiortu" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Informasi Kesehatan</a>
     </div>
 
     <!-- Burger + Profil -->
@@ -70,8 +70,7 @@
 <nav class="flex flex-col space-y-4 mt-4 px-6">
   <a href="halaman_orangtua" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Beranda</a>
   <a href="pertumbuhan" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Pertumbuhan Anak</a>
-  <a href="#riwayat" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Riwayat</a>
-  <a href="profil" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Profil</a>
+  <a href="informasiortu" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Informasi Kesehatan</a>
 </nav>
 
   </div>

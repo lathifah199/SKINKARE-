@@ -30,6 +30,8 @@ Route::view('/halaman_orangtua', 'pages.halaman_orang_tua')->name('halaman_orang
 Route::view('/halaman_nakes', 'pages.halaman_nakes')->name('halaman_nakes');
 Route::view('/halamanbf', 'pages.halamanbf')->name('halamanbf');
 Route::view('/pertumbuhan', 'pages.pertumbuhan')->name('pertumbuhan');
+Route::view('/informasiortu', 'pages.informasiortu')->name('informasiortu');
+Route::view('/informasiortubf', 'pages.informasiortubf')->name('informasiortubf');
 
 // ======================= DATA ANAK =======================
 // Form input data anak (awal sebelum pengukuran)
@@ -62,3 +64,10 @@ Route::get('/barcode/download/{id}', [BarcodeController::class, 'download'])->na
 
 // ======================= PROFIL PENGGUNA =======================
 Route::view('/profil', 'pages.profil')->name('profil');
+
+
+
+Route::get('/splash', function () {
+    return view('pages.splash');
+});
+
