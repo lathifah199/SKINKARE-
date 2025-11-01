@@ -28,6 +28,7 @@ Route::post('/registrasi', [RegisController::class, 'registrasi'])->name('regist
 // ======================= HALAMAN UTAMA =======================
 Route::view('/halaman_orangtua', 'pages.halaman_orang_tua')->name('halaman_orang_tua');
 Route::view('/halaman_nakes', 'pages.halaman_nakes')->name('halaman_nakes');
+Route::view('/halamanbf', 'pages.halamanbf')->name('halamanbf');
 Route::view('/pertumbuhan', 'pages.pertumbuhan')->name('pertumbuhan');
 
 // ======================= DATA ANAK =======================

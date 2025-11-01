@@ -1,4 +1,4 @@
-<div class="bg-[#E9B9C5]/30 p-4 mt-4 flex justify-center">
+<div class="bg-[#B9E9DD]/30 p-10 flex justify-center ">
   <div class="bg-white w-full max-w-lg rounded-3xl border border-gray-300 shadow-md py-8 px-6 text-center">
     <h3 class="text-lg font-semibold text-gray-700 mb-5">Tumbuh Kembang Anak</h3>
 

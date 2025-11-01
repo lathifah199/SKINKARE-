@@ -57,7 +57,7 @@
     <!-- Dot indikator -->
     <div id="dots-article" class="flex justify-center mt-8 gap-2"></div>
   </div>
-</section>
+</section></div>
 
 <style>
   /* Ukuran dan layout kartu informasi */
