@@ -22,6 +22,8 @@ Route::post('/logout', [RegisController::class, 'logout'])->name('logout');
 Route::get('/lupa_sandi', [RegisController::class, 'showLupaSandiForm'])->name('lupa_sandi');
 Route::post('/lupa_sandi', [RegisController::class, 'showLupaSandi'])->name('lupaSandi.submit');
 
+Route::get('/halaman_nakes', [NakesController::class, 'index'])->name('halaman_nakes');
+
 Route::get('/registrasi', [RegisController::class, 'showRegisterForm'])->name('register.form');
 Route::post('/registrasi', [RegisController::class, 'registrasi'])->name('registrasi');
 
