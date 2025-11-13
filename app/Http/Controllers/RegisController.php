@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Orangtua;
+use App\Models\Nakes;
 use Illuminate\Support\Facades\Hash;
 
 class RegisController extends Controller
 {
+    // ===================Login view============================
     public function showLoginForm()
     {
         if (Auth::guard('orangtua')->check()) {
@@ -18,34 +20,47 @@ class RegisController extends Controller
     }
 
 
+    // ============================== LOGIN PROSESS ====================
     public function login(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string',
+            'email' => 'required',
             'kata_sandi' => 'required|string'
         ]);
 
-        $orangtua = Orangtua::where('nama', $request->nama)->first();
+        $orangtua = Orangtua::where('email', $request->email)->first();
 
-        if (!$orangtua) {
-            return back()->withErrors(['nama' => 'Nama pengguna tidak ditemukan.']);
+        if ($orangtua && Hash::check($request->kata_sandi, $orangtua->kata_sandi)) {
+            session([
+                'user_id' => $orangtua->id_orangtua,
+                'user_nama' => $orangtua->nama,
+                'user_tipe' => 'orangtua',
+            ]);
+            Auth::guard('orangtua')->login($orangtua);
+            $request->session()->regenerate();
+            return redirect()->route('halaman_orang_tua');
         }
 
-        if (!Hash::check($request->kata_sandi, $orangtua->kata_sandi)) {
-            return back()->withErrors(['kata_sandi' => 'Kata sandi salah.']);
+        $nakes = Nakes::where('email', $request->email)->first();
+        if ($nakes && Hash::check($request->kata_sandi, $nakes->kata_sandi)) {
+            session([
+                'user_id' => $nakes->id_nakes,
+                'user_nama' => $nakes->nama_lengkap,
+                'user_tipe' => 'nakes',
+            ]);
+            return redirect()->route('halaman_nakes')->with('success', 'Login berhasil!');
         }
+        return back()->with('error', 'Email atau kata sandi salah.');
 
-        // Gunakan guard pelanggan untuk login
-        Auth::guard('orangtua')->login($orangtua);
-        $request->session()->regenerate();
-
-        return redirect()->route('halaman_orang_tua')->with('success', 'Login berhasil!');
     }
+
+    // =========================lupa sandi view=============================================
     public function showLupaSandiForm()
     {
         return view('pages.lupa_sandi');
     }
     
+    // ===========================Proses lupa sandi =========================================
     public function showLupaSandi(Request $request)
     {
         $request->validate([
@@ -65,11 +80,13 @@ class RegisController extends Controller
         return redirect()->route('login')->with('success', 'reset berhasil!');
     }
 
+    // ================================== REGISTRASI VIEW =================================
     public function showRegisterForm()
     {
         return view('pages.registrasi');
     }
 
+    // ================================== PROSES  REGISTRASI ================================
     public function registrasi(Request $request)
     {
         $validated = $request->validate([
