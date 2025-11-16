@@ -5,7 +5,8 @@
 
 @section('content')
 <div class="min-h-screen flex items-center justify-center px-4 ">
-    <div class="relative bg-[#E9B9C5]/75 backdrop-blur-md p-8 rounded-2xl shadow-lg w-full max-w-md sm:max-w-lg md:max-w-md">
+    <div class="flex justify-center items-start min-h-screen pt-10">
+  <div class="relative bg-[#E9B9C5]/75 backdrop-blur-md p-8 rounded-2xl shadow-lg w-full max-w-md sm:max-w-lg md:max-w-md">
         <!-- Gambar di tengah -->
         <div class="flex justify-center mb-1">
             <img src="{{ asset('images/logo.png') }}" alt="login" class="w-[70px] h-[70px] object-contain">
@@ -87,7 +88,8 @@
                 <p class="text-black font-semibold text-lg">Memproses login</p>
             </div>
     </div>
-</div>
+</div> </div>
+
 
 <script>
     // Auto-hide popup success
