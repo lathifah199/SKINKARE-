@@ -39,7 +39,7 @@
           <div class="px-5 py-4 bg-gradient-to-r from-[#E9B9C5] to-[#be6178] text-white rounded-t-lg">
             <div class="font-bold text-lg">Selamat Datang, </div>
             <div class="text-sm">
-              @if(Auth::guard('')->check())
+              @if(Auth::guard('orangtua')->check())
               <p><strong>Nama:</strong> {{ Auth::guard('orangtua')->user()->nama }}</p>
               <p><strong>Email:</strong> {{ Auth::guard('orangtua')->user()->email }}</p>
               <p><strong>No HP:</strong> {{ Auth::guard('orangtua')->user()->no_hp }}</p>
@@ -49,8 +49,16 @@
 
           <div class="py-2 px-2 bg-white rounded-b-lg">
             <a href="profil" class="block w-full text-sm font-medium text-white bg-blue-950 px-4 py-2 rounded mb-2 text-center">Lihat Profil</a>
-            <a href="#" onclick="confirmLogout(event)"
-              class="block w-full text-sm font-medium text-white bg-red-800 px-4 py-2 rounded text-center">Keluar</a>
+            <button type="button"
+              onclick="document.getElementById('logout-form').submit();"
+              class="block w-full text-sm font-medium text-white bg-red-800 px-4 py-2 rounded text-center">
+              Keluar
+            </button>
+
+            <!-- FORM LOGOUT -->
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+              @csrf
+            </form>
           </div>
         </div>
       </div>
@@ -67,14 +75,16 @@
       <h2 class="text-white font-bold text-xl">SKINKARE</h2>
       <button id="close-sidebar" class="text-white text-2xl font-bold">&times;</button>
     </div>
-<nav class="flex flex-col space-y-4 mt-4 px-6">
-  <a href="halaman_orangtua" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Beranda</a>
-  <a href="pertumbuhan" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Pertumbuhan Anak</a>
-  <a href="informasiortu" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Informasi Kesehatan</a>
-</nav>
-
+    <nav class="flex flex-col space-y-4 mt-4 px-6">
+      <a href="halaman_orangtua" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Beranda</a>
+      <a href="pertumbuhan" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Pertumbuhan Anak</a>
+      <a href="informasiortu" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Informasi Kesehatan</a>
+    </nav>
   </div>
 </nav>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+   @csrf
+</form>
 <script>
   const burgerBtn = document.getElementById('burger-btn');
   const sidebar = document.getElementById('sidebar');

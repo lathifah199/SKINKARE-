@@ -109,12 +109,12 @@ class RegisController extends Controller
     }
 
 
-   #public function logout(Request $request)
-#{
-    #Auth::guard('pelanggan')->logout(); // Guard pelanggan!
-    #$request->session()->invalidate();
-    #$request->session()->regenerateToken();
+   public function logout(Request $request)
+    {
+        Auth()->logout(); // Guard pelanggan!
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-    #return redirect()->route('dash-public');
-#}
+        return redirect()->route('halamanbf');
+    }
 }
