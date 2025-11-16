@@ -12,7 +12,7 @@ use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\RiwayatController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.halamanbf');
 });
 
 // ======================= AUTH =======================
