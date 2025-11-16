@@ -15,22 +15,22 @@
                 </svg>
             </div>
             <h2 class="text-base font-semibold text-gray-800">Nama Pengguna</h2>
-            <p class="text-sm text-gray-500">user@example.com</p>
+            <p class="text-sm text-gray-500">{{ $orangtua->email }}</p>
         </div>
 
         <!-- Info -->
         <div class="space-y-3 text-sm">
             <div>
                 <p class="text-gray-600">Nama Lengkap</p>
-                <p class="font-medium text-gray-800">Kharina</p>
+                <p class="font-medium text-gray-800">{{ $orangtua->nama }}</p>
             </div>
             <div>
                 <p class="text-gray-600">Alamat</p>
-                <p class="font-medium text-gray-800">Tiban</p>
+                <p class="font-medium text-gray-800">{{ $orangtua->alamat }}</p>
             </div>
             <div>
                 <p class="text-gray-600">Nomor HP</p>
-                <p class="font-medium text-gray-800">08123456789</p>
+                <p class="font-medium text-gray-800">{{ $orangtua->no_hp }}</p>
             </div>
         </div>
 

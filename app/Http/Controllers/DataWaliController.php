@@ -30,4 +30,22 @@ class DataWaliController extends Controller
 
         return response()->json($wali);
     }
+
+     public function profil()
+    {
+        $id = session('user_id');   // ambil ID user login
+
+        if (!$id) {
+            return redirect()->route('login')->with('error', 'Silakan login dulu');
+        }
+
+        $orangtua = Orangtua::find($id);
+
+        if (!$orangtua) {
+            return redirect()->route('login')->with('error', 'Data pengguna tidak ditemukan');
+        }
+
+        return view('pages.profil', compact('orangtua'));
+    }
 }
+
