@@ -13,7 +13,7 @@ class Orangtua extends Authenticatable
     protected $primaryKey = 'id_orangtua';
     public $timestamps = false;
 
-    protected $fillable = ['nama', 'email', 'alamat', 'no_wa', 'kata_sandi'];
+    protected $fillable = ['nama', 'email', 'alamat', 'no_hp', 'kata_sandi'];
 
     public function getAuthPassword()
     {

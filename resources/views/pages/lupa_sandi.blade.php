@@ -43,7 +43,7 @@
 
   <!-- Kata Sandi -->
   <div class="mb-6 relative">
-    <input type="password" name="kata_sandi" id="kata_sandi" placeholder="Kata Sandi"
+    <input type="password" name="kata_sandi" id="kata_sandi" placeholder="Kata Sandi Baru"
       class="w-full px-5 py-3 rounded-full bg-white text-black placeholder-gray-400 focus:border-[#53AFA2] focus:ring-2 focus:ring-[#53AFA2]">
     <button type="button" id="togglePassword1"
       class="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 hover:text-[#53AFA2] focus:outline-none">
