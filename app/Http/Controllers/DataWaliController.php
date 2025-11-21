@@ -17,7 +17,7 @@ class DataWaliController extends Controller
 
         $dataWali = $query->paginate(5);
 
-        return view('pages.data_wali', compact('dataWali'));
+        return view('pages.Data_Wali', compact('dataWali'));
     }
 
     public function show($id)
@@ -47,5 +47,10 @@ class DataWaliController extends Controller
 
         return view('pages.profil', compact('orangtua'));
     }
+    public function homeOrangtua()
+    {
+        return view('pages.halaman_orang_tua');
+    }
+
 }
 

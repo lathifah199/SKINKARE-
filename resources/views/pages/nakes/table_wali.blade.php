@@ -12,7 +12,7 @@
 
             <!-- Search Bar -->
             <div class="mb-6">
-                <form action="{{ route('data-wali.index') }}" method="GET" class="flex gap-3">
+                <form action="{{ route('Data_Wali') }}" method="GET" class="flex gap-3">
                     <div class="flex-1 relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,7 +33,7 @@
                     </button>
                     @if(request('search'))
                     <a 
-                        href="{{ route('data-wali.index') }}"
+                        href="{{ route('Data_Wali') }}"
                         class="px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-all duration-200">
                         Reset
                     </a>

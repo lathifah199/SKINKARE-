@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 // ======================= AUTH =======================
-Route::get('/login', [RegisController::class, 'showLoginForm'])->name('login');
+Route::get ('/login', [RegisController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [RegisController::class, 'login'])->name('login.submit');
 Route::post('/logout', [RegisController::class, 'logout'])->name('logout');
 Route::get('/lupa_sandi', [RegisController::class, 'showLupaSandiForm'])->name('lupa_sandi');
@@ -28,7 +28,7 @@ Route::get('/registrasi', [RegisController::class, 'showRegisterForm'])->name('r
 Route::post('/registrasi', [RegisController::class, 'registrasi'])->name('registrasi');
 
 // ======================= HALAMAN UTAMA =======================
-Route::get('/orangtua/home', [DataWaliController::class, 'index'])
+Route::get('home', [DataWaliController::class, 'homeOrangtua'])
     ->name('halaman_orang_tua');
 Route::view('/halaman_orangtua', 'pages.halaman_orang_tua')->name('halaman_orangtua');
 Route::view('/halaman_nakes', 'pages.halaman_nakes')->name('halaman_nakes');
@@ -55,7 +55,9 @@ Route::get('/input_manual', [ScanController::class, 'inputManual'])->name('input
 Route::get('/riwayat_anak', [RiwayatController::class, 'riwayat'])->name('riwayat_anak');
 
 // ======================= DATA WALI =======================
-Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali.index');
+Route::get('/orangtua/home', [DataWaliController::class, 'index'])
+    ->name('Data_Wali');
+//Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali.index');
 Route::get('/data-wali/{id}', [DataWaliController::class, 'show'])->name('data-wali.show');
 
 // ======================= BARCODE (QR CODE) =======================

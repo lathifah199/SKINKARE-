@@ -14,7 +14,7 @@
                         d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
             </div>
-            <h2 class="text-base font-semibold text-gray-800">Nama Pengguna</h2>
+            <h2 class="text-base font-semibold text-gray-800">{{ $orangtua->nama }}</h2>
             <p class="text-sm text-gray-500">{{ $orangtua->email }}</p>
         </div>
 

@@ -65,7 +65,7 @@ class RegisController extends Controller
     {
         $request->validate([
             'email' => 'required|string',
-            'kata_sandi' => 'required|string'
+            'kata_sandi' => 'required|string|min:6|confirmed'
         ]);
 
         $orangtua = Orangtua::where('email', $request->email)->first();
@@ -73,10 +73,9 @@ class RegisController extends Controller
         if (!$orangtua) {
             return back()->withErrors(['email' => 'Email pengguna tidak ditemukan.']);
         }
+        $orangtua->kata_sandi = bcrypt($request->kata_sandi);
+        $orangtua->save();
 
-        if (!Hash::check($request->kata_sandi, $orangtua->kata_sandi)) {
-            return back()->withErrors(['kata_sandi' => 'Kata sandi salah.']);
-        }
         return redirect()->route('login')->with('success', 'reset berhasil!');
     }
 
