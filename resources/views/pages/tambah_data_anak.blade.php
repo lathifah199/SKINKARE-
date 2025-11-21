@@ -48,7 +48,7 @@
 
                 <div>
                     <label class="block text-gray-600">Tempat, Tanggal Lahir</label>
-                    <input name="ttl" type="text" placeholder="Masukkan Tempat, tanggal lahir"
+                    <input name="tempat_lahir" type="text" placeholder="Masukkan Tempat, tanggal lahir"
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-300 outline-none">
                 </div>
 

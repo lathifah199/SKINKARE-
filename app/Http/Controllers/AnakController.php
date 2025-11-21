@@ -18,7 +18,7 @@ class AnakController extends Controller
             'nama_lengkap' => 'required|string|max:255',
             'jenis_kelamin' => 'required',
             'umur' => 'required|integer',
-            'ttl' => 'required|string|max:255',
+            'tempat_lahir' => 'required|string|max:255',
         ]);
 
         $anak = Anak::create($validated);
