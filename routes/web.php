@@ -73,7 +73,7 @@ Route::get('/profil', [DataWaliController::class, 'profil'])->name('profil');
 
 
 
-Route::get('/splash', function () {
+Route::get('/SKINKARE', function () {
     return view('pages.splash');
 });
 

@@ -115,22 +115,6 @@
 
 <!-- Script dengan Data Dummy -->
 <script>
-// Data dummy untuk pop-up
-const dummyData = {
-    emails: [
-        'Kharina@gmail.com'
-    ],
-    phones: [
-        '0895-7777-8888'
-    ],
-    addresses: [
-        'Permata laguna blok A9 no 9'
-    ],
-    children: [
-        ['Amey']
-    ]
-};
-
 function getRandomItem(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
@@ -159,21 +143,35 @@ function lihatDetail(nama, id) {
         loadingState.classList.add('hidden');
         dataContent.classList.remove('hidden');
         
-        // Generate dummy data
-        const dummyEmail = getRandomItem(dummyData.emails);
-        const dummyPhone = getRandomItem(dummyData.phones);
-        const dummyAddress = getRandomItem(dummyData.addresses);
-        const dummyChildren = getRandomItem(dummyData.children).join(', ');
-        
-        // Populate with dummy data
-        document.getElementById('detailNama').textContent = nama;
-        document.getElementById('detailEmail').textContent = dummyEmail;
-        document.getElementById('detailNoWa').textContent = dummyPhone;
-        document.getElementById('detailAlamat').textContent = dummyAddress;
-        document.getElementById('detailWaliDari').textContent = dummyChildren;
-        
-        // Show notification
-        showNotification('Data berhasil dimuat (Demo Mode)', 'success');
+        // 🔥 Fetch Data Dari Database
+        fetch(`/data-wali/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                loadingState.classList.add('hidden');
+                dataContent.classList.remove('hidden');
+
+                // Isi data dari database
+                console.log(data);
+                document.getElementById('detailNama').textContent = data.nama ?? '-';
+                document.getElementById('detailEmail').textContent = data.email ?? '-';
+                document.getElementById('detailNoWa').textContent = data.no_hp ?? '-';
+                document.getElementById('detailAlamat').textContent = data.alamat ?? '-';
+
+                // Jika ada relasi anak
+                let waliDari = '-';
+                if (data.anak && data.anak.length > 0) {
+                    waliDari = data.anak.map(a => a.nama).join(', ');
+                }
+                document.getElementById('detailWaliDari').textContent = waliDari;
+
+                showNotification('Data berhasil dimuat', 'success');
+            })
+            .catch(error => {
+                console.error(error);
+                loadingState.classList.add('hidden');
+                showNotification('Gagal memuat data', 'error');
+            });
+
     }, 800);
 }
 
