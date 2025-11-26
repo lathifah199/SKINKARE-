@@ -9,6 +9,10 @@ class Anak extends Model
 {
     use HasFactory;
 
+    protected $table = 'anaks'; // nama tabel
+    protected $primaryKey = 'id'; // pk di tabel anak
+    public $timestamps = false; // kalau tidak ada created_at / updated_at
+
     protected $fillable = [
         'nama_lengkap',
         'jenis_kelamin',
@@ -21,5 +25,13 @@ class Anak extends Model
         'nama_wali',
         'alamat',
         'foto',
+
+        // foreign key penting!
+        'id_orangtua',
     ];
+
+    public function orangtua()
+{
+    return $this->belongsTo(Orangtua::class, 'id_orangtua');
+}
 }
