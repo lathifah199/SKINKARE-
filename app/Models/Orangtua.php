@@ -19,8 +19,8 @@ class Orangtua extends Authenticatable
     {
         return $this->kata_sandi;
     }
-    public function anak()
-    {
-        return $this->hasMany(Anak::class);
-    }
+   public function anak()
+{
+    return $this->hasMany(Anak::class, 'id_orangtua');
+}
 }

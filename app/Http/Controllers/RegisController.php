@@ -38,7 +38,7 @@ class RegisController extends Controller
             ]);
             Auth::guard('orangtua')->login($orangtua);
             $request->session()->regenerate();
-            return redirect()->route('halaman_orang_tua');
+            return redirect()->route('halaman_orangtua');
         }
 
         $nakes = Nakes::where('email', $request->email)->first();

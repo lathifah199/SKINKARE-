@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('orangtua')) {
+        return; 
+    }
+    
          Schema::create('orangtua', function (Blueprint $table) {
             $table->id('id_orangtua'); // primary key AUTO INCREMENT
             $table->string('nama');
@@ -18,7 +22,7 @@ return new class extends Migration
             $table->string('kata_sandi');
             $table->string('no_hp')->nullable();
             $table->string('alamat')->nullable();
-            $table->timestamps(); // created_at & updated_at
+            $table->timestamps();
         });
     }
 

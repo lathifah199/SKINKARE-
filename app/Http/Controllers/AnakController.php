@@ -13,19 +13,26 @@ class AnakController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'nama_lengkap' => 'required|string|max:255',
-            'jenis_kelamin' => 'required',
-            'umur' => 'required|integer',
-            'tempat_lahir' => 'required|string|max:255',
-        ]);
+{
+    $validated = $request->validate([
+        'nama_lengkap' => 'required|string|max:255',
+        'jenis_kelamin' => 'required',
+        'umur' => 'required|integer',
+        'tempat_lahir' => 'required|string|max:255',
+    ]);
 
-        $anak = Anak::create($validated);
+    // Ambil ID orangtua dari session
+    $idOrangtua = session('user_id');
 
-        // Setelah input data awal, lanjut ke scan tinggi terlebih dahulu
-        return redirect()->route('scan_tinggi', $anak->id);
-    }
+    // Simpan ke kolom yang benar!
+    $validated['id_orangtua'] = $idOrangtua;
+
+    // Buat data anak
+    $anak = Anak::create($validated);
+
+    // Lanjut scan tinggi
+    return redirect()->route('scan_tinggi', $anak->id);
+}
 
     public function scanTinggi($id)
     {

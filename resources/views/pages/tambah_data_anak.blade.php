@@ -13,7 +13,7 @@
         <div class="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg w-full max-w-md mt-10 mb-10">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-semibold text-gray-700">Isi Data Anak</h2>
-                <a href="/" class="text-gray-500 hover:text-red-500 text-xl">&times;</a>
+               <a href="{{ route('halaman_orangtua') }}" class="text-gray-500 hover:text-red-500 text-lg sm:text-xl">&times;</a>
             </div>
 
             {{-- Notifikasi sukses --}}
