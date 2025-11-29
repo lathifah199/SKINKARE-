@@ -1,5 +1,5 @@
 <section class="bg-[#B9E9DD] mx-4 mt-6 rounded-2xl py-8 flex justify-center">
-  <div class="border-4 border-[#53AFA2] rounded-xl p-4 w-[280px] text-center bg-white shadow-md">
+  <div class="border-4 border-[#53AFA2] rounded-xl p-2 w-[280px] text-center bg-white shadow-md">
     
       <h2 class="text-gray-800 font-semibold text-sm mb-1">
         Lindungi Si Kecil Dari Stunting

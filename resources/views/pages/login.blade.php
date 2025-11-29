@@ -1,5 +1,4 @@
-
- @extends('layouts.login')
+@extends('layouts.login')
 
 @section('title', 'Login')
 
@@ -36,6 +35,18 @@
                     </div>
                 </div>
             @endif
+{{-- Pesan Error Login --}}
+@if(session('error'))
+    <div id="popupError" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+        <div class="bg-white text-red-700 px-6 py-3 rounded-full shadow-lg flex items-center gap-3 animate-fadeIn border border-red-400">
+            <i class="fa-solid fa-circle-xmark text-red-500 text-lg"></i>
+            <span class="text-sm">{{ session('error') }}</span>
+            <button onclick="document.getElementById('popupError').remove()" class="ml-2 text-gray-500 hover:text-gray-700 text-sm">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+@endif
 
             {{-- Form Login --}}
             <form method="POST" action="{{ route('login.submit') }}">
@@ -76,7 +87,7 @@
             </form>
             <!-- Overlay Loading -->
             <div id="loadingOverlay" 
-                class="absolute inset-0 bg-[#E9B9C5]/75 backdrop-blur-md flex flex-col items-center justify-center 
+                class="absolute inset-0 bg-[#E9B9C5] backdrop-blur-md flex flex-col items-center justify-center 
                     rounded-2xl shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
                 
                 <!-- Spinner elegan -->
@@ -97,7 +108,11 @@
         const popup = document.getElementById('popupSuccess');
         if (popup) popup.remove();
     }, 3000);
-
+// Auto-hide popup error
+setTimeout(() => {
+    const popupError = document.getElementById('popupError');
+    if (popupError) popupError.remove();
+}, 3000);
     // Fungsi toggle password
     const togglePassword = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('kata_sandi');
@@ -118,6 +133,7 @@
     });
 </script>
 <script>
+
     // Ambil elemen
     const form = document.querySelector('form');
     const loadingOverlay = document.getElementById('loadingOverlay');
@@ -133,13 +149,14 @@
         setTimeout(() => {
             loadingOverlay.classList.remove('pointer-events-none');
             loadingOverlay.classList.add('opacity-100');
-        }, 150);
+        }, 50);
 
         // Lanjutkan submit setelah 700ms
         setTimeout(() => {
             form.submit();
-        }, 700);
+        }, 150);
     });
+    
 </script>
 
 

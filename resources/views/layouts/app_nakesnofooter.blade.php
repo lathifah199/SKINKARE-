@@ -14,13 +14,12 @@
 </head>
 <body class="bg-white text-gray-800">
   <div class="min-h-screen flex flex-col">
-    @include('components.navbar')
+    @include('components.navbar_nakes')
 
     <main class="flex-1">
       @yield('content')
     </main>
 
-    @include('components.footer')
   </div>
 </body>
 </html>

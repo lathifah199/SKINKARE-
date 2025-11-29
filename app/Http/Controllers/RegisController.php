@@ -10,62 +10,68 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisController extends Controller
 {
-    // ===================Login view============================
+    // =================== LOGIN VIEW ====================
     public function showLoginForm()
     {
         if (Auth::guard('orangtua')->check()) {
             return redirect()->route('halaman_orangtua');
         }
+        if (Auth::guard('nakes')->check()) {
+            return redirect()->route('halaman_nakes');
+        }
         return view('pages.login');
     }
 
+    // =================== LOGIN PROCESS ====================
+  public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required',
+        'kata_sandi' => 'required|string',
+    ]);
 
-    // ============================== LOGIN PROSESS ====================
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required',
-            'kata_sandi' => 'required|string'
+    // Login Orangtua
+    $orangtua = Orangtua::where('email', $request->email)->first();
+    if ($orangtua && Hash::check($request->kata_sandi, $orangtua->kata_sandi)) {
+        session([
+            'user_id' => $orangtua->id_orangtua,
+            'user_nama' => $orangtua->nama,
+            'user_tipe' => 'orangtua',
         ]);
-
-        $orangtua = Orangtua::where('email', $request->email)->first();
-
-        if ($orangtua && Hash::check($request->kata_sandi, $orangtua->kata_sandi)) {
-            session([
-                'user_id' => $orangtua->id_orangtua,
-                'user_nama' => $orangtua->nama,
-                'user_tipe' => 'orangtua',
-            ]);
-            Auth::guard('orangtua')->login($orangtua);
-            $request->session()->regenerate();
-            return redirect()->route('halaman_orangtua');
-        }
-
-        $nakes = Nakes::where('email', $request->email)->first();
-        if ($nakes && Hash::check($request->kata_sandi, $nakes->kata_sandi)) {
-            session([
-                'user_id' => $nakes->id_nakes,
-                'user_nama' => $nakes->nama_lengkap,
-                'user_tipe' => 'nakes',
-            ]);
-            return redirect()->route('halaman_nakes')->with('success', 'Login berhasil!');
-        }
-        return back()->with('error', 'Email atau kata sandi salah.');
-
+        Auth::guard('orangtua')->login($orangtua);
+        $request->session()->regenerate();
+        return redirect()->route('halaman_orangtua');
     }
 
-    // =========================lupa sandi view=============================================
+    // Login Nakes
+    $nakes = Nakes::where('email', $request->email)->first();
+    if ($nakes && Hash::check($request->kata_sandi, $nakes->kata_sandi)) {
+        session([
+            'user_id' => $nakes->id_nakes,
+            'user_nama' => $nakes->nama_lengkap,
+            'user_tipe' => 'nakes',
+        ]);
+        Auth::guard('nakes')->login($nakes);
+        $request->session()->regenerate();
+        return redirect()->route('halaman_nakes')->with('success', 'Login berhasil!');
+    }
+
+    // ⚠ Jika gagal login, kirim error
+    return back()->with('error', 'Email atau kata sandi salah')->withInput();
+}
+
+    // =================== LUPA SANDI VIEW ====================
     public function showLupaSandiForm()
     {
         return view('pages.lupa_sandi');
     }
-    
-    // ===========================Proses lupa sandi =========================================
+
+    // =================== PROSES LUPA SANDI ====================
     public function showLupaSandi(Request $request)
     {
         $request->validate([
             'email' => 'required|string',
-            'kata_sandi' => 'required|string|min:6|confirmed'
+            'kata_sandi' => 'required|string|min:6|confirmed',
         ]);
 
         $orangtua = Orangtua::where('email', $request->email)->first();
@@ -73,25 +79,26 @@ class RegisController extends Controller
         if (!$orangtua) {
             return back()->withErrors(['email' => 'Email pengguna tidak ditemukan.']);
         }
+
         $orangtua->kata_sandi = bcrypt($request->kata_sandi);
         $orangtua->save();
 
-        return redirect()->route('login')->with('success', 'reset berhasil!');
+        return redirect()->route('login')->with('success', 'Reset berhasil!');
     }
 
-    // ================================== REGISTRASI VIEW =================================
+    // =================== REGISTRASI VIEW ====================
     public function showRegisterForm()
     {
         return view('pages.registrasi');
     }
 
-    // ================================== PROSES  REGISTRASI ================================
+    // =================== PROSES REGISTRASI ====================
     public function registrasi(Request $request)
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:100',
             'email' => 'required|string|email|max:255|unique:orangtua',
-            'alamat' => 'required|string|max:255',
+            'domisili' => 'required|string|max:255',
             'no_hp' => 'required|string|max:12',
             'kata_sandi' => 'required|string|min:6|confirmed',
         ]);
@@ -99,7 +106,7 @@ class RegisController extends Controller
         Orangtua::create([
             'nama' => $validated['nama'],
             'email' => $validated['email'],
-            'alamat' => $validated['alamat'],
+            'domisili' => $validated['domisili'],
             'no_hp' => $validated['no_hp'],
             'kata_sandi' => bcrypt($validated['kata_sandi']),
         ]);
@@ -107,10 +114,10 @@ class RegisController extends Controller
         return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 
-
-   public function logout(Request $request)
+    // =================== LOGOUT ====================
+    public function logout(Request $request)
     {
-        Auth()->logout(); // Guard pelanggan!
+        Auth()->logout(); // Logout semua guard
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

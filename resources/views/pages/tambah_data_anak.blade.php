@@ -1,11 +1,15 @@
-@extends('layouts.app')
+@php
+    if (Auth::guard('orangtua')->check()) {
+        $layout = 'layouts.orangtuanofooter';
+    } else {
+        $layout = 'layouts.app_nakesnofooter';
+    }
+@endphp
 
+@extends($layout)
 @section('content')
 <div class="min-h-screen bg-pink-100 flex flex-col">
     
-    {{-- Navbar --}}
-    @include('components.navbar')
-
     <!-- Background dan form -->
     <div class="flex-grow bg-cover bg-center flex items-center justify-center py-16"
          style="background-image: url('https://source.unsplash.com/800x600/?family,child');">
@@ -30,28 +34,35 @@
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-300 outline-none">
                 </div>
 
-                <div>
-                    <label class="block text-gray-600">Jenis Kelamin</label>
-                    <select name="jenis_kelamin"
-                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-300 outline-none">
-                        <option value="">-- Pilih Jenis Kelamin --</option>
-                        <option value="Laki-laki">Laki-laki</option>
-                        <option value="Perempuan">Perempuan</option>
-                    </select>
-                </div>
+        <div>
+            <label class="block text-gray-600">Jenis Kelamin</label>
+            <select name="jenis_kelamin"
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-300 outline-none">
+                <option value="">-- Pilih Jenis Kelamin --</option>
+                <option value="L">Laki-laki</option>
+                <option value="P">Perempuan</option>
+            </select>
+        </div>
 
-                <div>
-                    <label class="block text-gray-600">Umur (bulan)</label>
-                    <input name="umur" type="number" placeholder="Masukkan umur (dalam bulan)"
-                           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-300 outline-none">
-                </div>
+        <div>
+            <label class="block text-gray-600">Tempat Lahir</label>
+            <input name="tempat_lahir" type="text" placeholder="Masukkan Tempat Lahir"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-300 outline-none">
+        </div>
 
-                <div>
-                    <label class="block text-gray-600">Tempat, Tanggal Lahir</label>
-                    <input name="tempat_lahir" type="text" placeholder="Masukkan Tempat, tanggal lahir"
-                           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-300 outline-none">
-                </div>
+        <div>
+            <label class="block text-gray-600">Tanggal Lahir</label>
+            <input name="tanggal_lahir" type="date" id="tanggal_lahir"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-300 outline-none">
+        </div>
 
+<div>
+    <label class="block text-gray-600">Umur (bulan)</label>
+    <input id="umur" name="umur" type="number" placeholder="Otomatis terisi" readonly
+        class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100 focus:ring-2 focus:ring-pink-300 outline-none">
+</div>
+
+            
                 <button type="submit"
                         class="w-full bg-emerald-400 hover:bg-emerald-500 text-white font-semibold py-2 rounded-full mt-4 transition">
                     Mulai Scan
@@ -60,4 +71,34 @@
         </div>
     </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const tanggalInput = document.getElementById('tanggal_lahir');
+    const umurInput = document.getElementById('umur');
+
+    tanggalInput.addEventListener('change', function() {
+        const tglLahir = new Date(this.value);
+        const today = new Date();
+
+        if (!this.value) {
+            umurInput.value = '';
+            return;
+        }
+
+        let years = today.getFullYear() - tglLahir.getFullYear();
+        let months = today.getMonth() - tglLahir.getMonth();
+
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        const totalBulan = years * 12 + months;
+
+        // Tampilkan hasilnya di input umur
+        umurInput.value = totalBulan;
+    });
+});
+</script>
+
 @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.regis')
+@extends('layouts.login')
 
 @section('title', 'Registrasi')
 
@@ -53,16 +53,41 @@
     <i class="fa-solid fa-phone absolute right-4 top-1/2 transform -translate-y-1/2 text-black"></i>
   </div>
 
-  <!-- alamat -->
-  <div class="mb-4 relative">
-    <input type="text" name="alamat" value="{{ old('alamat') }}" placeholder="Alamat"
-      class="w-full px-5 py-3 rounded-full bg-white text-black placeholder-gray-400 focus:border-[#53AFA2] focus:ring-2 focus:ring-[#53AFA2]">
-    <i class="fa-solid fa-map-pin absolute right-4 top-1/2 transform -translate-y-1/2 text-black"></i>
-  </div>
+  <!-- Domisili -->
+<div class="mb-4 relative">
+  <select name="domisili" class="w-full px-5 py-3 rounded-full bg-white text-black focus:border-[#53AFA2] focus:ring-2 focus:ring-[#53AFA2]">
+    <option value="">-- Pilih Provinsi Domisili --</option>
+    <option value="Aceh">Aceh</option>
+    <option value="Sumatera Utara">Sumatera Utara</option>
+    <option value="Sumatera Barat">Sumatera Barat</option>
+    <option value="Riau">Riau</option>
+    <option value="Kepulauan Riau">Kepulauan Riau</option>
+    <option value="Jambi">Jambi</option>
+    <option value="Sumatera Selatan">Sumatera Selatan</option>
+    <option value="Lampung">Lampung</option>
+    <option value="DKI Jakarta">DKI Jakarta</option>
+    <option value="Jawa Barat">Jawa Barat</option>
+    <option value="Banten">Banten</option>
+    <option value="Jawa Tengah">Jawa Tengah</option>
+    <option value="DI Yogyakarta">DI Yogyakarta</option>
+    <option value="Jawa Timur">Jawa Timur</option>
+    <option value="Bali">Bali</option>
+    <option value="Kalimantan Barat">Kalimantan Barat</option>
+    <option value="Kalimantan Tengah">Kalimantan Tengah</option>
+    <option value="Kalimantan Selatan">Kalimantan Selatan</option>
+    <option value="Kalimantan Timur">Kalimantan Timur</option>
+    <option value="Sulawesi Selatan">Sulawesi Selatan</option>
+    <option value="Sulawesi Tengah">Sulawesi Tengah</option>
+    <option value="Sulawesi Tenggara">Sulawesi Tenggara</option>
+    <option value="Papua">Papua</option>
+  </select>
+  <i class="fa-solid fa-map-pin absolute right-4 top-1/2 transform -translate-y-1/2 text-black"></i>
+</div>
+
 
   <!-- Kata Sandi -->
   <div class="mb-6 relative">
-    <input type="password" name="kata_sandi" id="kata_sandi" placeholder="Kata Sandi"
+    <input type="password" name="kata_sandi" id="kata_sandi" placeholder="Kata Sandi (Min 6 Karakter)"
       class="w-full px-5 py-3 rounded-full bg-white text-black placeholder-gray-400 focus:border-[#53AFA2] focus:ring-2 focus:ring-[#53AFA2]">
     <button type="button" id="togglePassword1"
       class="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 hover:text-[#53AFA2] focus:outline-none">

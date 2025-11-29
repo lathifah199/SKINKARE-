@@ -1,4 +1,4 @@
-@extends('layouts.orangtua')
+@extends('layouts.orangtuanofooter')
 
 @section('content')
 <div class="min-h-screen flex flex-col items-center justify-center bg-white text-center">

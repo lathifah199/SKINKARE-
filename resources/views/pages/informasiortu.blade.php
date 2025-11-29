@@ -1,5 +1,7 @@
-@extends('layouts.app')
-
+@php
+    $layout = Auth::check() ? 'layouts.app' : 'layouts.appbf';
+@endphp
+@extends($layout)
 @section('title', 'Informasi untuk Orang Tua')
 
 @section('content')

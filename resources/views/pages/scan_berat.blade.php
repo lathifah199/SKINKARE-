@@ -1,5 +1,11 @@
-@extends('layouts.orangtua')
-
+@php
+    if (Auth::guard('orangtua')->check()) {
+        $layout = 'layouts.orangtuanofooter';
+    } else {
+        $layout = 'layouts.app_nakesnofooter';
+    }
+@endphp
+@extends($layout)
 @section('content')
 <div class="min-h-screen bg-white flex flex-col items-center justify-between p-4">
 

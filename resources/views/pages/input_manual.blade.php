@@ -1,5 +1,11 @@
-@extends('layouts.orangtua')
-
+@php
+    if (Auth::guard('orangtua')->check()) {
+        $layout = 'layouts.orangtuanofooter';
+    } else {
+        $layout = 'layouts.app_nakesnofooter';
+    }
+@endphp
+@extends($layout)
 @section('content')
 <div class="min-h-screen flex flex-col items-center justify-center bg-white text-center">
     <h1 class="text-xl font-semibold text-gray-700 mb-3">Input Manual Berat Badan Anak</h1>

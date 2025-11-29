@@ -7,14 +7,14 @@
     <div class="relative">
       <!-- Tombol kiri -->
       <button id="prevArticle" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-[#B9E9DD] text-[#53AFA2] p-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-30">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
       </button>
 
       <!-- Tombol kanan -->
       <button id="nextArticle" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-[#B9E9DD] text-[#53AFA2] p-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-30">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
       </button>
@@ -61,16 +61,15 @@
 
 <style>
   /* Ukuran dan layout kartu informasi */
-  #informasi-container .article-card {
-    min-width: 300px;
-    max-width: 300px;
-    flex-shrink: 0;
-  }
+#informasi-container .article-card {
+  min-width: 270px;
+  max-width: 270px;
+  flex-shrink: 0;}
 
   /* Gaya dot */
   .dot {
-    width: 10px;
-    height: 10px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background-color: #d1d5db;
     transition: all 0.3s ease;
@@ -110,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function updateSliderPosition() {
-    const translateX = -currentSlide * (300 + 24);
+    const translateX = -currentSlide * (270 + 24);
     track.style.transform = `translateX(${translateX}px)`;
     document.querySelectorAll('#dots-article .dot').forEach((dot, i) => {
       dot.classList.toggle('active', i === currentSlide);
