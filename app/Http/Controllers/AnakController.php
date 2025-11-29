@@ -4,22 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Anak;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; 
 
 class AnakController extends Controller
 {
     public function create()
-    {
-        return view('pages.tambah_data_anak');
+{
+    // Pastikan guard yang aktif terdeteksi
+    if (Auth::guard('orangtua')->check()) {
+        $layout = 'layouts.orangtuanofooter';
+    } elseif (Auth::guard('nakes')->check()) {
+        $layout = 'layouts.app_nakesnofooter';
+    } else {
+        $layout = 'layouts.appbf'; // fallback kalau belum login
     }
+
+    return view('pages.tambah_data_anak', compact('layout'));
+}
 
     public function store(Request $request)
 {
-    $validated = $request->validate([
-        'nama_lengkap' => 'required|string|max:255',
-        'jenis_kelamin' => 'required',
-        'umur' => 'required|integer',
-        'tempat_lahir' => 'required|string|max:255',
-    ]);
+$validated = $request->validate([
+    'nama_lengkap' => 'required|string|max:255',
+    'jenis_kelamin' => 'required|string',
+    'umur' => 'required|integer',
+    'tempat_lahir' => 'required|string|max:255',
+    'tanggal_lahir' => 'required|date',
+]);
 
     // Ambil ID orangtua dari session
     $idOrangtua = session('user_id');

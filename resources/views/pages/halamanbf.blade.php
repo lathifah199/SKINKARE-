@@ -2,9 +2,9 @@
 
 @section('content')
   @include('pages.sections.hero')
-  @include('pages.sections.tambah_anakbf')
-  @include('pages.sections.tombol_menubf')
-  @include('pages.sections.cek_stuntingbf')
+  @include('pages.sectionsbf.tambah_anakbf')
+  @include('pages.sectionsbf.tombol_menubf')
+  @include('pages.sectionsbf.cek_stuntingbf')
   @include('pages.sections.informasi')
 @endsection
 

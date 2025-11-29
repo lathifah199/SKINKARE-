@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Profil')
+@section('title', 'Profil Orang Tua')
 
 @section('content')
 <div class="min-h-screen bg-gray-50 flex justify-center items-center pt-20 pb-10">
@@ -25,12 +25,16 @@
                 <p class="font-medium text-gray-800">{{ $orangtua->nama }}</p>
             </div>
             <div>
-                <p class="text-gray-600">Alamat</p>
-                <p class="font-medium text-gray-800">{{ $orangtua->alamat }}</p>
+                <p class="text-gray-600">Email</p>
+                <p class="font-medium text-gray-800">{{ $orangtua->email }}</p>
             </div>
             <div>
                 <p class="text-gray-600">Nomor HP</p>
                 <p class="font-medium text-gray-800">{{ $orangtua->no_hp }}</p>
+            </div>
+            <div>
+                <p class="text-gray-600">Domisili</p>
+                <p class="font-medium text-gray-800">{{ $orangtua->domisili }}</p>
             </div>
         </div>
 

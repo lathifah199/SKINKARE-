@@ -7,9 +7,8 @@ return [
     | Authentication Defaults
     |--------------------------------------------------------------------------
     |
-    | This option defines the default authentication "guard" and password
-    | reset "broker" for your application. You may change these values
-    | as required, but they're a perfect start for most applications.
+    | Menentukan guard dan password broker default aplikasi.
+    | Kamu bisa mengubah nilainya sesuai kebutuhan.
     |
     */
 
@@ -23,15 +22,10 @@ return [
     | Authentication Guards
     |--------------------------------------------------------------------------
     |
-    | Next, you may define every authentication guard for your application.
-    | Of course, a great default configuration has been defined for you
-    | which utilizes session storage plus the Eloquent user provider.
+    | Setiap guard mengatur cara autentikasi pengguna.
+    | Secara default menggunakan session driver dan provider Eloquent.
     |
-    | All authentication guards have a user provider, which defines how the
-    | users are actually retrieved out of your database or other storage
-    | system used by the application. Typically, Eloquent is utilized.
-    |
-    | Supported: "session"
+    | Supported drivers: "session"
     |
     */
 
@@ -43,7 +37,11 @@ return [
         'orangtua' => [
             'driver' => 'session',
             'provider' => 'orangtua',
-        ]
+        ],
+        'nakes' => [
+            'driver' => 'session',
+            'provider' => 'nakes',
+        ],
     ],
 
     /*
@@ -51,15 +49,10 @@ return [
     | User Providers
     |--------------------------------------------------------------------------
     |
-    | All authentication guards have a user provider, which defines how the
-    | users are actually retrieved out of your database or other storage
-    | system used by the application. Typically, Eloquent is utilized.
+    | Provider menentukan bagaimana pengguna diambil dari database.
+    | Biasanya menggunakan model Eloquent.
     |
-    | If you have multiple user tables or models you may configure multiple
-    | providers to represent the model / table. These providers may then
-    | be assigned to any extra authentication guards you have defined.
-    |
-    | Supported: "database", "eloquent"
+    | Supported drivers: "eloquent", "database"
     |
     */
 
@@ -71,12 +64,11 @@ return [
         'orangtua' => [
             'driver' => 'eloquent',
             'model' => App\Models\Orangtua::class,
-        ]
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        ],
+        'nakes' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Nakes::class,
+        ],
     ],
 
     /*
@@ -84,17 +76,8 @@ return [
     | Resetting Passwords
     |--------------------------------------------------------------------------
     |
-    | These configuration options specify the behavior of Laravel's password
-    | reset functionality, including the table utilized for token storage
-    | and the user provider that is invoked to actually retrieve users.
-    |
-    | The expiry time is the number of minutes that each reset token will be
-    | considered valid. This security feature keeps tokens short-lived so
-    | they have less time to be guessed. You may change this as needed.
-    |
-    | The throttle setting is the number of seconds a user must wait before
-    | generating more password reset tokens. This prevents the user from
-    | quickly generating a very large amount of password reset tokens.
+    | Pengaturan perilaku reset password, termasuk tabel token
+    | dan lama waktu token valid.
     |
     */
 
@@ -112,9 +95,8 @@ return [
     | Password Confirmation Timeout
     |--------------------------------------------------------------------------
     |
-    | Here you may define the number of seconds before a password confirmation
-    | window expires and users are asked to re-enter their password via the
-    | confirmation screen. By default, the timeout lasts for three hours.
+    | Jumlah detik sebelum konfirmasi password kadaluarsa.
+    | Default-nya adalah 3 jam (10800 detik).
     |
     */
 

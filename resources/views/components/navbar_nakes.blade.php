@@ -42,20 +42,19 @@
         <div id="userDropdown"
           class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg border border-gray-200 z-[9999]">
           <div class="px-5 py-4 bg-gradient-to-r from-[#9fc4bb] to-[#147375] text-white rounded-t-lg">
-            <div class="font-bold text-lg">Selamat Datang Tenaga Kesehatan,</div>
+            <div class="font-bold text-lg">Selamat Datang Tenaga Kesehatan</div>
             <div class="text-sm">
-              @if(Auth::guard('')->check())
-              <p><strong>Nama:</strong> {{ Auth::guard('penyewa')->user()->nama_penyewa }}</p>
-              <p><strong>Email:</strong> {{ Auth::guard('penyewa')->user()->email }}</p>
-              <p><strong>No HP:</strong> {{ Auth::guard('penyewa')->user()->nomor_telepon }}</p>
-              @endif
-            </div>
-          </div>
+        
+            <button type="button"
+              onclick="document.getElementById('logout-form').submit();"
+              class="block w-full text-sm font-medium text-white bg-red-800 px-4 py-2 rounded text-center">
+              Keluar
+            </button>
 
-          <div class="py-2 px-2 bg-white rounded-b-lg">
-            <a href="#" class="block w-full text-sm font-medium text-white bg-blue-950 px-4 py-2 rounded mb-2 text-center">Edit Profil</a>
-            <a href="#" onclick="confirmLogout(event)"
-              class="block w-full text-sm font-medium text-white bg-red-800 px-4 py-2 rounded text-center">Keluar</a>
+            <!-- FORM LOGOUT -->
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+              @csrf
+            </form>
           </div>
         </div>
       </div>

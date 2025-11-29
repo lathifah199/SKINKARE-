@@ -10,6 +10,8 @@ use App\Http\Controllers\AnakController;
 use App\Http\Controllers\ScanController;
 use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\PertumbuhanController;
 
 Route::get('/', function () {
     return view('pages.halamanbf');
@@ -32,6 +34,9 @@ Route::get('/halaman_orangtua', [DataWaliController::class, 'halaman_orangtua'])
 Route::view('/halaman_nakes', 'pages.halaman_nakes')->name('halaman_nakes');
 Route::view('/halamanbf', 'pages.halamanbf')->name('halamanbf');
 Route::view('/pertumbuhan', 'pages.pertumbuhan')->name('pertumbuhan');
+// Daftar pertumbuhan anak
+Route::get('/pertumbuhan/{anak}', [PertumbuhanController::class, 'show'])->name('pertumbuhan.show');
+
 Route::view('/informasiortu', 'pages.informasiortu')->name('informasiortu');
 Route::view('/informasiortubf', 'pages.informasiortubf')->name('informasiortubf');
 
@@ -53,7 +58,7 @@ Route::get('/input_manual', [ScanController::class, 'inputManual'])->name('input
 Route::get('/riwayat_anak', [RiwayatController::class, 'riwayat'])->name('riwayat_anak');
 
 // ======================= DATA WALI =======================
-Route::get('/orangtua/home', [DataWaliController::class, 'index'])
+Route::get('data-wali', [DataWaliController::class, 'index'])
     ->name('Data_Wali');
 //Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali.index');
 Route::get('/data-wali/{id}', [DataWaliController::class, 'show'])->name('data-wali.show');
@@ -68,6 +73,10 @@ Route::get('/barcode/download/{id}', [BarcodeController::class, 'download'])->na
 
 // ======================= PROFIL PENGGUNA =======================
 Route::get('/profil', [DataWaliController::class, 'profil'])->name('profil');
+Route::middleware('auth:orangtua')->group(function () {
+    Route::get('/profil-orangtua', [ProfilController::class, 'index'])->name('profil.orangtua');
+    Route::post('/profil-orangtua/update', [ProfilController::class, 'update'])->name('profil.update');
+});
 
 
 

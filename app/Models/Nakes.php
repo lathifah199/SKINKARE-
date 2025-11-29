@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Nakes extends Model
+class Nakes extends Authenticatable
 {
     use Notifiable;
 
@@ -14,6 +14,8 @@ class Nakes extends Model
     public $timestamps = false;
 
     protected $fillable = ['nama_lengkap', 'email', 'kata_sandi', 'nomor_hp'];
+
+    protected $hidden = ['kata_sandi'];
 
     public function getAuthPassword()
     {
