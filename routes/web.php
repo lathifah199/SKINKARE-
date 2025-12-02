@@ -50,7 +50,8 @@ Route::get('/data-anak', [DataAnakController::class, 'index'])->name('data-anak.
 // ======================= SCAN PENGUKURAN =======================
 
 // Scan tinggi (AI)
-Route::get('/scan_tinggi/{id}', [ScanController::class, 'index'])->name('scan_tinggi');
+Route::get('/scan_tinggi/{id}', [AnakController::class, 'scanTinggi'])->name('scan_tinggi');
+
 
 // API dari AI (predict)
 Route::post('/scan/predict', [ScanController::class, 'predict'])->name('scan.predict');
