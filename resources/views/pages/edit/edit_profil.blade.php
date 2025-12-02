@@ -56,7 +56,7 @@
 
             <div class="flex justify-center pt-2 pb-2">
                 <button type="submit"
-                    class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-full px-6 py-2 text-sm transition-all shadow-md hover:shadow-lg">
+                    class="w-full sm:w-auto bg-[#53AFA2] hover:bg-emerald-600 text-white font-semibold rounded-full px-6 py-2 text-sm transition-all shadow-md hover:shadow-lg">
                     Simpan
                 </button>
             </div>
