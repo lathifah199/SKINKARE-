@@ -31,7 +31,6 @@ Route::post('/registrasi', [RegisController::class, 'registrasi'])->name('regist
 
 // ======================= HALAMAN UTAMA =======================
 Route::get('/halaman_orangtua', [DataWaliController::class, 'halaman_orangtua'])->name('halaman_orangtua');
-Route::view('/halaman_nakes', 'pages.halaman_nakes')->name('halaman_nakes');
 Route::view('/halamanbf', 'pages.halamanbf')->name('halamanbf');
 Route::view('/pertumbuhan', 'pages.pertumbuhan')->name('pertumbuhan');
 // Daftar pertumbuhan anak
@@ -49,10 +48,23 @@ Route::post('/tambah-data-anak', [AnakController::class, 'store'])->name('anak.s
 Route::get('/data-anak', [DataAnakController::class, 'index'])->name('data-anak.index');
 
 // ======================= SCAN PENGUKURAN =======================
-Route::get('/scan_tinggi', [ScanController::class, 'index'])->name('scan_tinggi');
-Route::get('/scan_berat', [ScanController::class, 'berat'])->name('scan_berat');
-Route::get('/hasil_scan', [ScanController::class, 'hasilScan'])->name('hasil_scan');
-Route::get('/input_manual', [ScanController::class, 'inputManual'])->name('input_manual');
+
+// Scan tinggi (AI)
+Route::get('/scan_tinggi/{id}', [AnakController::class, 'scanTinggi'])->name('scan_tinggi');
+
+
+// API dari AI (predict)
+Route::post('/scan/predict', [ScanController::class, 'predict'])->name('scan.predict');
+
+// Simpan tinggi hasil AI / manual
+Route::post('/scan_tinggi/{id}/store', [AnakController::class, 'storeTinggi'])->name('scan_tinggi.store');
+
+
+// ======================= INPUT BERAT  =======================
+Route::get('/input_berat/{id}', [AnakController::class, 'inputBerat'])->name('input_berat');
+// Simpan berat manual
+Route::post('/input_berat/{id}/store', [AnakController::class, 'storeBerat'])->name('input_berat.store');
+
 
 // ======================= Riwayat Anak ==================
 Route::get('/riwayat_anak', [RiwayatController::class, 'riwayat'])->name('riwayat_anak');
