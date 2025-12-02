@@ -222,7 +222,7 @@ function simpanDanLanjut() {
   }
 
   // Kirim ke backend untuk simpan
-  fetch("{{ route('scan_tinggi.store', $anak->id) }}", {
+  fetch("{{ route('scan_tinggi.store', ['id' => request()->route('id')]) }}", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
