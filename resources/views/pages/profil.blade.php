@@ -7,7 +7,7 @@
     <div class="bg-white border border-gray-200 shadow-md rounded-2xl w-full max-w-md mx-4 p-6">
         <!-- Header -->
         <div class="flex flex-col items-center border-b border-gray-200 pb-4 mb-4">
-            <div class="bg-emerald-500 text-white rounded-full p-4 mb-3">
+            <div class="bg-[#53AFA2] text-white rounded-full p-4 mb-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -41,7 +41,7 @@
         <!-- Tombol Edit -->
         <div class="flex justify-center mt-6">
             <button onclick="openEditModal()"
-                class="bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-full px-6 py-2 text-sm transition-all">
+                class="bg-[#53AFA2] hover:bg-emerald-600 text-white font-medium rounded-full px-6 py-2 text-sm transition-all">
                 Edit Profil
             </button>
         </div>
