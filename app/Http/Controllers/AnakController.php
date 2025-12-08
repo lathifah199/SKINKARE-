@@ -53,7 +53,6 @@ class AnakController extends Controller
     // ➤ SIMPAN TINGGI (SCAN AI / INPUT MANUAL)
     public function storeTinggi(Request $request, $id)
     {
-        // ✅ TAMBAHKAN LOGGING
         \Log::info('Store Tinggi Called', [
             'id' => $id,
             'request_data' => $request->all()
@@ -64,66 +63,23 @@ class AnakController extends Controller
         ]);
 
         $anak = Anak::findOrFail($id);
-        
-        \Log::info('Before Update', ['anak' => $anak->toArray()]);
-        
+
         $anak->update([
             'tinggi_badan' => $request->tinggi_badan
         ]);
-        
+
         \Log::info('After Update', ['anak' => $anak->fresh()->toArray()]);
 
         return response()->json([
             'success' => true,
             'message' => 'Tinggi berhasil disimpan',
             'tinggi' => $request->tinggi_badan,
-            'redirect_url' => route('input_berat', $anak->id)
+            'redirect_url' => route('scan.berat', $anak->id) // lanjut ke input berat
         ]);
-    }
-
-    // ➤ HALAMAN INPUT BERAT
-    public function inputBerat($id)
-    {
-        $anak = Anak::findOrFail($id);
-        return view('pages.input_berat', compact('anak'));
-    }
-
-    public function storeBerat(Request $request, $id)
-    {
-        $anak = Anak::findOrFail($id);
-
-        $request->validate([
-            'berat_badan' => 'required|numeric',
-        ]);
-
-        $anak->update([
-            'berat_badan' => $request->berat_badan,
-            'hasil_deteksi' => $this->hitungStatusGizi($request->berat_badan, $anak->tinggi_badan)
-        ]);
-
-        // Redirect ke halaman hasil atau halaman lain
-        return redirect()->route('data-anak.index')->with('success', 'Data berat badan berhasil disimpan!');
-    }
-
-
-
-    // ➤ HALAMAN HASIL DETEKSI
-    public function hasil($id)
-    {
-        $anak = Anak::findOrFail($id);
-        return view('pages.hasil_deteksi', compact('anak'));
-    }
-
-    // ➤ PERHITUNGAN IMT / STATUS GIZI
-    private function hitungStatusGizi($berat, $tinggi)
-    {
-        if (!$berat || !$tinggi) return null;
-
-        $imt = $berat / pow($tinggi / 100, 2);
-
-        if ($imt < 13) return 'Gizi Buruk';
-        elseif ($imt < 14) return 'Gizi Kurang';
-        elseif ($imt < 17) return 'Gizi Baik';
-        else return 'Gizi Lebih';
     }
 }
+//Jadi di AnakController hanya tersisa fitur:
+//tambah anak
+//simpan data awal
+//scan tinggi
+//simpan tinggi
