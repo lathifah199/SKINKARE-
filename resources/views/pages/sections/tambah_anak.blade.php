@@ -11,7 +11,8 @@
       
       <!-- Loop Data Anak -->
       @forelse ($anak as $a)
-        <div class="bg-[#E9B9C5] w-40 h-30 rounded-2xl shadow-md p-3 flex flex-col justify-between flex-shrink-0">
+       <a href="{{ route('scan.hasil', ['id' => $a->id]) }}">
+        <div class="bg-[#E9B9C5] w-40  h-[100px] rounded-2xl shadow-md p-3 flex flex-col justify-between flex-shrink-0">
           <div class="flex items-center space-x-2">
             @if ($a->foto)
               <img src="{{ asset('storage/'.$a->foto) }}" alt="Anak" class="w-10 h-10 rounded-full bg-white p-1">
@@ -23,13 +24,14 @@
               @endif
             @endif
             <div>
-              <p class="text-base font-semibold text-white">{{ $a->nama_lengkap }}</p>
-              <p class="text-xs text-white/90">
+              <p class="font-bold text-m text-white">{{ $a->nama_lengkap }}</p>
+              <p class="font-semibold text-s text-white">
                 {{ $a->umur }} {{ $a->umur > 1 ? 'Bulan' : 'Bulan' }}
               </p>
             </div>
           </div>
         </div>
+      </a>
       @empty
       @endforelse
 

@@ -67,13 +67,8 @@ Route::get('/input-berat/{id}', [ScanController::class, 'berat'])->name('scan.be
 Route::post('/input-berat/{id}/store', [ScanController::class, 'storeBerat'])->name('scan.berat.store');
 
 // Hasil deteksi (halaman hasil_deteksi)
-Route::get('/hasil/{id}', [ScanController::class, 'hasil'])->name('scan.hasil');
+Route::get('/hasil-deteksi/{id}', [ScanController::class, 'hasil'])->name('scan.hasil');
 
-// Halaman utama / form input data anak
-Route::get('/', [StuntingController::class, 'index'])->name('stunting.input');
-
-// Proses data dan tampilkan hasil deteksi
-Route::post('/deteksi', [StuntingController::class, 'deteksi'])->name('stunting.deteksi');
 // ======================= Riwayat Anak ==================
 Route::get('/riwayat_anak', [RiwayatController::class, 'riwayat'])->name('riwayat_anak');
 

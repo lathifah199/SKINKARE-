@@ -81,67 +81,50 @@ public function storeBerat(Request $request, $id)
     }
 }
 
-// ===================== HASIL DETEKSI (Z-SCORE) =====================
 public function hasil($id)
 {
     $anak = Anak::findOrFail($id);
 
     try {
-        // Kirim data ke Flask (Random Forest)
-        $response = Http::asJson()->post('http://127.0.0.1:5001/predict_rf', [
-            'umur' => (float) $anak->umur,
-            'tinggi_badan' => (float) $anak->tinggi_badan,
-            'berat_badan' => (float) $anak->berat_badan,
-            'jenis_kelamin' => $anak->jenis_kelamin,
+        $response = Http::post('http://127.0.0.1:5001/predict_rf', [
+            'umur' => $anak->umur,
+            'tinggi_badan' => $anak->tinggi_badan,
+            'berat_badan' => $anak->berat_badan,
+            'jenis_kelamin' => $anak->jenis_kelamin === 'L' ? 'laki-laki' : 'perempuan',
         ]);
 
         if ($response->failed()) {
-            // ❌ Jika Flask gagal, tetap tampilkan halaman dengan data dummy/error
-            \Log::error('Flask gagal memproses: ' . $response->body());
-            $hasil = [
-                'status' => 'Tidak dapat diproses - Server AI offline',
-                'persentase_stunting' => 0,
-                'imt' => 0,
-                'bbu' => 'Data tidak tersedia',
-                'tbu' => 'Data tidak tersedia',
-                'bbtb' => 'Data tidak tersedia',
-                'imtu' => 'Data tidak tersedia',
-                'z_bbu' => 0,
-                'z_tbu' => 0,
-                'z_bbtb' => 0,
-                'z_imtu' => 0,
-                'rekomendasi' => ['Server AI sedang offline. Silakan coba lagi nanti atau hubungi admin.']
-            ];
-            return view('pages.hasil_deteksi', compact('anak', 'hasil'))
-                   ->with('error', 'Gagal terhubung ke server AI. Menampilkan data dasar saja.');
+            return back()->with('error', 'Gagal memproses data di Flask.');
         }
 
-        $hasil = $response->json();
+        $data = $response->json();
 
-        // Simpan hasil ke DB (opsional)
-        $anak->hasil_deteksi = $hasil['status'] ?? 'Tidak diketahui';
+        $hasil     = $data['hasil'] ?? 'Tidak diketahui';
+        $status    = $data['status_prediksi'] ?? 'Tidak diketahui';
+        $risiko    = $data['risiko_persen'] ?? null;
+        $zscore    = $data['zscore'] ?? null;
+        $warna     = $data['warna_risiko'] ?? '#808080'; // ✅ Tambah ini
+        $kategori  = $data['kategori_risiko'] ?? 'Tidak diketahui'; // ✅ Dan ini
+
+        // Simpan hasil ke database
+        $anak->hasil_deteksi = $hasil;
         $anak->save();
 
-        // ✅ Kirim ke tampilan hasil_deteksi.blade
-        return view('pages.hasil_deteksi', compact('anak', 'hasil'));
+        // Kirim ke Blade
+        return view('pages.hasil_deteksi', compact(
+            'anak',
+            'hasil',
+            'data',
+            'status',
+            'risiko',
+            'zscore',
+            'warna',
+            'kategori'
+        ));
+
     } catch (\Exception $e) {
-        // Jika exception (e.g., koneksi gagal), fallback sama
         \Log::error('Gagal terhubung ke Flask: ' . $e->getMessage());
-        $hasil = [
-            'status' => 'Error koneksi',
-            'persentase_stunting' => 0,
-            'imt' => 0,
-            'bbu' => 'Error',
-            'tbu' => 'Error',
-            'bbtb' => 'Error',
-            'imtu' => 'Error',
-            'z_bbu' => 0,
-            'z_tbu' => 0,
-            'z_bbtb' => 0,
-            'z_imtu' => 0,
-            'rekomendasi' => ['Terjadi kesalahan teknis. Coba refresh halaman.']
-        ];
-        return view('pages.hasil_deteksi', compact('anak', 'hasil'))
-               ->with('error', 'Gagal terhubung ke server AI.');
+        return back()->with('error', 'Tidak dapat terhubung ke server AI.');
     }
-}}
+}
+}
