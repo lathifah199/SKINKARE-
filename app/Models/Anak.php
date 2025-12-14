@@ -31,7 +31,8 @@ class Anak extends Model
     ];
 
     public function orangtua()
-{
-    return $this->belongsTo(Orangtua::class, 'id_orangtua');
-}
+    {
+        return $this->belongsTo(Orangtua::class, 'id_orangtua');
+    }
+    
 }
