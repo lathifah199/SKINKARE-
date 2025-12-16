@@ -8,7 +8,7 @@ use App\Models\Orangtua;
 use App\Models\Nakes;
 use Illuminate\Support\Facades\Hash;
 
-class RegisController extends Controller
+class AuthController extends Controller
 {
     // =================== LOGIN VIEW ====================
     public function showLoginForm()

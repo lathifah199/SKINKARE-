@@ -2,41 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anak;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class DataAnakController extends Controller
 {
     public function index(Request $request)
+{
+    if (session('user_tipe') !== 'nakes') {
+        return redirect('/login')->with('error', 'Akses ditolak');
+    }
+
+    $idNakes = session('user_id');
+
+    $query = Anak::with('orangtua')
+                ->where('id_nakes', $idNakes);
+
+    if ($request->filled('search')) {
+        $query->where('nama_lengkap', 'like', '%' . $request->search . '%');
+    }
+
+    $dataAnak = $query->paginate(5);
+
+    return view('pages.data_anak', compact('dataAnak'));
+}
+
+    public function store(Request $request)
     {
-        // Dummy data (tidak dari database)
-    $dataDummy = collect([
-        (object) ['id_anak' => 'A001', 'nama_anak' => 'Amey'],
-    ]);
-
-
-        // Filter pencarian (jika ada)
-        $search = $request->input('search');
-        if ($search) {
-        $dataDummy = $dataDummy->filter(function ($item) use ($search) {
-            return stripos($item->nama_anak, $search) !== false;
-        });
-
-
+        // 1️⃣ Pastikan nakes login
+        if (session('user_tipe') !== 'nakes') {
+            return redirect('/login')->with('error', 'Akses ditolak');
         }
 
-        // Pagination manual (5 data per halaman)
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $perPage = 5;
-        $currentItems = $dataDummy->slice(($currentPage - 1) * $perPage, $perPage)->values();
-        $dataAnak = new LengthAwarePaginator(
-            $currentItems,
-            $dataDummy->count(),
-            $perPage,
-            $currentPage,
-            ['path' => $request->url(), 'query' => $request->query()]
-        );
+        // 2️⃣ Ambil id nakes
+        $idNakes = session('user_id');
 
-        return view('pages.data_anak', compact('dataAnak'));
+        // 3️⃣ Validasi
+        $request->validate([
+            'nama_lengkap'  => 'required|string|max:100',
+            'tgl_lahir'     => 'required|date',
+            'jenis_kelamin' => 'required',
+        ]);
+
+        // 4️⃣ Simpan data anak + id_nakes
+        Anak::create([
+            'nama_lengkap'  => $request->nama_lengkap,
+            'tgl_lahir'     => $request->tgl_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'id_nakes'      => $idNakes, // 🔑 KUNCI
+        ]);
+
+        return redirect()->route('data-anak.index')
+                         ->with('success', 'Data anak berhasil ditambahkan');
     }
 }

@@ -13,12 +13,28 @@ class Nakes extends Authenticatable
     protected $primaryKey = 'id_nakes';
     public $timestamps = false;
 
-    protected $fillable = ['nama_lengkap', 'email', 'kata_sandi', 'nomor_hp'];
+    protected $fillable = [
+        'nama_lengkap',
+        'email',
+        'kata_sandi',
+        'nomor_hp'
+    ];
 
-    protected $hidden = ['kata_sandi'];
+    protected $hidden = [
+        'kata_sandi'
+    ];
 
+    // Untuk sistem login Laravel
     public function getAuthPassword()
     {
         return $this->kata_sandi;
+    }
+
+    /**
+     * RELASI: Nakes punya banyak Anak
+     */
+    public function anaks()
+    {
+        return $this->hasMany(Anak::class, 'id_nakes', 'id_nakes');
     }
 }
