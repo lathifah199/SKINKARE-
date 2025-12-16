@@ -40,10 +40,8 @@
           <div class="px-5 py-4 bg-gradient-to-r from-[#E9B9C5] to-[#be6178] text-white rounded-t-lg">
             <div class="font-bold text-lg">Selamat Datang, </div>
             <div class="text-sm">
-              @if(Auth::guard('orangtua')->check())
-              <p><strong>Nama:</strong> {{ Auth::guard('orangtua')->user()->nama }}</p>
-              <p><strong>Email:</strong> {{ Auth::guard('orangtua')->user()->email }}</p>
-              <p><strong>No HP:</strong> {{ Auth::guard('orangtua')->user()->no_hp }}</p>
+              @if(Auth::guard('nakes')->check())
+              <p><strong>Email:</strong> {{ Auth::guard('nakes')->user()->email }}</p>
               @endif
             </div>
           </div>

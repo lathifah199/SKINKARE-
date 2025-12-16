@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anak;
+use App\Models\Orangtua;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +26,9 @@ class AnakController extends Controller
     // ➤ SIMPAN DATA AWAL ANAK
     public function store(Request $request)
     {
+        // ==========================
+        // VALIDASI DATA ANAK (WAJIB)
+        // ==========================
         $validated = $request->validate([
             'nama_lengkap'  => 'required|string|max:255',
             'jenis_kelamin' => 'required|string',
@@ -33,13 +37,46 @@ class AnakController extends Controller
             'tanggal_lahir' => 'required|date',
         ]);
 
-        // Ambil id orangtua dari session
-        $validated['id_orangtua'] = session('user_id');
+        // ==========================
+        // JIKA ORANG TUA LOGIN
+        // ==========================
+        if (Auth::guard('orangtua')->check()) {
+            $validated['id_orangtua'] = Auth::guard('orangtua')->id();
+            $validated['id_nakes'] = null;
+        }
 
-        // Buat anak baru
+        // ==========================
+        // JIKA NAKES LOGIN
+        // ==========================
+        if (Auth::guard('nakes')->check()) {
+
+            // VALIDASI DATA ORANG TUA
+            $request->validate([
+                'ortu_nama'     => 'required|string|max:255',
+                'ortu_no_hp'    => 'required|string|max:20',
+                'domisili' => 'required|string|max:255',
+            ]);
+
+            // SIMPAN ORANG TUA
+            $orangtua = Orangtua::create([
+                'nama'     => $request->ortu_nama,
+                'no_hp'    => $request->ortu_no_hp,
+                'domisili' => $request->domisili,
+            ]);
+
+            // HUBUNGKAN KE ANAK
+            $validated['id_orangtua'] = $orangtua->id_orangtua; // ⬅️ INI PENTING
+            $validated['id_nakes'] = Auth::guard('nakes')->id();
+        }
+
+        // ==========================
+        // SIMPAN DATA ANAK
+        // ==========================
         $anak = Anak::create($validated);
 
-        // Lanjut ke langkah scan tinggi
+        // ==========================
+        // REDIRECT KE SCAN
+        // ==========================
         return redirect()->route('scan_tinggi', $anak->id);
     }
 
@@ -50,14 +87,9 @@ class AnakController extends Controller
         return view('pages.scan_tinggi', compact('anak'));
     }
 
-    // ➤ SIMPAN TINGGI (SCAN AI / INPUT MANUAL)
+    // ➤ SIMPAN TINGGI
     public function storeTinggi(Request $request, $id)
     {
-        \Log::info('Store Tinggi Called', [
-            'id' => $id,
-            'request_data' => $request->all()
-        ]);
-
         $request->validate([
             'tinggi_badan' => 'required|numeric'
         ]);
@@ -68,18 +100,10 @@ class AnakController extends Controller
             'tinggi_badan' => $request->tinggi_badan
         ]);
 
-        \Log::info('After Update', ['anak' => $anak->fresh()->toArray()]);
-
         return response()->json([
             'success' => true,
             'message' => 'Tinggi berhasil disimpan',
-            'tinggi' => $request->tinggi_badan,
-            'redirect_url' => route('scan.berat', $anak->id) // lanjut ke input berat
+            'redirect_url' => route('scan.berat', $anak->id)
         ]);
     }
 }
-//Jadi di AnakController hanya tersisa fitur:
-//tambah anak
-//simpan data awal
-//scan tinggi
-//simpan tinggi

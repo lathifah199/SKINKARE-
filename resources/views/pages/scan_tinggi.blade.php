@@ -57,7 +57,7 @@
         <div class="flex justify-center gap-3">
           <button onclick="simpanDanLanjut()" 
                   class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-full">
-              Scan Berat Badan
+              Input Berat Badan
           </button>
 
           <button onclick="switchToManual()" 
@@ -79,13 +79,13 @@
 
           <div class="flex justify-center gap-3">
 
-              <!-- SIMPAN (warna emerald sama persis seperti di popup utama) -->
+              <!-- SIMPAN -->
               <button onclick="saveManual()" 
                   class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-full">
                   Simpan
               </button>
 
-              <!-- KEMBALI (warna pink sama persis seperti tombol Input Manual) -->
+              <!-- KEMBALI -->
               <button onclick="switchToHasil()" 
                   class="bg-pink-300 hover:bg-pink-400 text-white px-4 py-2 rounded-full">
                   Kembali

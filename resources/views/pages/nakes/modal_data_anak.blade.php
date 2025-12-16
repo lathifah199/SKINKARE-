@@ -76,7 +76,7 @@
                         </svg>
                     </div>
                     <div class="flex-1">
-                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Umur</p>
+                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Umur (Bulan) </p>
                         <p class="text-sm font-medium text-gray-900 mt-1" id="detailUmur">-</p>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                     </div>
                     <div class="flex-1">
                         <p class="text-xs font-semibold text-gray-600 uppercase tracking-wide">Anak Dari</p>
-                        <p class="text-sm font-medium text-gray-900 mt-1" id="detailAnakDari">-</p>
+                        <p class="text-sm font-medium text-gray-900 mt-1" id="detailNamaOrtu">-</p>
                     </div>
                 </div>
 
@@ -143,7 +143,7 @@
                     </div>
                     <div class="flex-1">
                         <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Alamat</p>
-                        <p class="text-sm font-medium text-gray-900 mt-1" id="detailAlamat">-</p>
+                        <p class="text-sm font-medium text-gray-900 mt-1" id="detailAlamatOrtu">-</p>
                     </div>
                 </div>
             </div>
@@ -163,122 +163,63 @@
     </div>
 </div>
 
-<!-- Script dengan Data Dummy -->
+
 <script>
-// Data dummy untuk pop-up
-const dummyData = {
-    jenisKelamin: ['Laki-laki', 'Perempuan'],
-    umur: ['3 tahun', '4 tahun', '5 tahun', '6 tahun', '7 tahun', '8 tahun'],
-    tinggiBadan: ['95 cm', '100 cm', '105 cm', '110 cm', '115 cm', '120 cm', '125 cm'],
-    beratBadan: ['12 kg', '14 kg', '16 kg', '18 kg', '20 kg', '22 kg', '24 kg'],
-    status: ['Normal', 'beresiko Stunting 5%'],
-    orangTua: [
-        'Kharina'
-    ],
-    alamat: [
-        'Permata laguna blok A9 no 9'
-    ]
-};
-
-function getRandomItem(array) {
-    return array[Math.floor(Math.random() * array.length)];
-}
-
-function lihatDetail(nama, id) {
+function lihatDetail(button) {
     const modal = document.getElementById('modalDetail');
     const modalContent = document.getElementById('modalContent');
     const loadingState = document.getElementById('loadingState');
     const dataContent = document.getElementById('dataContent');
-    
-    // Show modal with animation
+
+    // ambil data dari DB (via data-attribute)
+    const nama = button.dataset.nama;
+    const jk = button.dataset.jenisKelamin;
+    const umur = button.dataset.umur;
+    const tb = button.dataset.tb;
+    const bb = button.dataset.bb;
+    const status = button.dataset.status;
+    const namaOrtu = button.dataset.namaOrtu;
+    const alamatOrtu = button.dataset.alamatOrtu;
+
+    // tampilkan modal
     modal.classList.remove('hidden');
     modal.offsetHeight;
+
     setTimeout(() => {
         modalContent.classList.remove('scale-95', 'opacity-0');
         modalContent.classList.add('scale-100', 'opacity-100');
     }, 10);
-    
-    // Show loading state
+
     loadingState.classList.remove('hidden');
     dataContent.classList.add('hidden');
-    
-    // Simulate loading delay
+
     setTimeout(() => {
-        // Hide loading, show data
         loadingState.classList.add('hidden');
         dataContent.classList.remove('hidden');
-        
-        // Generate dummy data
-        const dummyJenisKelamin = getRandomItem(dummyData.jenisKelamin);
-        const dummyUmur = getRandomItem(dummyData.umur);
-        const dummyTB = getRandomItem(dummyData.tinggiBadan);
-        const dummyBB = getRandomItem(dummyData.beratBadan);
-        const dummyStatus = getRandomItem(dummyData.status);
-        const dummyOrangTua = getRandomItem(dummyData.orangTua);
-        const dummyAlamat = getRandomItem(dummyData.alamat);
-        
-        // Populate with dummy data
-        document.getElementById('detailNama').textContent = nama;
-        document.getElementById('detailJenisKelamin').textContent = dummyJenisKelamin;
-        document.getElementById('detailUmur').textContent = dummyUmur;
-        document.getElementById('detailTB').textContent = dummyTB;
-        document.getElementById('detailBB').textContent = dummyBB;
-        document.getElementById('detailStatus').textContent = dummyStatus;
-        document.getElementById('detailAnakDari').textContent = dummyOrangTua;
-        document.getElementById('detailAlamat').textContent = dummyAlamat;
-        
-        // Show notification
-        showNotification('Data berhasil dimuat (Demo Mode)', 'success');
-    }, 800);
+
+        document.getElementById('detailNama').textContent = nama ?? '-';
+        document.getElementById('detailJenisKelamin').textContent = jk === 'P' ? 'Perempuan' : 'Laki-laki';
+        document.getElementById('detailUmur').textContent = umur ?? '-';
+        document.getElementById('detailTB').textContent = tb ? tb + ' cm' : '-';
+        document.getElementById('detailBB').textContent = bb ? bb + ' kg' : '-';
+        document.getElementById('detailStatus').textContent = status ?? '-';
+        document.getElementById('detailNamaOrtu').textContent = namaOrtu ?? '-';
+        document.getElementById('detailAlamatOrtu').textContent = alamatOrtu ?? '-';
+
+    }, 300);
 }
 
 function tutupModal() {
     const modal = document.getElementById('modalDetail');
     const modalContent = document.getElementById('modalContent');
-    
-    // Animate out
+
     modalContent.classList.remove('scale-100', 'opacity-100');
     modalContent.classList.add('scale-95', 'opacity-0');
-    
+
     setTimeout(() => {
         modal.classList.add('hidden');
     }, 300);
 }
-
-function showNotification(message, type = 'info') {
-    const notificationDiv = document.createElement('div');
-    const bgColor = type === 'error' ? 'bg-red-500' : type === 'success' ? 'bg-green-500' : 'bg-pink-500';
-    
-    notificationDiv.className = `fixed top-20 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-[10000] animate-bounce`;
-    notificationDiv.innerHTML = `
-        <div class="flex items-center space-x-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            <span>${message}</span>
-        </div>
-    `;
-    document.body.appendChild(notificationDiv);
-    
-    setTimeout(() => {
-        notificationDiv.remove();
-    }, 3000);
-}
-
-// Close modal with Escape key
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        const modal = document.getElementById('modalDetail');
-        if (!modal.classList.contains('hidden')) {
-            tutupModal();
-        }
-    }
-});
-
-// Prevent modal from closing when clicking inside modal content
-document.getElementById('modalContent')?.addEventListener('click', function(event) {
-    event.stopPropagation();
-});
 </script>
 
 <style>

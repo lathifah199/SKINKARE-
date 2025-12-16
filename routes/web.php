@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DataWaliController;
 use App\Http\Controllers\DataAnakController;
@@ -19,32 +19,48 @@ Route::get('/', function () {
 });
 
 // ======================= AUTH =======================
-Route::get ('/login', [RegisController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [RegisController::class, 'login'])->name('login.submit');
-Route::post('/logout', [RegisController::class, 'logout'])->name('logout');
-Route::get('/lupa_sandi', [RegisController::class, 'showLupaSandiForm'])->name('lupa_sandi');
-Route::post('/lupa_sandi', [RegisController::class, 'showLupaSandi'])->name('lupaSandi.submit');
+Route::get('/registrasi', [AuthController::class, 'showRegisterForm'])->name('register.form');
+Route::post('/registrasi', [AuthController::class, 'registrasi'])->name('registrasi');
+Route::get ('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/lupa_sandi', [AuthController::class, 'showLupaSandiForm'])->name('lupa_sandi');
+Route::post('/lupa_sandi', [AuthController::class, 'showLupaSandi'])->name('lupaSandi.submit');
 
 //Route::get('/halaman_nakes', [NakesController::class, 'index'])->name('halaman_nakes');
 
-Route::get('/registrasi', [RegisController::class, 'showRegisterForm'])->name('register.form');
-Route::post('/registrasi', [RegisController::class, 'registrasi'])->name('registrasi');
+// ======================= NAKES =======================
+Route::group([], function () {
+
+    Route::view('/halaman_nakes', 'pages.halaman_nakes')
+        ->name('halaman_nakes');
+
+});
+
+// ======================= DATA ANAK =======================
+
+// form tambah data (ortu & nakes)
+Route::get('/tambah-data-anak', [AnakController::class, 'create'])
+    ->name('tambah.data.anak');
+
+// simpan data anak + ortu (1 pintu saja)
+Route::post('/tambah-data-anak', [AnakController::class, 'store'])
+    ->name('anak.store');
+
+// tabel data anak (nakes)
+Route::get('/data-anak', [DataAnakController::class, 'index'])
+    ->name('data-anak.index');
 
 // ======================= HALAMAN UTAMA =======================
 Route::get('/halaman_orangtua', [DataWaliController::class, 'halaman_orangtua'])->name('halaman_orangtua');
-Route::view('/halaman_nakes', 'pages.halaman_nakes')->name('halaman_nakes');
 Route::view('/halamanbf', 'pages.halamanbf')->name('halamanbf');
 Route::view('/pertumbuhan', 'pages.pertumbuhan')->name('pertumbuhan');
-// Daftar pertumbuhan anak
+
+//======================= Daftar pertumbuhan anak =======================
 Route::get('/pertumbuhan/{anak}', [PertumbuhanController::class, 'show'])->name('pertumbuhan.show');
 
 Route::view('/informasiortu', 'pages.informasiortu')->name('informasiortu');
 Route::view('/informasiortubf', 'pages.informasiortubf')->name('informasiortubf');
-
-// ======================= DATA ANAK =======================
-// Form input data anak (awal sebelum pengukuran)
-Route::get('/tambah-data-anak', [AnakController::class, 'create'])->name('tambah.data.anak');
-Route::post('/tambah-data-anak', [AnakController::class, 'store'])->name('anak.store');
 
 // Tabel daftar anak
 Route::get('/data-anak', [DataAnakController::class, 'index'])->name('data-anak.index');

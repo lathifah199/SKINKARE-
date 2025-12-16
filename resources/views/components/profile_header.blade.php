@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <div class="bg-[#E9B9C5] p-4 flex items-center justify-between rounded-b-3xl shadow"> <!-- Kiri: Tombol Back + Profil Anak --> 
   <div class="flex items-center space-x-3"> <!-- Tombol Back --> 
     <button> </button>
@@ -5,44 +6,56 @@
       <button onclick="window.history.back()" class="focus:outline-none">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700 hover:text-gray-900 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
+          
+<!-- === NAVBAR PROFIL === -->
+<div class="bg-[#E9B9C5] p-4 flex items-center justify-between rounded-b-3xl shadow">
+  <!-- Kiri: Tombol Back + Profil Anak -->
+  <div class="flex items-center space-x-3">
+    <!-- Tombol Back -->
+    <button>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
 
-      <!-- Foto & Info Anak -->
-      @if(isset($anak))
-        <img src="{{ asset('images/anakpr.png') }}" alt="Foto Anak" class="w-10 h-10 rounded-full object-cover">
-        <div>
-          <h2 class="font-semibold text-gray-800">{{ $anak->nama_lengkap }}</h2>
-          <p class="text-gray-600 text-sm">{{ $anak->umur }} Bulan</p>
-        </div>
-      @else
-        <div class="text-gray-500 text-sm">Tidak ada data anak</div>
-      @endif
+    <!-- Foto & Info Anak -->
+    <img src="{{ asset('images/anakpr.png') }}" alt="Foto Anak" class="w-10 h-10 rounded-full">
+    <div>
+      <p class="text-base font-semibold text-white">
+        {{ $a->nama_lengkap }}
+      </p>
+            
+      <p class="text-xs text-white/90">
+        {{ $a->umur }} {{ $a->umur > 1 ? 'Bulan' : 'Bulan' }}
+      </p>
     </div>
+  </div>
 
-    <!-- Kanan: Burger + Profil -->
-    <div class="flex items-center space-x-3">
-      <!-- Burger Menu -->
-      <button id="burger-btn" class="md:hidden text-gray-700 focus:outline-none">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-          class="w-7 h-7">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16" />
+  <!-- Kanan: Burger + Profil -->
+  <div class="flex items-center space-x-3">
+    <!-- Burger Menu -->
+    <button id="burger-btn" class="md:hidden text-gray-700 focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        class="w-7 h-7">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Profil Dropdown -->
+    <div class="relative">
+      <!-- Tombol Profil -->
+      <button id="dropdownUserButton" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#555"
+          class="bi bi-person-circle" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+          <path fill-rule="evenodd"
+            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 
+              11.37C3.242 11.226 4.805 10 8 10s4.757 
+              1.225 5.468 2.37A7 7 0 0 0 8 1" />
         </svg>
       </button>
-
-      <!-- Profil Dropdown -->
-      <div class="relative">
-        <button id="dropdownUserButton" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300">
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#555"
-            class="bi bi-person-circle" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-            <path fill-rule="evenodd"
-              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 
-                11.37C3.242 11.226 4.805 10 8 10s4.757 
-                1.225 5.468 2.37A7 7 0 0 0 8 1" />
-          </svg>
-        </button>
 
         <!-- Isi Dropdown Profil -->
         <div id="userDropdown"
