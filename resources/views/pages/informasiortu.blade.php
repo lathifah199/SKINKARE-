@@ -1,5 +1,7 @@
 @php
-    $layout = Auth::check() ? 'layouts.app' : 'layouts.appbf';
+    $layout = (Auth::guard('orangtua')->check() || Auth::guard('nakes')->check())
+        ? 'layouts.app'
+        : 'layouts.appbf';
 @endphp
 @extends($layout)
 @section('title', 'Informasi untuk Orang Tua')

@@ -12,17 +12,6 @@
         </div>
         <h2 class="text-2xl font-bold text-center mb-1 text-gray-800">Selamat Datang di SKINKARE</h2>
         <h6 class="text-sm font-medium text-center mb-8 text-gray-700">Silakan melakukan login terlebih dahulu</h6>
-            {{-- Pesan Error --}}
-            @if($errors->any())
-                <div class="mb-4 bg-red-50 border border-red-300 text-red-700 px-5 py-3 rounded-xl shadow-sm">
-                    <ul class="text-sm space-y-1">
-                        @foreach ($errors->all() as $error)
-                            <li><i class="fa-solid fa-circle-exclamation mr-2"></i>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
             {{-- Pesan Sukses --}}
             @if(session('success'))
                 <div id="popupSuccess" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
@@ -34,42 +23,53 @@
                         </button>
                     </div>
                 </div>
+                <script>
+                    setTimeout(() => {
+                        const popup = document.getElementById('popupSuccess');
+                        if (popup) popup.remove();
+                    }, 2000);
+                </script>
             @endif
-{{-- Pesan Error Login --}}
-@if(session('error'))
-    <div id="popupError" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
-        <div class="bg-white text-red-700 px-6 py-3 rounded-full shadow-lg flex items-center gap-3 animate-fadeIn border border-red-400">
-            <i class="fa-solid fa-circle-xmark text-red-500 text-lg"></i>
-            <span class="text-sm">{{ session('error') }}</span>
-            <button onclick="document.getElementById('popupError').remove()" class="ml-2 text-gray-500 hover:text-gray-700 text-sm">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-    </div>
-@endif
+            {{-- Pesan Error Login --}}
+            @if(session('error'))
+                <div id="popupError" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+                    <div class="bg-white text-red-700 px-6 py-3 rounded-full shadow-lg flex items-center gap-3 animate-fadeIn border border-red-400">
+                        <i class="fa-solid fa-circle-xmark text-red-500 text-lg"></i>
+                        <span class="text-sm">{{ session('error') }}</span>
+                        <button onclick="document.getElementById('popupError').remove()" class="ml-2 text-gray-500 hover:text-gray-700 text-sm">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            @endif
 
             {{-- Form Login --}}
-            <form method="POST" action="{{ route('login.submit') }}">
+            <form method="POST" action="{{ route('login.submit') }}" id="loginForm">
                 @csrf
                 {{-- Email Pengguna --}}
-                <div class="mb-6">
-                        
+                <div class="mb-6">   
                     <div class="relative">
-                        <input type="email" id="email" name="email" placeholder="Masukkan Email" class="w-full py-3 pl-5 pr-12 rounded-full bg-white text-black placeholder-gray-400 border border-gray-300 focus:border-[#53AFA2] focus:ring-2 focus:ring-[#53AFA2]">
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Masukkan Email" class="w-full py-3 pl-5 pr-12 rounded-full bg-white text-black placeholder-gray-400 border border-gray-300 focus:border-[#53AFA2] focus:ring-2 focus:ring-[#53AFA2] @error('email') border-red-400 @enderror">
                         <i class='bx bxs-user absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 text-xl'></i>
                     </div>
+                    @error('email')
+                        <p class="text-xs text-red-500 mt-1 ml-4">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mb-6">
                     <div class="relative">
                         <input type="password" id="kata_sandi" name="kata_sandi" placeholder="Masukkan kata sandi"
-                            class="w-full py-3 pl-5 pr-12 rounded-full bg-white text-black placeholder-gray-400 border border-gray-300 focus:border-[#53AFA2] focus:ring-2 focus:ring-[#53AFA2]">
+                            class="w-full py-3 pl-5 pr-12 rounded-full bg-white text-black placeholder-gray-400 border border-gray-300 focus:border-[#53AFA2] focus:ring-2 focus:ring-[#53AFA2] @error('kata_sandi') border-red-400 @enderror">
                             
                         {{-- Tombol lihat sandi --}}
-                        <button type="button" id="togglePassword" class="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 hover:text-[#53AFA2] focus:outline-none">
+                        <button type="button" id="togglePassword" class="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 hover:text-[#53AFA2] focus:outline-none ">
                             <i id="eyeIcon" class='bx bx-show text-2xl'></i>
                         </button>
                     </div>
+                    @error('kata_sandi')
+                        <p class="text-xs text-red-500 mt-1 ml-4">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <button type="submit" class="w-1/2 mx-auto flex justify-center text-xl bg-[#53AFA2] hover:bg-[#469488] text-white font-semibold py-3 rounded-full transition-all duration-300 shadow-md hover:shadow-lg">
@@ -88,7 +88,7 @@
             <!-- Overlay Loading -->
             <div id="loadingOverlay" 
                 class="absolute inset-0 bg-[#E9B9C5] backdrop-blur-md flex flex-col items-center justify-center 
-                    rounded-2xl shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
+                    rounded-2xl shadow-lg opacity-0 pointer-events-none transition-opacity duration-40">
                 
                 <!-- Spinner elegan -->
                 <div class="relative w-12 h-12 mb-4">
@@ -98,66 +98,73 @@
 
                 <p class="text-black font-semibold text-lg">Memproses login</p>
             </div>
-    </div>
-</div> </div>
+        </div>
+    </div> 
+</div>
 
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
     // Auto-hide popup success
-    setTimeout(() => {
-        const popup = document.getElementById('popupSuccess');
-        if (popup) popup.remove();
-    }, 3000);
-// Auto-hide popup error
-setTimeout(() => {
+    const popupSuccess = document.getElementById('popupSuccess');
+    if (popupSuccess) {
+        setTimeout(() => {
+            popupSuccess.remove();
+        }, 3000);
+    }
+
+    // Auto-hide popup error
     const popupError = document.getElementById('popupError');
-    if (popupError) popupError.remove();
-}, 3000);
-    // Fungsi toggle password
+    if (popupError) {
+        setTimeout(() => {
+            popupError.remove();
+        }, 3000);
+    }
+
+    // Toggle password visibility
     const togglePassword = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('kata_sandi');
     const eyeIcon = document.getElementById('eyeIcon');
 
-    togglePassword.addEventListener('click', () => {
-        const isPassword = passwordInput.type === 'password';
-        passwordInput.type = isPassword ? 'text' : 'password';
-        
-        // Ganti ikon mata
-        if (isPassword) {
-            eyeIcon.classList.remove('bx-show');
-            eyeIcon.classList.add('bx-hide');
-        } else {
-            eyeIcon.classList.remove('bx-hide');
-            eyeIcon.classList.add('bx-show');
-        }
-    });
-</script>
-<script>
+    if (togglePassword) {
+        togglePassword.addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            
+            if (isPassword) {
+                eyeIcon.classList.remove('bx-show');
+                eyeIcon.classList.add('bx-hide');
+            } else {
+                eyeIcon.classList.remove('bx-hide');
+                eyeIcon.classList.add('bx-show');
+            }
+        });
+    }
 
-    // Ambil elemen
-    const form = document.querySelector('form');
+    // Loading overlay on form submit (hanya jika tidak ada error validasi)
+    const loginForm = document.getElementById('loginForm');
     const loadingOverlay = document.getElementById('loadingOverlay');
-
-    form.addEventListener('submit', function(e) {
-        // Tahan dulu submit agar animasi sempat muncul
-        e.preventDefault();
-
-        // Sembunyikan form dengan animasi
-        form.classList.add('opacity-0', 'transition-opacity', 'duration-300');
-
-        // Tampilkan overlay setelah sedikit delay
-        setTimeout(() => {
-            loadingOverlay.classList.remove('pointer-events-none');
-            loadingOverlay.classList.add('opacity-100');
-        }, 50);
-
-        // Lanjutkan submit setelah 700ms
-        setTimeout(() => {
-            form.submit();
-        }, 150);
-    });
     
-</script>
+    @if(!$errors->any())
+    if (loginForm && loadingOverlay) {
+        loginForm.addEventListener('submit', function(e) {
+            // Tampilkan loading overlay
+            loadingOverlay.classList.remove('pointer-events-none', 'opacity-0');
+            loadingOverlay.classList.add('opacity-100');
+        });
+    }
+    @endif
 
+    // Jika ada session success, tampilkan popup dulu baru loading
+    @if(session('success'))
+        setTimeout(() => {
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('pointer-events-none', 'opacity-0');
+                loadingOverlay.classList.add('opacity-100');
+            }
+        }, 700);
+    @endif
+});
+</script>
 
 @endsection

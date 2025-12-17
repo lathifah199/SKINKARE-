@@ -37,12 +37,9 @@
         <div id="userDropdown"
           class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg border border-gray-200 z-[9999]">
           <div class="px-5 py-4 bg-gradient-to-r from-[#E9B9C5] to-[#be6178] text-white rounded-t-lg">
-            <div class="font-bold text-lg">Selamat Datang, </div>
-            <div class="text-sm">
+            <div class="font-bold text-lg">Selamat Datang,
               @if(Auth::guard('orangtua')->check())
-              <p><strong>Nama:</strong> {{ Auth::guard('orangtua')->user()->nama }}</p>
-              <p><strong>Email:</strong> {{ Auth::guard('orangtua')->user()->email }}</p>
-              <p><strong>No HP:</strong> {{ Auth::guard('orangtua')->user()->no_hp }}</p>
+                  {{ Auth::guard('orangtua')->user()->nama }}
               @endif
             </div>
           </div>

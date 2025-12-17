@@ -24,41 +24,46 @@ class AuthController extends Controller
 
     // =================== LOGIN PROCESS ====================
   public function login(Request $request)
-{
-    $request->validate([
-        'email' => 'required',
-        'kata_sandi' => 'required|string',
-    ]);
-
-    // Login Orangtua
-    $orangtua = Orangtua::where('email', $request->email)->first();
-    if ($orangtua && Hash::check($request->kata_sandi, $orangtua->kata_sandi)) {
-        session([
-            'user_id' => $orangtua->id_orangtua,
-            'user_nama' => $orangtua->nama,
-            'user_tipe' => 'orangtua',
+    {
+        $request->validate([
+            'email' => 'required',
+            'kata_sandi' => 'required|string',
         ]);
-        Auth::guard('orangtua')->login($orangtua);
-        $request->session()->regenerate();
-        return redirect()->route('halaman_orangtua');
-    }
 
-    // Login Nakes
-    $nakes = Nakes::where('email', $request->email)->first();
-    if ($nakes && Hash::check($request->kata_sandi, $nakes->kata_sandi)) {
-        session([
-            'user_id' => $nakes->id_nakes,
-            'user_nama' => $nakes->nama_lengkap,
-            'user_tipe' => 'nakes',
-        ]);
-        Auth::guard('nakes')->login($nakes);
-        $request->session()->regenerate();
-        return redirect()->route('halaman_nakes')->with('success', 'Login berhasil!');
-    }
+        // Login Orangtua
+        $orangtua = Orangtua::where('email', $request->email)->first();
+        if ($orangtua && Hash::check($request->kata_sandi, $orangtua->kata_sandi)) {
+            session([
+                'user_id' => $orangtua->id_orangtua,
+                'user_nama' => $orangtua->nama,
+                'user_tipe' => 'orangtua',
+            ]);
+            Auth::guard('orangtua')->login($orangtua);
+            $request->session()->regenerate();
+            return redirect()->route('halaman_orangtua')
+                ->with('success', 'Login anda berhasil');
+        }
 
-    // ⚠ Jika gagal login, kirim error
-    return back()->with('error', 'Email atau kata sandi salah')->withInput();
-}
+        // Login Nakes
+        $nakes = Nakes::where('email', $request->email)->first();
+        if ($nakes && Hash::check($request->kata_sandi, $nakes->kata_sandi)) {
+            session([
+                'user_id' => $nakes->id_nakes,
+                'user_nama' => $nakes->nama_lengkap,
+                'user_tipe' => 'nakes',
+            ]);
+            Auth::guard('nakes')->login($nakes);
+            $request->session()->regenerate();
+            return redirect()->route('halaman_nakes')->with('success', 'Login berhasil!');
+        }
+
+        // ⚠ Jika gagal login, kirim error
+        return back()->withErrors([
+            'email' => 'Email yang dimasukkan salah',
+            'kata_sandi' => 'Kata sandi anda salah',
+        ])->withInput();
+
+    }
 
     // =================== LUPA SANDI VIEW ====================
     public function showLupaSandiForm()

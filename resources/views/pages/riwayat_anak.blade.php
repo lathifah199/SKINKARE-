@@ -9,43 +9,69 @@
     <div class="w-full max-w-4xl text-left mb-4">
         <h2 class="text-lg font-semibold text-gray-800 border-b pb-2">Riwayat</h2>
     </div>
-
     {{-- Tabel Riwayat --}}
-    <div class="w-full max-w-4xl ">
-        <table class="w-full text-sm text-left border border-gray-300 border-collapse table-fixed">
-            <thead class="bg-gray-100">
-                <tr>
-                    <th class="w-1/2 px-4 py-2 border border-gray-400 text-gray-700 font-medium text-center">Nama Anak</th>
-                    <th class="w-1/2 px-4 py-2 border border-gray-400 text-gray-700 font-medium text-center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($anak as $item)
-                <tr class="border-t">
-                    <td class="px-4 py-2 text-gray-800">{{ $item->nama_lengkap }}</td>
-                    <td class="px-4 py-2 text-center">
-                        @php
-                            $tanggal = $item->created_at?->format("Y-m-d H:i:s") ?? "Tanggal Tidak Tersedia";
-                        @endphp
-                        <button onclick="openDetailModal(
-                            '{{$item->nama_lengkap}}',
-                            '{{$item->umur}}',
-                            '{{$item->created_at?->format("Y-m-d H:i:s") ?? "Tanggal Tidak Tersedia" }}',
-                            '{{$item->tinggi_badan}}',
-                            '{{$item->berat_badan}}',
-                            '{{$item->hasil_deteksi}}'                          
-                            )" class="text-white bg-pink-300 hover:bg-pink-400 focus:ring-4 focus:ring-pink-200 font-medium rounded-full text-xs px-4 py-2 transition">
+    <div class="w-full flex justify-center">
+        <div class="w-full max-w-4xl overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase">
+                            Nama Anak
+                        </th>
+                        <th class="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase">
+                            Aksi
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @forelse ($anak as $item)
+                    <tr class="hover:bg-gray-50">
+                        {{-- Nama Anak --}}
+                        <td class="px-6 py-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="h-10 w-10 rounded-full bg-[#F3C0CD] flex items-center justify-center text-white font-semibold">
+                                    {{ strtoupper(substr($item->nama_lengkap, 0, 1)) }}
+                                </div>
+                                <div class="text-sm font-medium text-gray-900">
+                                    {{ $item->nama_lengkap }}
+                                </div>
+                            </div>
+                        </td>
+
+                        {{-- Aksi --}}
+                        <td class="px-6 py-4 text-center">
+                            <button
+                                onclick="openDetailModal(
+                                    '{{$item->nama_lengkap}}',
+                                    '{{$item->created_at?->format("Y-m-d H:i:s") ?? "Tanggal Tidak Tersedia"}}',
+                                    '{{$item->tinggi_badan}}',
+                                    '{{$item->berat_badan}}',
+                                    '{{$item->hasil_deteksi}}'
+                                )"
+                                class="inline-flex items-center px-4 py-2 bg-[#F3C0CD] hover:bg-[#E8A8B8] text-white text-sm rounded-lg shadow">
                                 Lihat Detail
-                        </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                            </button>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="2" class="px-6 py-12 text-center text-gray-500">
+                            Tidak ada riwayat pemeriksaan
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="mt-4">
+
+    @if ($anak->hasPages())
+    <div class="mt-6 flex justify-center">
         {{ $anak->links() }}
     </div>
+    @endif
+
 </div>
 {{-- MODAL DETAIL --}}
 <div id="detailModal" tabindex="-1" aria-hidden="true" 
@@ -53,25 +79,18 @@
     <div class="relative p-4 w-full max-w-md">
         <div class="relative bg-white rounded-lg shadow">
             {{-- Header Modal --}}
-            <div class="flex items-center justify-between p-4 border-b rounded-t">
-                <h3 class="text-lg font-semibold text-gray-900">Riwayat Pemeriksaan</h3>
+            <div class="flex items-center justify-center p-4 border-b rounded-t">
+                <h3 class="text-lg font-semibold text-gray-900 text-center ">
+                    Riwayat Pemeriksaan <span id="detailNamaHeader"></span>
+                </h3>
+
                 <button type="button" onclick="closeDetailModal()" 
-                        class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center">
+                        class="absolute right-4 text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center">
                     ✕
                 </button>
             </div>
             {{-- Body Modal --}}
             <div class="p-5">
-                <table class="w-full text-sm">
-                    <tr>
-                        <td class="font-semibold w-32">Nama</td>
-                        <td>: <span id="detailNama" class="text-gray-700"></span></td>
-                    </tr>
-                    <tr>
-                        <td class="font-semibold">Umur</td>
-                        <td>: <span id="detailUmur" class="text-gray-700"></span>bulan</td>
-                    </tr>
-                </table>
                 <div class="p-5 space-y-3">
                     <table class="w-full text-sm border border-gray-300">
                         <tr class="border">
@@ -105,10 +124,9 @@
 </div>
 @push('scripts')
 <script>
-    function openDetailModal(nama, umur, created_at, tinggi, berat, hasil_deteksi) {
+    function openDetailModal(nama, created_at, tinggi, berat, hasil_deteksi) {
         console.log("MODAL DIPANGGIL");
-        document.getElementById('detailNama').innerText = nama;
-        document.getElementById('detailUmur').innerText = umur;
+        document.getElementById('detailNamaHeader').innerText = nama;
         document.getElementById('detailTanggal').innerText = created_at;
         document.getElementById('detailTinggi').innerText = tinggi;
         document.getElementById('detailBerat').innerText = berat;

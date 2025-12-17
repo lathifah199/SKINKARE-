@@ -79,12 +79,12 @@
                         </svg>
                     </div>
                     <div class="flex-1">
-                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Alamat</p>
-                        <p class="text-sm font-medium text-gray-900 mt-1" id="detailAlamat">-</p>
+                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Domisili</p>
+                        <p class="text-sm font-medium text-gray-900 mt-1" id="detailDomisili">-</p>
                     </div>
                 </div>
 
-                <!-- Wali Dari -->
+                <!-- Wali Dari 
                 <div class="flex items-start space-x-3 p-3 bg-teal-50 rounded-lg border border-teal-100">
                     <div class="flex-shrink-0 mt-1">
                         <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,7 +155,7 @@ function lihatDetail(nama, id) {
                 document.getElementById('detailNama').textContent = data.nama ?? '-';
                 document.getElementById('detailEmail').textContent = data.email ?? '-';
                 document.getElementById('detailNoWa').textContent = data.no_hp ?? '-';
-                document.getElementById('detailAlamat').textContent = data.alamat ?? '-';
+                document.getElementById('detailDomisili').textContent = data.domisili ?? '-';
 
                 // Jika ada relasi anak
                 let waliDari = '-';
@@ -165,11 +165,7 @@ function lihatDetail(nama, id) {
                 document.getElementById('detailWaliDari').textContent = waliDari;
 
                 showNotification('Data berhasil dimuat', 'success');
-            })
-            .catch(error => {
-                console.error(error);
-                loadingState.classList.add('hidden');
-                showNotification('Gagal memuat data', 'error');
+        
             });
 
     }, 800);
