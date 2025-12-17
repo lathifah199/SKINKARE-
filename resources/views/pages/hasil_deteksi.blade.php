@@ -64,7 +64,7 @@
                class="bg-[#7DDCD3] hover:bg-[#6bc6bf] text-white font-semibold p-3 rounded-full shadow text-center transition">
                 Download Barcode
             </a>
-            <a href=""
+            <a href="{{ route('halaman_orangtua') }}"
                class="bg-[#E984A7] hover:bg-[#d97298] text-white font-semibold p-3 rounded-full shadow text-center transition">
                Kembali
             </a>
