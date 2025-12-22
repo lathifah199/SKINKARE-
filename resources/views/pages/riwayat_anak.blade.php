@@ -3,11 +3,11 @@
 @section('title', 'Riwayat')
 
 @section('content')
-<div class="min-h-[calc(100vh-160px)] bg-white px-4 py-6">
+<div class="min-h-[calc(100vh-160px)] bg-white px-4 py-6 mt-20">
 
     {{-- Header --}}
-    <div class="w-full max-w-4xl text-left mb-4">
-        <h2 class="text-lg font-semibold text-gray-800 border-b pb-2">Riwayat</h2>
+<div class="w-full max-w-4xl text-left mb-4 ">
+        <h2 class="text-lg font-semibold text-gray-800 text-center border-b pb-2">Riwayat Pemeriksaan</h2>
     </div>
     {{-- Tabel Riwayat --}}
     <div class="w-full flex justify-center">
@@ -25,39 +25,47 @@
                 </thead>
 
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @forelse ($anak as $item)
-                    <tr class="hover:bg-gray-50">
-                        {{-- Nama Anak --}}
-                        <td class="px-6 py-4">
-                            <div class="flex items-center space-x-3">
-                                <div class="h-10 w-10 rounded-full bg-[#F3C0CD] flex items-center justify-center text-white font-semibold">
-                                    {{ strtoupper(substr($item->nama_lengkap, 0, 1)) }}
-                                </div>
-                                <div class="text-sm font-medium text-gray-900">
-                                    {{ $item->nama_lengkap }}
-                                </div>
-                            </div>
-                        </td>
+                    @forelse ($anak as $a)
+                        @forelse ($a->pemeriksaan as $p)
+                            <tr class="hover:bg-gray-50">
+                                {{-- Nama Anak --}}
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="h-10 w-10 rounded-full bg-[#F3C0CD] flex items-center justify-center text-white font-semibold">
+                                            {{ strtoupper(substr($a->nama_lengkap, 0, 1)) }}
+                                        </div>
+                                        <div class="text-sm font-medium text-gray-900">
+                                            {{ $a->nama_lengkap }}
+                                        </div>
+                                    </div>
+                                </td>
 
-                        {{-- Aksi --}}
-                        <td class="px-6 py-4 text-center">
-                            <button
-                                onclick="openDetailModal(
-                                    '{{$item->nama_lengkap}}',
-                                    '{{$item->created_at?->format("Y-m-d H:i:s") ?? "Tanggal Tidak Tersedia"}}',
-                                    '{{$item->tinggi_badan}}',
-                                    '{{$item->berat_badan}}',
-                                    '{{$item->hasil_deteksi}}'
-                                )"
-                                class="inline-flex items-center px-4 py-2 bg-[#F3C0CD] hover:bg-[#E8A8B8] text-white text-sm rounded-lg shadow">
-                                Lihat Detail
-                            </button>
-                        </td>
-                    </tr>
+                                {{-- Aksi --}}
+                                <td class="px-6 py-4 text-center">
+                                    <button
+                                        onclick="openDetailModal(
+                                            '{{$a->nama_lengkap}}',
+                                            '{{$p->tanggal_pemeriksaan}}',
+                                            '{{$p->tinggi_badan}}',
+                                            '{{$p->berat_badan}}',
+                                            '{{ $p->hasilDeteksi->kategori_risiko ?? 'Belum ada hasil' }}'
+            )"
+                                        class="inline-flex items-center px-4 py-2 bg-[#F3C0CD] hover:bg-[#E8A8B8] text-white text-sm rounded-lg shadow">
+                                        Lihat Detail
+                                    </button>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="2" class="px-6 py-12 text-center text-gray-500">
+                                    Belum ada pemeriksaan untuk {{ $a->nama_lengkap }}
+                                </td>
+                            </tr>
+                        @endforelse
                     @empty
                     <tr>
-                        <td colspan="2" class="px-6 py-12 text-center text-gray-500">
-                            Tidak ada riwayat pemeriksaan
+                        <td colspan="3" class="px-6 py-12 text-center text-gray-500">
+                            Tidak ada data anak
                         </td>
                     </tr>
                     @endforelse
@@ -106,7 +114,7 @@
                             <td class="px-3 py-2" id="detailBerat"></td>
                         </tr>
                         <tr class="border">
-                            <td class="font-semibold px-3 py-2">Status Gizi</td>
+                            <td class="font-semibold px-3 py-2">Status beresiko </td>
                             <td class="px-3 py-2" id="detailStatus"></td>
                         </tr>
                     </table>
@@ -124,13 +132,13 @@
 </div>
 @push('scripts')
 <script>
-    function openDetailModal(nama, created_at, tinggi, berat, hasil_deteksi) {
+    function openDetailModal(nama, created_at, tinggi, berat, kategori_risiko) {
         console.log("MODAL DIPANGGIL");
         document.getElementById('detailNamaHeader').innerText = nama;
         document.getElementById('detailTanggal').innerText = created_at;
-        document.getElementById('detailTinggi').innerText = tinggi;
-        document.getElementById('detailBerat').innerText = berat;
-        document.getElementById('detailStatus').innerHTML = hasil_deteksi.replace(/\n/g, '<br>');
+        document.getElementById('detailTinggi').innerText = tinggi + 'cm';
+        document.getElementById('detailBerat').innerText = berat + 'kg';
+        document.getElementById('detailStatus').innerText = kategori_risiko;
 
         document.getElementById('detailModal').classList.remove('hidden');
         document.body.classList.add('overflow-hidden'); // biar ga bisa scroll pas modal buka

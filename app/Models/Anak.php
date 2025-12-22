@@ -19,11 +19,9 @@ class Anak extends Model
         'umur',
         'tempat_lahir',
         'tanggal_lahir',
-        'tinggi_badan',
-        'berat_badan',
-        'hasil_deteksi',
+        'umur',
+        'domisili',
         'nama_wali',
-        'alamat',
         'foto',
 
         // foreign key
@@ -42,4 +40,12 @@ class Anak extends Model
     {
         return $this->belongsTo(Nakes::class, 'id_nakes', 'id_nakes');
     }
+    // Relasi: 1 anak bisa punya banyak pemeriksaan
+    public function pemeriksaan()
+    {
+        return $this->hasMany(Pemeriksaan::class, 'id', 'id');
+        // kolom foreign di pemeriksaan: id (FK)
+        // kolom lokal di anaks: id
+    }
+    
 }

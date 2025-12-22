@@ -16,8 +16,9 @@ if not os.path.exists(file_path):
 
 df = pd.read_excel(file_path, sheet_name='DataInput')
 
-# Bersihkan dan siapkan data
-df['Jenis_Kelamin'] = df['Jenis_Kelamin'].map({'Laki-laki': 1, 'Perempuan': 0})
+# Bersihkan data
+df['Status_Stunting'] = df['Status_Stunting'].astype(str).str.strip().str.title()
+df['Jenis_Kelamin'] = df['Jenis_Kelamin'].map({'Laki-Laki': 1, 'Laki-laki': 1, 'Perempuan': 0})
 for col in ['Usia_Bulan', 'Jenis_Kelamin', 'Tinggi_Badan_cm', 'Berat_Badan_kg']:
     df[col] = pd.to_numeric(df[col], errors='coerce')
 df = df.dropna(subset=['Usia_Bulan', 'Jenis_Kelamin', 'Tinggi_Badan_cm', 'Berat_Badan_kg'])
@@ -30,7 +31,12 @@ le = LabelEncoder()
 y_encoded = le.fit_transform(y)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.2, random_state=42)
-model = RandomForestClassifier(n_estimators=200, max_depth=10, random_state=42)
+model = RandomForestClassifier(
+    n_estimators=200,
+    max_depth=10,
+    class_weight='balanced',
+    random_state=42
+)
 model.fit(X_train, y_train)
 
 akurasi = accuracy_score(y_test, model.predict(X_test)) * 100
@@ -42,11 +48,8 @@ joblib.dump(le, 'label_encoder.pkl')
 # ===================== 3️⃣ Baca Tabel WHO Z-Score =====================
 z_laki = pd.read_excel(file_path, sheet_name='Anak Laki-laki', skiprows=2)
 z_perempuan = pd.read_excel(file_path, sheet_name='Anak Perempuan', skiprows=2)
-
 for zdf in [z_laki, z_perempuan]:
     zdf.rename(columns=lambda c: str(c).strip(), inplace=True)
-print("📘 Kolom sheet Laki-laki:", list(z_laki.columns))
-print("📘 Kolom sheet Perempuan:", list(z_perempuan.columns))
 
 # ===================== 4️⃣ Hitung Z-Score Berdasarkan WHO =====================
 def hitung_zscore(umur, tinggi, jenis_kelamin):
@@ -69,6 +72,7 @@ def hitung_zscore(umur, tinggi, jenis_kelamin):
 
     tinggi = float(tinggi)
 
+    # Jika ekstrem
     if tinggi <= batas[-3]:
         return -3.5
     elif tinggi >= batas[3]:
@@ -84,55 +88,70 @@ def hitung_zscore(umur, tinggi, jenis_kelamin):
 
     return None
 
-# ===================== 5️⃣ Konversi Z-Score → Risiko =====================
-def zscore_to_risk(z):
+# ===================== 5️⃣ Interpretasi Z-Score =====================
+def interpretasi_zscore(z):
     if z is None:
-        return 0, "Tidak Diketahui"
+        return "Tidak Diketahui", 0, "Tidak diketahui"
     if z >= -1:
-        return 20, "Normal"
+        return "Normal", 10, "Pertumbuhan anak sesuai standar WHO."
     elif z >= -2:
-        return 45, "Mulai Berisiko"
+        return "Beresiko", 35, "Anak mulai berisiko stunting, pantau asupan gizi dan pertumbuhan."
     elif z >= -3:
-        return 70, "Berisiko Tinggi"
+        return "Stunting", 65, "Anak tergolong stunting. Perlu peningkatan gizi dan konsultasi ke tenaga kesehatan."
     else:
-        return 90, "Sangat Berisiko"
+        return "Stunting Berat", 90, "Anak mengalami stunting berat. Segera bawa ke fasilitas kesehatan."
 
 # ===================== 6️⃣ Fungsi Saran Otomatis =====================
-def get_saran_otomatis(pred_label, z, risiko):
-    pred_label = pred_label.lower()
-
-    if 'normal' in pred_label:
-        kategori = "Normal"
-        warna = "#7DDCD3"  # Tosca pastel
+def get_saran_otomatis(status, z, risiko):
+    if status == "Normal":
+        warna = "#7DDCD3"
         saran = (
-            f"Risiko Stunting: {risiko:.1f}% ({kategori}).\n"
+            f"Risiko Stunting: {risiko:.1f}% (Normal).\n"
             f"Nilai Z-Score: {z}.\n\n"
             "Pertumbuhan anak berada dalam kategori normal. "
-            "Pertahankan pola makan bergizi seimbang dengan karbohidrat, protein, sayur, dan buah. "
-            "Lakukan pemantauan tinggi dan berat badan secara rutin di Posyandu."
+            "Pertahankan pola makan bergizi seimbang dengan protein hewani, "
+            "sayur, dan buah. "
+            "Lakukan pemantauan tinggi dan berat badan secara rutin di Posyandu setiap bulan."
         )
 
-    elif 'stunting' in pred_label:
-        kategori = "Beresiko"
-        warna = "#F2A5C4"  # Pink lembut
+    elif status == "Mulai Berisiko":
+        warna = "#FFD580"
         saran = (
-            f"Risiko Stunting: {risiko:.1f}% ({kategori}).\n"
+            f"Risiko Stunting: {risiko:.1f}% (Mulai Berisiko).\n"
             f"Nilai Z-Score: {z}.\n\n"
-            "Anak menunjukkan potensi keterlambatan pertumbuhan. "
-            "Perbaiki asupan gizi harian dengan menambah protein hewani (ikan, ayam, telur) "
-            "dan sayur serta buah. "
-            "Konsultasikan dengan tenaga kesehatan untuk panduan pencegahan stunting."
+            "Anak mulai menunjukkan penurunan pertumbuhan. "
+            "Perlu konseling gizi dasar di Posyandu, "
+            "pemberian PMT (Pemberian Makanan Tambahan), dan "
+            "pemantauan ulang tinggi badan setelah 1 bulan."
+        )
+
+    elif status == "Stunting":
+        warna = "#F2A5C4"
+        saran = (
+            f"Risiko Stunting: {risiko:.1f}% (Stunting).\n"
+            f"Nilai Z-Score: {z}.\n\n"
+            "Anak termasuk stunting. "
+            "Segera rujuk ke **Puskesmas** untuk pemeriksaan lanjutan, "
+            "evaluasi *red flags*, dan penilaian penyebab gizi buruk. "
+            "Dokter akan menentukan apakah perlu dirujuk ke RSUD."
+        )
+
+    elif status == "Stunting Berat":
+        warna = "#F26B6B"
+        saran = (
+            f"Risiko Stunting: {risiko:.1f}% (Stunting Berat).\n"
+            f"Nilai Z-Score: {z}.\n\n"
+            "Anak mengalami stunting berat. "
+            "Segera rujuk ke **RSUD** untuk evaluasi menyeluruh, "
+            "pemeriksaan red flags, dan pemberian **PKMK (Perbaikan Kualitas Makanan Khusus)**. "
+            "Pendampingan gizi dan pemeriksaan lanjutan sangat diperlukan."
         )
 
     else:
-        kategori = "Tidak Diketahui"
         warna = "#B0B0B0"
-        saran = (
-            "Data tidak dapat diinterpretasikan dengan pasti. "
-            "Pastikan data tinggi, berat, dan usia anak sudah benar, lalu ulangi deteksi."
-        )
+        saran = "Data tidak dapat diinterpretasikan. Pastikan data tinggi, berat, dan usia anak benar."
 
-    return saran, kategori, warna
+    return saran, warna
 
 # ===================== 7️⃣ Endpoint Prediksi =====================
 @app.route('/predict_rf', methods=['POST'])
@@ -147,7 +166,11 @@ def predict_rf():
         if not all([umur, tinggi, berat, jenis_kelamin]):
             return jsonify({'error': 'Data input tidak lengkap!'}), 400
 
-        # --- Prediksi Random Forest ---
+        # --- Hitung Z-Score WHO ---
+        z = hitung_zscore(umur, tinggi, jenis_kelamin)
+        status_z, risiko, penjelasan = interpretasi_zscore(z)
+
+        # --- Prediksi pendukung dari model Random Forest ---
         jk_encoded = 1 if 'laki' in jenis_kelamin else 0
         data_baru = pd.DataFrame({
             'Usia_Bulan': [umur],
@@ -155,34 +178,33 @@ def predict_rf():
             'Tinggi_Badan_cm': [tinggi],
             'Berat_Badan_kg': [berat]
         })
-
         probas = model.predict_proba(data_baru)[0]
         pred_idx = probas.argmax()
         pred_label = le.inverse_transform([pred_idx])[0]
         prob_rf = probas[pred_idx] * 100
 
-        # --- Hitung Z-Score WHO ---
-        z = hitung_zscore(umur, tinggi, jenis_kelamin)
-        risiko, kategori_z = zscore_to_risk(z)
+        # --- Gunakan Z-Score sebagai penentu utama ---
+        final_status = status_z
 
-        # --- Ambil saran gabungan RF + Z-Score ---
-        saran, kategori, warna = get_saran_otomatis(pred_label, z, risiko)
+        # --- Ambil saran berdasarkan hasil akhir ---
+        saran, warna = get_saran_otomatis(final_status, z, risiko)
 
-        # --- Log hasil ke terminal (biar bisa dicek langsung) ---
-        print(f"👶 Umur: {umur} bln | JK: {jenis_kelamin} | TB: {tinggi} cm | RF: {pred_label} | Z: {z} | Risiko: {risiko}%")
+        print(f"[DEBUG] Umur: {umur} | JK: {jenis_kelamin} | TB: {tinggi} | Z: {z} | Status Z: {final_status} | RF: {pred_label} ({prob_rf:.1f}%)")
 
         return jsonify({
-            'status_prediksi': pred_label,
+            'status_prediksi': final_status,
             'zscore': z,
-            'risiko_persen': round(risiko, 2),
-            'kategori_risiko': kategori,
+            'risiko_persen': round(risiko, 1),
+            'hasil': saran,
             'warna_risiko': warna,
-            'hasil': saran
+            'penjelasan': penjelasan,
+            'model_rf': pred_label,
+            'probabilitas_rf': round(prob_rf, 1)
         })
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    print("🚀 Flask API SKINKARE - Random Forest + WHO Z-Score aktif (versi sopan & profesional)")
+    print("🚀 Flask API SKINKARE aktif (Z-Score sebagai prioritas utama)")
     app.run(debug=True, host='127.0.0.1', port=5001)

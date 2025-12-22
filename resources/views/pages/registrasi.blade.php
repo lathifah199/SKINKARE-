@@ -6,8 +6,8 @@
 <!-- Success Popup -->
 @if(session('success'))
 <!-- Modal Popup -->
-<div id="popupSuccess" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-    <div class="bg-white rounded-xl p-6 shadow-lg w-96 text-center">
+<div id="popupSuccess" class="flex justify-center items-start min-h-screen pt-10">
+    <div class="bg-white rounded-xl p-6 shadow-lg text-center">
         <h2 class="text-xl font-semibold text-gray-800 mb-2">Registrasi Berhasil!</h2>
         <p class="text-gray-600 mb-4">{{ session('success') }}</p>
         <button onclick="document.getElementById('popupSuccess').remove()" class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">
@@ -17,21 +17,26 @@
 </div>
 @endif
 
-<!-- Form Registrasi -->
-<form action="{{ route('registrasi') }}" method="POST" class="bg-[#E9B9C5]/75 backdrop-blur-md p-8 text-center rounded-2xl shadow-lg w-full max-w-md">
-  @csrf
-  <!-- Error Popup -->
-  @if ($errors->any())
-    <div class="bg-red-200 text-red-800 p-2 mb-4 rounded">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>- {{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-  @endif
-  <h2 class="text-2xl font-bold text-gray-800 mb-6">Registrasi</h2>
+<!-- Container Tengah -->
+<div class="min-h-screen flex items-start justify-center bg-cover bg-center px-4 pt-4 sm:pt-8 md:pt-12" style="background-image: url('/img/bg-login.jpg');">
+    <div class="relative bg-[#E9B9C5]/75 backdrop-blur-md p-8 rounded-2xl shadow-lg w-full max-w-md sm:max-w-lg mt-[-1rem] sm:mt-[-0.5rem] md:mt-0">
+      
+        <!-- Form Registrasi -->
+        <form action="{{ route('registrasi') }}" method="POST">
+            @csrf
 
+            <!-- Error Popup -->
+            @if ($errors->any())
+                <div class="bg-red-200 text-red-800 p-2 mb-4 rounded text-left">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>- {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <h2 class="text-2xl font-semibold text-gray-800 text-center mb-6">Registrasi Akun</h2>
   <!-- Nama Pengguna -->
   <div class="mb-4 relative">
     <input type="text" name="nama" value="{{ old('nama') }}" placeholder="Nama Lengkap"

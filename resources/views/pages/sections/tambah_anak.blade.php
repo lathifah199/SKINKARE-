@@ -10,7 +10,16 @@
 
       <!-- Loop Data Anak -->
       @forelse ($anak as $a)
-        <a href="{{ route('scan.hasil', ['id' => $a->id]) }}" class="flex-shrink-0">
+                @php
+            $pemeriksaanTerakhir = $a->pemeriksaan()->latest()->first();
+        @endphp
+
+        @if ($pemeriksaanTerakhir)
+          <a href="{{ route('scan.hasil', ['id' => $pemeriksaanTerakhir->id_pemeriksaan]) }}" class="flex-shrink-0">
+        @else
+          <a href="{{ route('scan_tinggi', ['id' => $a->id]) }}" class="flex-shrink-0">
+        @endif
+
           <div class="bg-[#E9B9C5] w-40 h-[100px] rounded-2xl shadow-md p-3 flex flex-col justify-between">
             <div class="flex items-center space-x-2">
               @if ($a->foto)

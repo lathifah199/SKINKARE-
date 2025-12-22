@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anak;
+use App\Models\Pemeriksaan;
 use App\Models\Orangtua;
+use App\Models\HasilDeteksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AnakController extends Controller
 {
@@ -26,9 +29,6 @@ class AnakController extends Controller
     // ➤ SIMPAN DATA AWAL ANAK
     public function store(Request $request)
     {
-        // ==========================
-        // VALIDASI DATA ANAK (WAJIB)
-        // ==========================
         $validated = $request->validate([
             'nama_lengkap'  => 'required|string|max:255',
             'jenis_kelamin' => 'required|string',
@@ -37,46 +37,30 @@ class AnakController extends Controller
             'tanggal_lahir' => 'required|date',
         ]);
 
-        // ==========================
-        // JIKA ORANG TUA LOGIN
-        // ==========================
         if (Auth::guard('orangtua')->check()) {
             $validated['id_orangtua'] = Auth::guard('orangtua')->id();
             $validated['id_nakes'] = null;
         }
 
-        // ==========================
-        // JIKA NAKES LOGIN
-        // ==========================
         if (Auth::guard('nakes')->check()) {
-
-            // VALIDASI DATA ORANG TUA
             $request->validate([
-                'ortu_nama'     => 'required|string|max:255',
-                'ortu_no_hp'    => 'required|string|max:20',
-                'domisili' => 'required|string|max:255',
+                'ortu_nama'  => 'required|string|max:255',
+                'ortu_no_hp' => 'required|string|max:20',
+                'domisili'   => 'required|string|max:255',
             ]);
 
-            // SIMPAN ORANG TUA
             $orangtua = Orangtua::create([
                 'nama'     => $request->ortu_nama,
                 'no_hp'    => $request->ortu_no_hp,
                 'domisili' => $request->domisili,
             ]);
 
-            // HUBUNGKAN KE ANAK
-            $validated['id_orangtua'] = $orangtua->id_orangtua; // ⬅️ INI PENTING
+            $validated['id_orangtua'] = $orangtua->id_orangtua;
             $validated['id_nakes'] = Auth::guard('nakes')->id();
         }
 
-        // ==========================
-        // SIMPAN DATA ANAK
-        // ==========================
         $anak = Anak::create($validated);
 
-        // ==========================
-        // REDIRECT KE SCAN
-        // ==========================
         return redirect()->route('scan_tinggi', $anak->id);
     }
 
@@ -87,23 +71,36 @@ class AnakController extends Controller
         return view('pages.scan_tinggi', compact('anak'));
     }
 
-    // ➤ SIMPAN TINGGI
+    // ➤ SIMPAN TINGGI (masuk ke tabel pemeriksaan)
     public function storeTinggi(Request $request, $id)
     {
         $request->validate([
-            'tinggi_badan' => 'required|numeric'
+            'tinggi_badan' => 'required|numeric',
         ]);
 
-        $anak = Anak::findOrFail($id);
+        try {
+            $anak = Anak::findOrFail($id);
 
-        $anak->update([
-            'tinggi_badan' => $request->tinggi_badan
-        ]);
+            // Simpan ke tabel pemeriksaan
+            $pemeriksaan = Pemeriksaan::create([
+                'id' => $anak->id, // FK ke tabel anaks
+                'tanggal_pemeriksaan' => now(),
+                'tinggi_badan' => $request->tinggi_badan,
+                'berat_badan' => null, // nanti diisi di langkah berikutnya
+                'metode_input' => $request->metode_input ?? 'otomatis',
+            ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Tinggi berhasil disimpan',
-            'redirect_url' => route('scan.berat', $anak->id)
-        ]);
+            Log::info('Data pemeriksaan berhasil disimpan', $pemeriksaan->toArray());
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Tinggi berhasil disimpan',
+                'redirect_url' => route('scan.berat', $pemeriksaan->id_pemeriksaan),
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Gagal menyimpan pemeriksaan: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Gagal menyimpan data'], 500);
+        }
     }
 }
