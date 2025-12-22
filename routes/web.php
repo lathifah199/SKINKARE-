@@ -86,7 +86,7 @@ Route::post('/input-berat/{id}/store', [ScanController::class, 'storeBerat'])->n
 Route::get('/hasil-deteksi/{id}', [ScanController::class, 'hasil'])->name('scan.hasil');
 
 // ======================= Riwayat Anak ==================
-Route::get('/riwayat_anak', [RiwayatController::class, 'riwayat'])->name('riwayat_anak');
+Route::get('/riwayat_anak', [RiwayatController::class, 'riwayat'])->name('riwayat.anak');
 
 //======================= DATA WALI =======================
 Route::get('/data-wali', [DataWaliController::class, 'index'])->name('Data_Wali');
@@ -114,4 +114,6 @@ Route::get('/download-laporan/{id}', [HasilDeteksiController::class, 'downloadLa
 Route::get('/SKINKARE', function () {
     return view('pages.splash');
 });
+Route::get('/barcode/{id}', [BarcodeController::class, 'showBarcode'])->name('barcode.show');
+Route::get('/barcode/download/{id}', [BarcodeController::class, 'download'])->name('barcode.download');
 

@@ -11,9 +11,9 @@ class RiwayatController extends Controller
     {
         $ortu = Auth::guard('orangtua')->user();
         $id_orangtua = $ortu->id_orangtua;
-        $anak = Anak::where('id_orangtua',$id_orangtua)
-                ->orderBy('created_at', 'desc')
-                ->paginate(3);
+        $anak = Anak::with(['pemeriksaan.hasilDeteksi'])
+            ->where('id_orangtua', $id_orangtua)
+            ->paginate(5);
         return view('pages.riwayat_anak', compact('anak'));
     }
     public function detail($id)

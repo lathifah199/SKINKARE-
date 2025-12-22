@@ -19,25 +19,24 @@
             Masukkan berat badan anak secara manual.
         </p>
 
-        <form method="POST" action="{{ route('scan.berat.store', $anak->id) }}">
+<form method="POST" action="{{ route('scan.berat.store', $pemeriksaan->id_pemeriksaan) }}">
     @csrf
-            <input type="number" name="berat_badan"
-                   class="w-full border border-gray-300 rounded-lg px-4 py-3 text-center text-lg mb-6 focus:ring-2 focus:ring-pink-300"
-                   placeholder="contoh: 12.5" required>
+    <input type="number" name="berat_badan"
+           class="w-full border border-gray-300 rounded-lg px-4 py-3 text-center text-lg mb-6 focus:ring-2 focus:ring-pink-300"
+           placeholder="contoh: 12.5" required>
 
-            <div class="flex justify-center gap-4">
-                <button type="submit"
-                    class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-full shadow-md">
-                    Simpan
-                </button>
+    <div class="flex justify-center gap-4">
+        <button type="submit"
+            class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-full shadow-md">
+            Simpan
+        </button>
 
-                <a href="{{ route('scan_tinggi', $anak->id) }}"
-                   class="bg-pink-300 hover:bg-pink-400 text-white px-6 py-3 rounded-full shadow-md">
-                    Kembali
-                </a>
-            </div>
-        </form>
-
+        <a href="{{ route('scan_tinggi', $anak->id) }}"
+           class="bg-pink-300 hover:bg-pink-400 text-white px-6 py-3 rounded-full shadow-md">
+            Kembali
+        </a>
     </div>
+</form>
+</div>
 </div>
 @endsection

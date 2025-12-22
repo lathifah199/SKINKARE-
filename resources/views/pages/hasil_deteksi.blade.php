@@ -17,36 +17,41 @@
                 <p><strong>Nama</strong></p><p>: {{ $anak->nama_lengkap }}</p>
                 <p><strong>Jenis Kelamin</strong></p><p>: {{ $anak->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</p>
                 <p><strong>Umur</strong></p><p>: {{ $anak->umur }} bulan</p>
-                <p><strong>Tinggi Badan</strong></p><p>: {{ number_format($anak->tinggi_badan, 1) }} cm</p>
-                <p><strong>Berat Badan</strong></p><p>: {{ number_format($anak->berat_badan, 1) }} kg</p>
+                <p><strong>Tinggi Badan</strong></p><p>: {{ number_format($pemeriksaan->tinggi_badan, 1) }} cm</p>
+                <p><strong>Berat Badan</strong></p><p>: {{ number_format($pemeriksaan->berat_badan, 1) }} kg</p>
             </div>
         </div>
 
-        <!-- Hasil Analisis -->
-        <div class="text-center mb-6">
-            <h3 class="text-xl font-semibold text-[#E573A8] mb-2">Hasil Analisis</h3>
-            <div class="bg-gradient-to-r from-[#D8F3F1] to-[#FFE5EE] rounded-2xl shadow p-6">
-                <p class="text-gray-700 text-sm mb-2">
-                    Status: <span class="font-semibold">{{ $status }}</span>
-                </p>
-                <p class="text-gray-700 text-sm mb-2">
-                    Z-Score: <span class="font-semibold">{{ $zscore }}</span>
-                </p>
-                <p class="text-gray-700 text-sm">
-                    Risiko Stunting:
-                    <span class="font-bold text-lg" style="color: {{ $warna }}">{{ $risiko }}%</span>
-                    <span class="text-sm text-gray-600">({{ $kategori }})</span>
-                </p>
-            </div>
-        </div>
+<!-- Hasil Analisis -->
+<div class="text-center mb-6">
+    <h3 class="text-xl font-semibold text-[#E573A8] mb-2">Hasil Analisis</h3>
+    <div class="bg-gradient-to-r from-[#D8F3F1] to-[#FFE5EE] rounded-2xl shadow p-6">
+        <p class="text-gray-700 text-sm mb-2">
+            Status: <span class="font-semibold">{{ $hasil->status_prediksi ?? 'Tidak diketahui' }}</span>
+        </p>
+        <p class="text-gray-700 text-sm mb-2">
+            Z-Score: <span class="font-semibold">{{ $hasil->zscore ?? '-' }}</span>
+        </p>
+        <p class="text-gray-700 text-sm">
+            Risiko Stunting:
+            <span class="font-bold text-lg" style="color: {{ $hasil->warna_risiko ?? '#808080' }}">
+                {{ $hasil->risiko_persen ?? 0 }}%
+            </span>
+            <span class="text-sm text-gray-600">
+                ({{ $hasil->kategori_risiko ?? 'Tidak diketahui' }})
+            </span>
+        </p>
+    </div>
+</div>
 
-        <!-- Interpretasi -->
-        <div class="bg-gradient-to-r from-[#FFE6EE] to-[#D8F3F1] rounded-2xl shadow-md p-5 mb-8">
-            <h4 class="font-semibold text-gray-700 text-base mb-2">Rekomendasi Gizi & Pencegahan:</h4>
-            <div class="bg-white rounded-xl p-4 text-sm text-gray-700 leading-relaxed">
-                {{ $hasil ?? 'Belum ada hasil interpretasi.' }}
-            </div>
-        </div>
+<!-- Interpretasi -->
+<div class="bg-gradient-to-r from-[#FFE6EE] to-[#D8F3F1] rounded-2xl shadow-md p-5 mb-8">
+    <h4 class="font-semibold text-gray-700 text-base mb-2">Rekomendasi Gizi & Pencegahan:</h4>
+    <div class="bg-white rounded-xl p-4 text-sm text-gray-700 leading-relaxed">
+        {!! nl2br(e($hasil->hasil ?? 'Belum ada hasil interpretasi.')) !!}
+    </div>
+</div>
+
 <!-- Grafik Z-Score -->
 <div class="bg-[#B9E9DD]/20 shadow-xl rounded-3xl p-8 mt-10 w-full max-w-3xl border border-pink-100">
     <h3 class="text-xl font-semibold text-pink-500 text-center mb-4">
@@ -60,7 +65,7 @@
 
         <!-- Tombol -->
         <div class="flex flex-col sm:flex-row mt-10 gap-4 w-full justify-center ">
-            <a href="{{ route('barcode.download', $anak->id) }}" 
+            <a href="{{ route('barcode.show', $anak->id) }}"
                class="bg-[#7DDCD3] hover:bg-[#6bc6bf] text-white font-semibold p-3 rounded-full shadow text-center transition">
                 Download Barcode
             </a>
@@ -91,7 +96,8 @@ const sdPlus3_vals  = [57, 75, 89, 101, 110, 116, 122];
 const pair = (xArr, yArr) => xArr.map((x,i)=>({x,y:yArr[i]}));
 
 const umurAnak = {{ $anak->umur }};
-const tinggiAnak = {{ $anak->tinggi_badan }};
+const tinggiAnak = {{ $pemeriksaan->tinggi_badan }};
+
 
 new Chart(ctx, {
     type: 'line',
