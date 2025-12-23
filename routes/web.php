@@ -108,8 +108,8 @@ Route::middleware('auth:orangtua')->group(function () {
 });
 
 // ======================= KONSULTASI DOKTER & LAPORAN =======================
-Route::get('/konsultasi/{id}', [HasilDeteksiController::class, 'konsultasi'])->name('konsultasi');
-Route::get('/download-laporan/{id}', [HasilDeteksiController::class, 'downloadLaporan'])->name('download.laporan');
+//Route::get('/konsultasi/{id}', [HasilDeteksiController::class, 'konsultasi'])->name('konsultasi');
+//Route::get('/download-laporan/{id}', [HasilDeteksiController::class, 'downloadLaporan'])->name('download.laporan');
 
 Route::get('/SKINKARE', function () {
     return view('pages.splash');

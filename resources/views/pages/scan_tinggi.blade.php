@@ -139,8 +139,20 @@
 
       <div id="modeHasil">
         <p class="text-gray-800 mb-4">Hasil Scan Tinggi anak anda adalah:</p>
-        <input id="popupInput" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 text-center font-bold text-xl">
-
+        <div class="relative mb-4">
+          <input
+            id="popupInput"
+            type="text"
+            readonly
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-center font-bold text-xl pr-12"
+          >
+          <span
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-lg"
+          >
+            cm
+          </span>
+        </div>
+          
         <p class="text-gray-700 mb-4">Apakah anda ingin melakukan Input manual?</p>
 
         <div class="flex justify-center gap-3">

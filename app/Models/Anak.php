@@ -47,5 +47,10 @@ class Anak extends Model
         // kolom foreign di pemeriksaan: id (FK)
         // kolom lokal di anaks: id
     }
-    
+
+    public function hasilDeteksi()
+    {
+        return $this->hasMany(HasilDeteksi::class, 'id', 'id');
+    }
+
 }

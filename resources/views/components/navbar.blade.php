@@ -1,18 +1,18 @@
-<nav class="fixed top-0 left-0 w-full bg-[#E9B9C5] shadow-md z-[1000]">
+<nav class="fixed top-0 left-0 w-full bg-[#E9B9C5] shadow-md z-[1000] pointer-events-auto">
   <div class="flex items-center justify-between px-4 sm:px-6 h-16">
     <!-- Logo -->
-    <div class="flex items-center space-x-2">
-      <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-[45px] w-auto">
-        <h1 class="text-white font-bold text-xl sm:text-2xl tracking-wider drop-shadow-sm">
+    <div class="flex items-center gap-2 min-w-0">
+      <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-9 sm:h-11 w-auto shrink-0">
+        <h1 class="text-white font-bold text-base sm:text-xl tracking-wide truncate">
           SKINKARE
         </h1>
     </div>
 
     <!-- Menu Desktop -->
     <div class="hidden md:flex text-white items-center space-x-20">
-      <a href="halaman_orangtua" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Beranda</a>
-      <a href="pertumbuhan" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Pertumbuhan Anak</a>
-      <a href="informasiortu" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Informasi Kesehatan</a>
+      <a href="{{ route('halaman_orangtua') }}" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Beranda</a>
+      <!--<a href="{{ route('pertumbuhan') }}" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Pertumbuhan Anak</a>-->
+      <a href="{{ route('informasiortu') }}" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Informasi Kesehatan</a>
     </div>
 
     <!-- Burger + Profil -->
@@ -73,9 +73,9 @@
       <button id="close-sidebar" class="text-white text-2xl font-bold">&times;</button>
     </div>
     <nav class="flex flex-col space-y-4 mt-4 px-6">
-      <a href="halaman_orangtua" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Beranda</a>
-      <a href="pertumbuhan" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Pertumbuhan Anak</a>
-      <a href="informasiortu" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Informasi Kesehatan</a>
+      <a href="{{ route('halaman_orangtua') }}" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Beranda</a>
+      <!--<a href="{{ route('pertumbuhan') }}" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Pertumbuhan Anak</a>-->
+      <a href="{{ route('informasiortu') }}" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Informasi Kesehatan</a>
     </nav>
   </div>
 </nav>
