@@ -12,7 +12,7 @@
   <!-- Font Awesome untuk ikon -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-white text-gray-800">
+<body class="bg-white text-gray-800 ">
   <div class="min-h-screen flex flex-col">
     @include('components.navbar_nakes')
 

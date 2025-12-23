@@ -1,9 +1,8 @@
-@extends('layouts.app') @section('content')
+@extends('layouts.app')
 @section('content')
-<div class="min-h-screen bg-pink-50/70 flex flex-col items-center justify-center py-20">
-    @include('components.navbar')
+    <div class="min-h-[calc(100vh-160px)] bg-white px-4 py-6 ">
 
-    <div class="bg-white shadow-xl rounded-3xl p-10 w-full max-w-3xl border border-pink-100">
+    <div class="bg-white shadow-xl rounded-3xl p-10 w-full max-w-3xl border border-pink-100 mx-auto">
         <!-- Judul -->
         <div class="text-center mb-8">
             <h1 class="text-3xl font-semibold text-pink-500">Hasil Deteksi Kesehatan Anak</h1>
@@ -12,7 +11,7 @@
 
         <!-- Data Anak -->
         <div class="bg-pink-100/50 rounded-2xl p-6 mb-6">
-            <h2 class="text-lg font-semibold text-gray-700 mb-3 border-b border-pink-200 pb-1">Data Anak</h2>
+            <h2 class="text-lg font-semibold text-gray-700 text-center mb-3 border-b border-pink-200 pb-1">Data Anak</h2>
             <div class="grid grid-cols-2 gap-y-2 text-gray-700 text-sm">
                 <p><strong>Nama</strong></p><p>: {{ $anak->nama_lengkap }}</p>
                 <p><strong>Jenis Kelamin</strong></p><p>: {{ $anak->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</p>
@@ -66,18 +65,22 @@
         <!-- Tombol -->
         <div class="flex flex-col sm:flex-row mt-10 gap-4 w-full justify-center ">
             <a href="{{ route('barcode.show', $anak->id) }}"
-               class="bg-[#7DDCD3] hover:bg-[#6bc6bf] text-white font-semibold p-3 rounded-full shadow text-center transition">
+               class="bg-[#ddb9e9] hover:bg-[#6bc6bf] text-white font-semibold p-3 rounded-full shadow text-center transition">
                 Download Barcode
+            </a>            
+            <a href="{{ route('scan_tinggi', $anak->id) }}"
+               class="bg-[#53AFA2] hover:bg-[#6bc6bf] text-white font-semibold p-3 rounded-full shadow text-center transition">
+                Perbarui data
             </a>
             <a href="{{ route('halaman_orangtua') }}"
-               class="bg-[#E984A7] hover:bg-[#d97298] text-white font-semibold p-3 rounded-full shadow text-center transition">
+               class="bg-[#E9B9C5] hover:bg-[#d97298] text-white font-semibold p-3 rounded-full shadow text-center transition">
                Kembali
             </a>
         </div>
     </div>
  </div><!-- CDN Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const ctx = document.getElementById('chartTbu').getContext('2d');

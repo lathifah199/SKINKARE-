@@ -26,6 +26,7 @@ class Pemeriksaan extends Model
     }
     public function hasilDeteksi()
     {
-        return $this->hasOne(HasilDeteksi::class, 'id_pemeriksaan', 'id_pemeriksaan');
+        return $this->hasOne(HasilDeteksi::class, 'id_pemeriksaan', 'id_pemeriksaan')
+                    ->latest('id_hasil');
     }
 }

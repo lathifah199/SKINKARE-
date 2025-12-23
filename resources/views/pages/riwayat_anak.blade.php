@@ -25,61 +25,40 @@
                 </thead>
 
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @forelse ($anak as $a)
-                        @forelse ($a->pemeriksaan as $p)
-                            <tr class="hover:bg-gray-50">
-                                {{-- Nama Anak --}}
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="h-10 w-10 rounded-full bg-[#F3C0CD] flex items-center justify-center text-white font-semibold">
-                                            {{ strtoupper(substr($a->nama_lengkap, 0, 1)) }}
-                                        </div>
-                                        <div class="text-sm font-medium text-gray-900">
-                                            {{ $a->nama_lengkap }}
-                                        </div>
-                                    </div>
-                                </td>
+                @forelse ($riwayat as $item)
+                    <tr class="hover:bg-gray-50">
+                        {{-- Nama Anak --}}
+                        <td class="px-6 py-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="h-10 w-10 rounded-full bg-[#F3C0CD] flex items-center justify-center text-white font-semibold">
+                                    {{ strtoupper(substr($item['anak']['nama_lengkap'],0,1)) }}
+                                </div>
+                                <div class="text-sm font-medium text-gray-900">
+                                    {{ $item['anak']['nama_lengkap'] }}
+                                </div>
+                            </div>
+                        </td>
 
-                                {{-- Aksi --}}
-                                <td class="px-6 py-4 text-center">
-                                    <button
-                                        onclick="openDetailModal(
-                                            '{{$a->nama_lengkap}}',
-                                            '{{$p->tanggal_pemeriksaan}}',
-                                            '{{$p->tinggi_badan}}',
-                                            '{{$p->berat_badan}}',
-                                            '{{ $p->hasilDeteksi->kategori_risiko ?? 'Belum ada hasil' }}'
-            )"
-                                        class="inline-flex items-center px-4 py-2 bg-[#F3C0CD] hover:bg-[#E8A8B8] text-white text-sm rounded-lg shadow">
+                        {{-- Aksi --}}
+                        <td class="px-6 py-4 text-center">
+                            <button
+                                onclick='openDetailModal(@json($item["anak"]["nama_lengkap"]), @json($item["pemeriksaan"]))'
+                                    class="inline-flex items-center px-4 py-2 bg-[#F3C0CD] hover:bg-[#E8A8B8] text-white text-sm rounded-lg shadow">
                                         Lihat Detail
-                                    </button>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="2" class="px-6 py-12 text-center text-gray-500">
-                                    Belum ada pemeriksaan untuk {{ $a->nama_lengkap }}
-                                </td>
-                            </tr>
-                        @endforelse
-                    @empty
-                    <tr>
-                        <td colspan="3" class="px-6 py-12 text-center text-gray-500">
-                            Tidak ada data anak
+                            </button>
                         </td>
                     </tr>
-                    @endforelse
+                    @empty
+                    <tr>
+                        <td colspan="2" class="px-6 py-12 text-center text-gray-500">
+                            Belum ada pemeriksaan
+                        </td>
+                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-
-    @if ($anak->hasPages())
-    <div class="mt-6 flex justify-center">
-        {{ $anak->links() }}
-    </div>
-    @endif
-
 </div>
 {{-- MODAL DETAIL --}}
 <div id="detailModal" tabindex="-1" aria-hidden="true" 
@@ -103,7 +82,12 @@
                     <table class="w-full text-sm border border-gray-300">
                         <tr class="border">
                             <td class="font-semibold px-3 py-2 w-32">Tanggal pemeriksaan</td>
-                            <td class="px-3 py-2" id="detailTanggal"></td>
+                            <td class="px-3 py-2">
+                                <select id="tanggalSelect"
+                                    class="w-full border rounded px-2 py-1"
+                                    onchange="updateDetail(this.value)">
+                                </select>
+                            </td>
                         </tr>
                         <tr class="border">
                             <td class="font-semibold px-3 py-2">Tinggi Badan</td>
@@ -132,22 +116,62 @@
 </div>
 @push('scripts')
 <script>
-    function openDetailModal(nama, created_at, tinggi, berat, kategori_risiko) {
-        console.log("MODAL DIPANGGIL");
-        document.getElementById('detailNamaHeader').innerText = nama;
-        document.getElementById('detailTanggal').innerText = created_at;
-        document.getElementById('detailTinggi').innerText = tinggi + 'cm';
-        document.getElementById('detailBerat').innerText = berat + 'kg';
-        document.getElementById('detailStatus').innerText = kategori_risiko;
+let pemeriksaanData = [];
 
-        document.getElementById('detailModal').classList.remove('hidden');
-        document.body.classList.add('overflow-hidden'); // biar ga bisa scroll pas modal buka
+function openDetailModal(nama, data) {
+    console.log('Nama:', nama);
+    console.log('Data pemeriksaan:', data);
+
+    // Validasi data
+    if (!data || data.length === 0) {
+        alert('Tidak ada data pemeriksaan');
+        return;
     }
 
-    function closeDetailModal() {
-        document.getElementById('detailModal').classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
+    pemeriksaanData = data;
+    document.getElementById('detailNamaHeader').innerText = nama;
+
+    // Populate dropdown tanggal
+    const select = document.getElementById('tanggalSelect');
+    select.innerHTML = '';
+
+    data.forEach((p, index) => {
+        const opt = document.createElement('option');
+        opt.value = index;
+        opt.textContent = p.tanggal_pemeriksaan;
+        select.appendChild(opt);
+    });
+
+    // Tampilkan detail pemeriksaan pertama
+    updateDetail(0);
+
+    // Tampilkan modal
+    const modal = document.getElementById('detailModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.classList.add('overflow-hidden');
+}
+
+function updateDetail(index) {
+    const p = pemeriksaanData[index];
+
+    document.getElementById('detailTinggi').innerText = (p.tinggi_badan || 0) + ' cm';
+    document.getElementById('detailBerat').innerText = (p.berat_badan || 0) + ' kg';
+    document.getElementById('detailStatus').innerText = p.kategori_risiko || 'Belum ada hasil';
+}
+
+function closeDetailModal() {
+    const modal = document.getElementById('detailModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.classList.remove('overflow-hidden');
+}
+
+// Event listener untuk menutup modal saat klik di luar
+document.getElementById('detailModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeDetailModal();
     }
+});
 </script>
 @endpush
-@endsection

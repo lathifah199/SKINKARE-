@@ -15,8 +15,11 @@ class DataAnakController extends Controller
 
     $idNakes = session('user_id');
 
-    $query = Anak::with('orangtua');
-                //-g-->where('id_nakes', $idNakes);
+    $query = Anak::with([
+        'orangtua',
+        'hasilDeteksi' => fn ($q) => $q->latest()->limit(1),
+        'pemeriksaan' => fn ($q) => $q->latest()->limit(1),
+    ]);
 
     if ($request->filled('search')) {
         $query->where('nama_lengkap', 'like', '%' . $request->search . '%');

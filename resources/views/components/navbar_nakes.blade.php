@@ -1,19 +1,19 @@
 <nav class="fixed top-0 left-0 w-full bg-[#E9B9C5] shadow-md z-[1000]">
-  <div class="flex items-center justify-between px-4 sm:px-6 h-16">
+  <div class="flex items-center justify-between px-4 sm:px-6 h-16 max-w-7xl mx-auto">
     <!-- Logo -->
-    <div class="flex items-center space-x-2">
-      <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-[45px] w-auto">
-        <h1 class="text-white font-bold text-xl sm:text-2xl tracking-wider drop-shadow-sm">
+    <div class="flex items-center gap-2 min-w-0">
+      <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-9 sm:h-11 w-auto shrink-0">
+        <h1 class="text-white font-bold text-base sm:text-xl tracking-wide truncate">
           SKINKARE
         </h1>
     </div>
 
     <!-- Menu Desktop -->
     <div class="hidden md:flex text-white items-center space-x-20">
- <a href="halaman_nakes" class="px-4 py-2 rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Beranda</a>
-      <a href="tambah-data-anak" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Periksa Anak</a>
-      <a href="data-anak" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Data Anak</a>
-      <a href="data-wali" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Data Orangtua</a>
+      <a href="{{ route('halaman_nakes') }}" class="px-4 py-2 rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Beranda</a>
+      <a href="{{ route('tambah.data.anak') }}" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Periksa Anak</a>
+      <a href="{{ route('data-anak.index') }}" class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Data Anak</a>
+      <a href="{{ route('Data_Wali') }}"class="px-4 py-2 font-medium rounded-md hover:bg-[#B9E9DD] hover:text-[#53AFA2] transition">Data Orangtua</a>
     </div>
 
     <!-- Burger + Profil -->
@@ -38,7 +38,7 @@
         <div id="userDropdown"
           class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg border border-gray-200 z-[9999]">
           <div class="px-5 py-4 bg-gradient-to-r from-[#E9B9C5] to-[#be6178] text-white rounded-t-lg">
-            <div class="font-bold text-lg">Selamat Datang, </div>
+            <div class="font-bold text-lg">Selamat Datang! </div>
             <div class="text-sm">
               @if(Auth::guard('nakes')->check())
               <p><strong>Email:</strong> {{ Auth::guard('nakes')->user()->email }}</p>
@@ -47,7 +47,7 @@
           </div>
 
           <div class="py-2 px-2 bg-white rounded-b-lg">
-            <a href="profil" class="block w-full text-sm font-medium text-white bg-blue-950 px-4 py-2 rounded mb-2 text-center">Lihat Profil</a>
+            <!--<a href="profil" class="block w-full text-sm font-medium text-white bg-blue-950 px-4 py-2 rounded mb-2 text-center">Lihat Profil</a>-->
             <button type="button"
               onclick="document.getElementById('logout-form').submit();"
               class="block w-full text-sm font-medium text-white bg-red-800 px-4 py-2 rounded text-center">
@@ -75,10 +75,10 @@
       <button id="close-sidebar" class="text-white text-2xl font-bold">&times;</button>
     </div>
     <nav class="flex flex-col space-y-4 mt-4 px-6">
-      <a href="halaman_nakes" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Beranda</a>
-    <a href="tambah-data-anak" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Periksa Anak</a>
-    <a href="data-anak" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Data Anak</a>
-    <a href="data-wali" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Data Orangtua</a>
+      <a href="{{ route('halaman_nakes') }}" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Beranda</a>
+      <a href="{{ route('tambah.data.anak') }}" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Periksa Anak</a>
+      <a href="{{ route('data-anak.index') }}" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Data Anak</a>
+      <a href="{{ route('Data_Wali') }}" class="text-white font-medium border-b border-white pb-1 hover:text-[#B9E9DD] hover:border-[#B9E9DD] transition duration-300">Data Orangtua</a>
     </nav>
   </div>
 </nav>

@@ -16,7 +16,7 @@
             Input Manual Berat Badan Anak
         </h2>
         <p class="text-gray-600 mb-6">
-            Masukkan berat badan anak secara manual.
+            Masukkan berat badan anak (dalam kg).
         </p>
 
 <form method="POST" action="{{ route('scan.berat.store', $pemeriksaan->id_pemeriksaan) }}">
