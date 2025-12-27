@@ -15,6 +15,6 @@
   <main class="flex-grow flex items-center justify-center py-12">
     @yield('content')
   </main>
-
+  @yield('scripts')
 </body>
 </html>
