@@ -88,7 +88,8 @@ class AuthController extends Controller
         $orangtua->kata_sandi = bcrypt($request->kata_sandi);
         $orangtua->save();
 
-        return redirect()->route('login')->with('success', 'Reset berhasil!');
+        // ✅ Ubah session key agar bisa dibedakan
+        return redirect()->route('login')->with('success_reset', 'Reset kata sandi berhasil! Silakan login.');
     }
 
     // =================== REGISTRASI VIEW ====================
