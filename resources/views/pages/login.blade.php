@@ -8,16 +8,16 @@
   <div class="relative bg-[#E9B9C5]/75 backdrop-blur-md p-8 rounded-2xl shadow-lg w-full max-w-md sm:max-w-lg md:max-w-md">
         <!-- Gambar di tengah -->
         <div class="flex justify-center mb-1">
-            <img src="{{ asset('images/logo.png') }}" alt="login" class="w-[70px] h-[70px] object-contain">
+            <img src="{{ asset('images/logo.png') }}" alt="login" class="w-[100px] h-[100px] object-contain">
         </div>
-        <h2 class="text-2xl font-bold text-center mb-1 text-gray-800">Selamat Datang di SKINKARE</h2>
+        <h2 class="text-2xl font-bold text-center mb-1 text-gray-800">Selamat Datang!</h2>
         <h6 class="text-sm font-medium text-center mb-8 text-gray-700">Silakan melakukan login terlebih dahulu</h6>
-            {{-- Pesan Sukses dari Reset/Registrasi --}}
-            @if(session('success_reset') || session('success_register'))
+            {{-- Pesan Sukses --}}
+            @if(session('success'))
                 <div id="popupSuccess" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
                     <div class="bg-white text-gray-800 px-6 py-3 rounded-full shadow-lg flex items-center gap-3 animate-fadeIn border border-[#53AFA2]">
                         <i class="fa-solid fa-circle-check text-[#53AFA2] text-lg"></i>
-                        <span class="text-sm">{{ session('success_reset') ?? session('success_register') }}</span>
+                        <span class="text-sm">{{ session('success') }}</span>
                         <button onclick="document.getElementById('popupSuccess').remove()" class="ml-2 text-gray-500 hover:text-gray-700 text-sm">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
@@ -29,16 +29,6 @@
                         if (popup) popup.remove();
                     }, 2000);
                 </script>
-            @endif
-
-            {{-- Pesan Sukses dari Login --}}
-            @if(session('success'))
-                <div id="popupSuccessLogin" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
-                    <div class="bg-white text-gray-800 px-6 py-3 rounded-full shadow-lg flex items-center gap-3 animate-fadeIn border border-[#53AFA2]">
-                        <i class="fa-solid fa-circle-check text-[#53AFA2] text-lg"></i>
-                        <span class="text-sm">{{ session('success') }}</span>
-                    </div>
-                </div>
             @endif
             {{-- Pesan Error Login --}}
             @if(session('error'))
@@ -163,6 +153,16 @@ document.addEventListener('DOMContentLoaded', function() {
             loadingOverlay.classList.add('opacity-100');
         });
     }
+    @endif
+
+    // Jika ada session success, tampilkan popup dulu baru loading
+    @if(session('success'))
+        setTimeout(() => {
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('pointer-events-none', 'opacity-0');
+                loadingOverlay.classList.add('opacity-100');
+            }
+        }, 700);
     @endif
 });
 </script>

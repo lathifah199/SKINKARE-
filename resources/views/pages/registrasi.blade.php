@@ -36,7 +36,7 @@
                 </div>
             @endif
 
-            <h2 class="text-2xl font-semibold text-gray-800 text-center mb-6">Registrasi Akun</h2>
+            <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Registrasi Akun</h2>
   <!-- Nama Pengguna -->
   <div class="mb-4 relative">
     <input type="text" name="nama" value="{{ old('nama') }}" placeholder="Nama Lengkap"
@@ -117,7 +117,7 @@
   </button>
 
   <!-- Link ke login -->
-  <div class="mt-4 text-sm text-gray-700">
+  <div class="mt-4 text-sm text-gray-700 text-center">
     Sudah punya akun? <a href="{{ route('login') }}" class="font-bold hover:underline">Klik Disini</a>
   </div>
 </form>
