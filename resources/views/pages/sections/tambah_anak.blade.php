@@ -1,6 +1,6 @@
 <!-- Profil Anak Section -->
 <section id="tambah_anak">
-  <div class="bg-[#53AFA2]/65 text-white px-5 py-4 rounded-b-3xl">
+  <div class="bg-[#53AFA2]/65 text-white px-5 py-2 rounded-b-2xl">
     <h1 class="text-lg font-bold">Profil Anak</h1>
   </div>
 

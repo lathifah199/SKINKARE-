@@ -3,7 +3,7 @@
     <!-- Logo -->
     <div class="flex items-center gap-2 min-w-0">
       <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-9 sm:h-11 w-auto shrink-0">
-        <h1 class="text-white font-bold text-base sm:text-xl tracking-wide truncate">
+        <h1 class="text-white font-bold text-lg sm:text-xl tracking-wide truncate">
           SKINKARE
         </h1>
     </div>
@@ -34,33 +34,44 @@
           </svg>
         </button>
 
-        <div id="userDropdown"
-          class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg border border-gray-200 z-[9999]">
-          <div class="px-5 py-4 bg-gradient-to-r from-[#E9B9C5] to-[#be6178] text-white rounded-t-lg">
-            <div class="font-bold text-lg">Selamat Datang,
-              @if(Auth::guard('orangtua')->check())
-                  {{ Auth::guard('orangtua')->user()->nama }}
-              @endif
-            </div>
-          </div>
+  <!-- Dropdown User -->
+<div id="userDropdown"
+  class="hidden absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-xl border border-gray-200
+  z-[9999] overflow-hidden animate-fadeIn">
 
-          <div class="py-2 px-2 bg-white rounded-b-lg">
-            <a href="profil" class="block w-full text-sm font-medium text-white bg-blue-950 px-4 py-2 rounded mb-2 text-center">Lihat Profil</a>
-            <button type="button"
-              onclick="document.getElementById('logout-form').submit();"
-              class="block w-full text-sm font-medium text-white bg-red-800 px-4 py-2 rounded text-center">
-              Keluar
-            </button>
-
-            <!-- FORM LOGOUT -->
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-              @csrf
-            </form>
-          </div>
-        </div>
-      </div>
+  <!-- Header Dropdown -->
+  <div class="px-5 py-4 bg-gradient-to-r from-[#E9B9C5] to-[#be6178] text-white">
+    <div class="font-semibold text-lg">
+      Selamat Datang,
+      @if(Auth::guard('orangtua')->check())
+        <span class="block text-base font-light mt-1">
+          {{ Auth::guard('orangtua')->user()->nama }}
+        </span>
+      @endif
     </div>
   </div>
+
+  <!-- Isi Dropdown -->
+  <div class="py-3 px-3 bg-white">
+    <a href="profil"
+      class="block w-full text-sm font-medium text-center text-white bg-[#53AFA2] hover:bg-[#469488]
+      px-4 py-2 rounded-full transition-all duration-300 shadow-sm mb-2">
+      <i class="fa-solid fa-user me-1"></i> Lihat Profil
+    </a>
+
+    <button type="button"
+      onclick="document.getElementById('logout-form').submit();"
+      class="block w-full text-sm font-medium text-center text-white bg-[#be6178] hover:bg-[#a55269]
+      px-4 py-2 rounded-full transition-all duration-300 shadow-sm">
+      <i class="fa-solid fa-right-from-bracket me-1"></i> Keluar
+    </button>
+
+      <!-- FORM LOGOUT -->
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+      @csrf
+    </form>
+  </div>
+</div>
 
   <!-- Overlay -->
   <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-40 z-[999]"></div>

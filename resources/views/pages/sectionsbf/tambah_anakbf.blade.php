@@ -1,7 +1,7 @@
 
    <!-- Profil Anak Section -->
     <section id="tambah_anak">
-  <div class="bg-[#53AFA2]/60 text-white px-5 py-4 rounded-b-3xl">
+  <div class="bg-[#53AFA2]/60 text-white px-5 py-2 rounded-b-3xl">
     <h1 class="text-lg font-semibold">Profil Anak</h1>
   </div>
 

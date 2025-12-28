@@ -131,7 +131,7 @@ def get_saran_otomatis(status, z, risiko):
             f"Risiko Stunting: {risiko:.1f}% (Stunting).\n"
             f"Nilai Z-Score: {z}.\n\n"
             "Anak termasuk stunting. "
-            "Segera rujuk ke **Puskesmas** untuk pemeriksaan lanjutan, "
+            "Segera rujuk ke Puskesmas untuk pemeriksaan lanjutan, "
             "evaluasi *red flags*, dan penilaian penyebab gizi buruk. "
             "Dokter akan menentukan apakah perlu dirujuk ke RSUD."
         )
@@ -142,7 +142,7 @@ def get_saran_otomatis(status, z, risiko):
             f"Risiko Stunting: {risiko:.1f}% (Stunting Berat).\n"
             f"Nilai Z-Score: {z}.\n\n"
             "Anak mengalami stunting berat. "
-            "Segera rujuk ke **RSUD** untuk evaluasi menyeluruh, "
+            "Segera rujuk ke RSUD untuk evaluasi menyeluruh, "
             "pemeriksaan red flags, dan pemberian **PKMK (Perbaikan Kualitas Makanan Khusus)**. "
             "Pendampingan gizi dan pemeriksaan lanjutan sangat diperlukan."
         )

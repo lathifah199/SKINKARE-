@@ -3,8 +3,9 @@
 @section('title', 'Lupa kata sandi')
 
 @section('content')
-<div class="bg-[#E9B9C5]/75 backdrop-blur-md p-8 rounded-2xl shadow-lg w-full max-w-md">
-  <h2 class="text-2xl font-bold text-center mb-1 text-gray-800">Lupa kata sandi?</h2>
+<div class="min-h-screen flex items-start justify-center bg-cover bg-center px-4 pt-4 sm:pt-8 md:pt-12" style="background-image: url('/img/bg-login.jpg');">
+    <div class="relative bg-[#E9B9C5]/75 backdrop-blur-md p-8 rounded-2xl shadow-lg w-full max-w-md sm:max-w-lg mt-[-1rem] sm:mt-[-0.5rem] md:mt-0">
+  <h2 class="text-2xl font-bold text-center mb-1 text-gray-800">Lupa Kata Sandi?</h2>
   <h6 class="text-sm font-medium text-center mb-6 text-gray-700">Masukkan email dan kata sandi baru anda</h6>
 
 
@@ -43,7 +44,7 @@
 
   <!-- Kata Sandi -->
   <div class="mb-6 relative">
-    <input type="password" name="kata_sandi" id="kata_sandi" placeholder="Kata Sandi Baru (Min 6 Karakter)"
+    <input type="password" name="kata_sandi" id="kata_sandi" placeholder="Kata Sandi (Min 6 Karakter)"
       class="w-full px-5 py-3 rounded-full bg-white text-black placeholder-gray-400 focus:border-[#53AFA2] focus:ring-2 focus:ring-[#53AFA2]">
     <button type="button" id="togglePassword1"
       class="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 hover:text-[#53AFA2] focus:outline-none">

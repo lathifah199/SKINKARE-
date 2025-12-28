@@ -8,7 +8,7 @@
   <!-- Hubungkan Tailwind dan Flowbite -->
   <script src="{{ asset('styles/tailwindcss3.4.1.js') }}"></script>
   <script src="{{ asset('styles/flowbite.min.js') }}"></script>
-
+<script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome untuk ikon -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
