@@ -55,7 +55,6 @@ for zdf in [z_laki, z_perempuan]:
 def hitung_zscore(umur, tinggi, jenis_kelamin):
     ref = z_laki if 'laki' in jenis_kelamin else z_perempuan
     usia_terdekat = ref.iloc[(ref['USIA'] - umur).abs().argsort()[:1]]
-
     if usia_terdekat.empty:
         return None
 
@@ -71,8 +70,6 @@ def hitung_zscore(umur, tinggi, jenis_kelamin):
     }
 
     tinggi = float(tinggi)
-
-    # Jika ekstrem
     if tinggi <= batas[-3]:
         return -3.5
     elif tinggi >= batas[3]:
@@ -85,72 +82,64 @@ def hitung_zscore(umur, tinggi, jenis_kelamin):
         if v1 <= tinggi <= v2:
             z = k1 + (tinggi - v1) * (k2 - k1) / (v2 - v1)
             return round(z, 2)
-
     return None
 
-# ===================== 5️⃣ Interpretasi Z-Score =====================
+# ===================== 5️⃣ Interpretasi Z-Score (Sesuai PMK No. 2/2020) =====================
 def interpretasi_zscore(z):
     if z is None:
-        return "Tidak Diketahui", 0, "Tidak diketahui"
-    if z >= -1:
-        return "Normal", 10, "Pertumbuhan anak sesuai standar WHO."
-    elif z >= -2:
-        return "Beresiko", 35, "Anak mulai berisiko stunting, pantau asupan gizi dan pertumbuhan."
-    elif z >= -3:
-        return "Stunting", 65, "Anak tergolong stunting. Perlu peningkatan gizi dan konsultasi ke tenaga kesehatan."
-    else:
-        return "Stunting Berat", 90, "Anak mengalami stunting berat. Segera bawa ke fasilitas kesehatan."
+        return "Tidak Diketahui", 0, "Data tidak mencukupi untuk interpretasi Z-score."
 
-# ===================== 6️⃣ Fungsi Saran Otomatis =====================
+    # Berdasarkan PMK No. 2 Tahun 2020, Pasal 4 ayat (3)
+    if z >= -2:
+        return "Normal", 10, (
+            "Anak memiliki tinggi badan sesuai umur dan termasuk kategori normal "
+            "berdasarkan Standar Antropometri Anak (PMK No. 2 Tahun 2020)."
+        )
+    elif z >= -3:
+        return "Stunted", 65, (
+            "Anak termasuk kategori pendek (stunted) "
+            "menurut PMK No. 2 Tahun 2020, yaitu Z-score antara -3 SD hingga kurang dari -2 SD. "
+            "Hal ini menunjukkan adanya gangguan pertumbuhan kronis yang perlu pemantauan gizi."
+        )
+    else:
+        return "Severely Stunted", 90, (
+            "Anak tergolong sangat pendek (severely stunted) dengan Z-score < -3 SD "
+            "sesuai ketentuan PMK No. 2 Tahun 2020. "
+            "Segera rujuk ke fasilitas kesehatan untuk evaluasi dan tata laksana gizi lanjut."
+        )
+
+# ===================== 6️⃣ Saran Otomatis =====================
 def get_saran_otomatis(status, z, risiko):
     if status == "Normal":
         warna = "#7DDCD3"
         saran = (
-            f"Risiko Stunting: {risiko:.1f}% (Normal).\n"
-            f"Nilai Z-Score: {z}.\n\n"
-            "Pertumbuhan anak berada dalam kategori normal. "
-            "Pertahankan pola makan bergizi seimbang dengan protein hewani, "
-            "sayur, dan buah. "
-            "Lakukan pemantauan tinggi dan berat badan secara rutin di Posyandu setiap bulan."
+            f"Risiko Stunting: {risiko:.1f}% (Normal)\n"
+            f"Nilai Z-Score: {z}\n\n"
+            "Pertumbuhan anak normal sesuai Standar Antropometri Anak (PMK No. 2 Tahun 2020). "
+            "Tetap jaga pola makan bergizi seimbang, cukup protein hewani, "
+            "dan lakukan pemantauan rutin di Posyandu."
         )
-
-    elif status == "Mulai Berisiko":
-        warna = "#FFD580"
-        saran = (
-            f"Risiko Stunting: {risiko:.1f}% (Mulai Berisiko).\n"
-            f"Nilai Z-Score: {z}.\n\n"
-            "Anak mulai menunjukkan penurunan pertumbuhan. "
-            "Perlu konseling gizi dasar di Posyandu, "
-            "pemberian PMT (Pemberian Makanan Tambahan), dan "
-            "pemantauan ulang tinggi badan setelah 1 bulan."
-        )
-
-    elif status == "Stunting":
+    elif status == "Stunted":
         warna = "#F2A5C4"
         saran = (
-            f"Risiko Stunting: {risiko:.1f}% (Stunting).\n"
-            f"Nilai Z-Score: {z}.\n\n"
-            "Anak termasuk stunting. "
-            "Segera rujuk ke Puskesmas untuk pemeriksaan lanjutan, "
-            "evaluasi *red flags*, dan penilaian penyebab gizi buruk. "
-            "Dokter akan menentukan apakah perlu dirujuk ke RSUD."
+            f"Risiko Stunting: {risiko:.1f}% (Stunted)\n"
+            f"Nilai Z-Score: {z}\n\n"
+            "Anak termasuk pendek (stunted). Menurut PMK No. 2 Tahun 2020, "
+            "Z-score antara -3 SD hingga -2 SD menunjukkan gangguan pertumbuhan kronis. "
+            "Perlu peningkatan gizi, pemberian PMT, dan konsultasi ke tenaga kesehatan."
         )
-
-    elif status == "Stunting Berat":
+    elif status == "Severely Stunted":
         warna = "#F26B6B"
         saran = (
-            f"Risiko Stunting: {risiko:.1f}% (Stunting Berat).\n"
-            f"Nilai Z-Score: {z}.\n\n"
-            "Anak mengalami stunting berat. "
-            "Segera rujuk ke RSUD untuk evaluasi menyeluruh, "
-            "pemeriksaan red flags, dan pemberian **PKMK (Perbaikan Kualitas Makanan Khusus)**. "
-            "Pendampingan gizi dan pemeriksaan lanjutan sangat diperlukan."
+            f"Risiko Stunting: {risiko:.1f}% (Severely Stunted)\n"
+            f"Nilai Z-Score: {z}\n\n"
+            "Anak tergolong sangat pendek (severely stunted) dengan Z-score < -3 SD. "
+            "Sesuai PMK No. 2 Tahun 2020, kondisi ini perlu penanganan segera. "
+            "Rujuk ke Puskesmas atau RS untuk evaluasi penyebab dan tata laksana gizi lebih lanjut."
         )
-
     else:
         warna = "#B0B0B0"
-        saran = "Data tidak dapat diinterpretasikan. Pastikan data tinggi, berat, dan usia anak benar."
-
+        saran = "Data tidak dapat diinterpretasikan."
     return saran, warna
 
 # ===================== 7️⃣ Endpoint Prediksi =====================
@@ -166,11 +155,11 @@ def predict_rf():
         if not all([umur, tinggi, berat, jenis_kelamin]):
             return jsonify({'error': 'Data input tidak lengkap!'}), 400
 
-        # --- Hitung Z-Score WHO ---
+        # --- Hitung Z-Score ---
         z = hitung_zscore(umur, tinggi, jenis_kelamin)
         status_z, risiko, penjelasan = interpretasi_zscore(z)
 
-        # --- Prediksi pendukung dari model Random Forest ---
+        # --- Prediksi Model RF ---
         jk_encoded = 1 if 'laki' in jenis_kelamin else 0
         data_baru = pd.DataFrame({
             'Usia_Bulan': [umur],
@@ -183,28 +172,28 @@ def predict_rf():
         pred_label = le.inverse_transform([pred_idx])[0]
         prob_rf = probas[pred_idx] * 100
 
-        # --- Gunakan Z-Score sebagai penentu utama ---
-        final_status = status_z
-
-        # --- Ambil saran berdasarkan hasil akhir ---
-        saran, warna = get_saran_otomatis(final_status, z, risiko)
-
-        print(f"[DEBUG] Umur: {umur} | JK: {jenis_kelamin} | TB: {tinggi} | Z: {z} | Status Z: {final_status} | RF: {pred_label} ({prob_rf:.1f}%)")
+        saran, warna = get_saran_otomatis(status_z, z, risiko)
 
         return jsonify({
-            'status_prediksi': final_status,
+            'status_prediksi': status_z,
             'zscore': z,
             'risiko_persen': round(risiko, 1),
-            'hasil': saran,
+            'kategori_risiko': status_z,  # ✅ biar Blade tahu kategorinya
             'warna_risiko': warna,
             'penjelasan': penjelasan,
+            'hasil': saran,
             'model_rf': pred_label,
-            'probabilitas_rf': round(prob_rf, 1)
+            'probabilitas_rf': round(prob_rf, 1),
+            'dasar_regulasi': (
+                "Analisis ini mengacu pada Peraturan Menteri Kesehatan Republik Indonesia "
+                "Nomor 2 Tahun 2020 tentang Standar Antropometri Anak, "
+                "sebagai dasar penilaian status gizi dan pertumbuhan anak di Indonesia."
+            )
         })
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    print("🚀 Flask API SKINKARE aktif (Z-Score sebagai prioritas utama)")
+    print("🚀 Flask API SKINKARE aktif (mengacu PMK No. 2 Tahun 2020)")
     app.run(debug=True, host='127.0.0.1', port=5001)
