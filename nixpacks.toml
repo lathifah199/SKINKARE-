@@ -1,0 +1,30 @@
+[phases.setup]
+nixPkgs = ["php82", "python311", "nodejs", "mysql80"]
+
+[phases.install]
+cmds = [
+  "composer install --no-dev --optimize-autoloader",
+  "pip install -r requirements.txt"
+]
+
+[start]
+cmd = "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"
+```
+
+5. **Save** (Ctrl + S)
+
+---
+
+### File 3: `requirements.txt`
+
+**Kalau project kamu pakai Python untuk AI**, buat file ini:
+
+1. **"New File"**
+2. Nama: `requirements.txt`
+3. Isi dengan library Python yang kamu pakai, contoh:
+```
+tensorflow==2.15.0
+numpy
+pandas
+pillow
+keras
