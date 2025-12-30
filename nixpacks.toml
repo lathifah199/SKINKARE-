@@ -3,7 +3,8 @@ nixPkgs = ["php82", "python311", "nodejs", "mysql80"]
 
 [phases.install]
 cmds = [
-  "composer install --no-dev --optimize-autoloader",
+  "install-php-extensions gd",
+  "composer install --no-dev --optimize-autoloader --no-interaction",
   "pip install -r requirements.txt"
 ]
 
