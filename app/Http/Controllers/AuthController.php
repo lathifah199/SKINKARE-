@@ -26,7 +26,6 @@ class AuthController extends Controller
     // =================== LOGIN PROCESS ====================
   public function login(Request $request)
     {
-        dd(DB::connection()->getDatabaseName());
         $request->validate([
             'email' => 'required',
             'kata_sandi' => 'required|string',
@@ -103,7 +102,6 @@ class AuthController extends Controller
     // =================== PROSES REGISTRASI ====================
     public function registrasi(Request $request)
     {   
-        dd(DB::connection()->getDatabaseName());
         $validated = $request->validate([
             'nama' => 'required|string|max:100',
             'email' => 'required|string|email|max:255|unique:orangtua',
