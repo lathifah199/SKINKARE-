@@ -194,6 +194,9 @@ def predict_rf():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-if __name__ == '__main__':
-    print("🚀 Flask API SKINKARE aktif (mengacu PMK No. 2 Tahun 2020)")
-    app.run(debug=True, host='127.0.0.1', port=5001)
+def register_rf_routes(main_app):
+    main_app.add_url_rule(
+        '/predict_rf',
+        view_func=predict_rf,
+        methods=['POST']
+    )

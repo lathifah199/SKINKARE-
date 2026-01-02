@@ -1,3 +1,4 @@
+from app_flask_rf import register_rf_routes
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import cv2
@@ -7,6 +8,7 @@ import os
 
 app = Flask(__name__)
 
+
 # CORS Configuration
 CORS(app, resources={
     r"/*": {
@@ -15,6 +17,7 @@ CORS(app, resources={
         "allow_headers": ["Content-Type"]
     }
 })
+register_rf_routes(app)
 
 # =====================================================
 # MEDIAPIPE SETUP
@@ -365,4 +368,7 @@ if __name__ == "__main__":
     print(f"\n⚠️  Press CTRL+C to stop server")
     print("="*60 + "\n")
     
-    app.run(debug=True, host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
