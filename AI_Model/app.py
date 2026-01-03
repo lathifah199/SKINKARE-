@@ -1,12 +1,11 @@
-from app_flask_rf import register_rf_routes
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-import cv2
-import numpy as np
 import os
 os.environ["MEDIAPIPE_DISABLE_GPU"] = "1"
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-
+import cv2
+import numpy as np
+from app_flask_rf import register_rf_routes
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 app = Flask(__name__)
 
 
@@ -63,6 +62,9 @@ def read_image(file):
 
 def precheck_image(image):
     """Validasi kondisi gambar sebelum prediksi - return 3 kriteria terpisah"""
+    import mediapipe as mp
+    mp_pose = mp.solutions.pose
+
     try:
         if image is None:
             return {
@@ -163,6 +165,7 @@ def precheck_image(image):
 
 def predict_height_with_model(image):
     """Prediksi menggunakan ML Model"""
+    
     try:
         img = cv2.resize(image, (224, 224))
         img = img / 255.0
@@ -177,6 +180,7 @@ def predict_height_with_mediapipe(image):
     """Prediksi menggunakan MediaPipe (fallback)"""
     import mediapipe as mp
     mp_pose = mp.solutions.pose
+    pose = get_pose()
     try:
         h, w = image.shape[:2]
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -215,6 +219,8 @@ def predict_height_with_mediapipe(image):
     except Exception as e:
         print(f"❌ MediaPipe prediction error: {e}")
         return None
+    finally:
+        pose.close()
 
 def predict_height(image):
     """Main function untuk prediksi tinggi"""
