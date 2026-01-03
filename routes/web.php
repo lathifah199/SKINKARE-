@@ -40,11 +40,8 @@ Route::group([], function () {
 // ======================= DATA ANAK =======================
 
 // form tambah data (ortu & nakes)
-Route::middleware(['auth:orangtua,auth:nakes'])->group(function () {
-    Route::get('/tambah-data-anak', [AnakController::class, 'create'])
-        ->name('tambah.data.anak');
-});
-
+Route::get('/tambah-data-anak', [AnakController::class, 'create'])
+    ->name('tambah.data.anak');
 
 // simpan data anak + ortu (1 pintu saja)
 Route::post('/tambah-data-anak', [AnakController::class, 'store'])
