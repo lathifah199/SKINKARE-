@@ -208,7 +208,7 @@ const checkPosisi = document.getElementById("checkPosisi");
 const checkJarak = document.getElementById("checkJarak");
 
 // ⚙️ CONFIG - Ganti URL ini sesuai server AI Anda
-const AI_SERVER_URL = "successful-charisma-production.up.railway.app";
+const AI_SERVER_URL = "http://127.0.0.1:5000";
 
 let stream = null;
 let tinggiTerakhir = null;
