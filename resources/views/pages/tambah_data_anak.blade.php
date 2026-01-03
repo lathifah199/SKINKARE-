@@ -1,8 +1,10 @@
 @php
     if (Auth::guard('orangtua')->check()) {
         $layout = 'layouts.orangtuanofooter';
-    } else {
+    } elseif (Auth::guard('nakes')->check()) {
         $layout = 'layouts.app_nakesnofooter';
+    } else {
+        $layout = 'layouts.guest'; {{-- fallback --}}
     }
 @endphp
 
