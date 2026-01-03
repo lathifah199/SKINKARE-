@@ -1,8 +1,6 @@
 import os
 os.environ["MEDIAPIPE_DISABLE_GPU"] = "1"
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-import cv2
-import numpy as np
 from app_flask_rf import register_rf_routes
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -36,26 +34,25 @@ def get_pose():
 # =====================================================
 # TENSORFLOW MODEL SETUP (OPTIONAL)
 # =====================================================
+model = None
 USE_ML_MODEL = False
-try:
-    import tensorflow as tf
-    MODEL_PATH = "model/model_height.keras"
-    
-    if os.path.exists(MODEL_PATH):
+
+def get_model():
+    global model, USE_ML_MODEL
+    if model is None:
+        import tensorflow as tf
+        MODEL_PATH = "model/model_height.keras"
         model = tf.keras.models.load_model(MODEL_PATH, compile=False)
         USE_ML_MODEL = True
-        print("✅ TensorFlow Model loaded successfully")
-    else:
-        print(f"⚠️ Model tidak ditemukan: {MODEL_PATH}")
-        print("💡 Menggunakan MediaPipe fallback")
-except Exception as e:
-    print(f"⚠️ TensorFlow tidak tersedia: {e}")
-    print("💡 Menggunakan MediaPipe fallback")
+    return model
+
 
 # =====================================================
 # HELPER FUNCTIONS
 # =====================================================
 def read_image(file):
+    import cv2
+    import numpy as np
     """Baca file gambar dari request"""
     file_bytes = np.frombuffer(file.read(), np.uint8)
     return cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
@@ -170,6 +167,7 @@ def predict_height_with_model(image):
         img = cv2.resize(image, (224, 224))
         img = img / 255.0
         img = np.expand_dims(img, axis=0)
+        model = get_model()
         tinggi = model.predict(img, verbose=0)[0][0]
         return round(float(tinggi), 1)
     except Exception as e:
