@@ -3,8 +3,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import cv2
 import numpy as np
-import mediapipe as mp
 import os
+os.environ["MEDIAPIPE_DISABLE_GPU"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 app = Flask(__name__)
 
@@ -22,13 +23,15 @@ register_rf_routes(app)
 # =====================================================
 # MEDIAPIPE SETUP
 # =====================================================
-mp_pose = mp.solutions.pose
-pose = mp_pose.Pose(
-    static_image_mode=True,
-    min_detection_confidence=0.5,
-    model_complexity=0,
-    enable_segmentation=False
-)
+def get_pose():
+    import mediapipe as mp
+    return mp.solutions.pose.Pose(
+        static_image_mode=True,
+        min_detection_confidence=0.5,
+        model_complexity=0,
+        enable_segmentation=False
+    )
+
 
 
 # =====================================================
@@ -73,7 +76,10 @@ def precheck_image(image):
 
         h, w = image.shape[:2]
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        pose = get_pose()
         results = pose.process(image_rgb)
+        pose.close()
+
 
         if not results.pose_landmarks:
             return {
@@ -169,6 +175,8 @@ def predict_height_with_model(image):
 
 def predict_height_with_mediapipe(image):
     """Prediksi menggunakan MediaPipe (fallback)"""
+    import mediapipe as mp
+    mp_pose = mp.solutions.pose
     try:
         h, w = image.shape[:2]
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
