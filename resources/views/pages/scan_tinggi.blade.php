@@ -208,7 +208,7 @@ const checkPosisi = document.getElementById("checkPosisi");
 const checkJarak = document.getElementById("checkJarak");
 
 // ⚙️ CONFIG - Ganti URL ini sesuai server AI Anda
-const AI_SERVER_URL = "http://127.0.0.1:5000";
+const AI_SERVER_URL = "successful-charisma-production.up.railway.app";
 
 let stream = null;
 let tinggiTerakhir = null;
@@ -602,23 +602,30 @@ function simpanDanLanjut() {
     return;
   }
 
-  fetch("{{ route('scan_tinggi.store', ['id' => request()->route('id')]) }}", {
+  fetch("/scan_tinggi/{{ request()->route('id') }}/store", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-CSRF-TOKEN": "{{ csrf_token() }}"
     },
-    body: JSON.stringify({ tinggi_badan: tinggi })
+    body: JSON.stringify({
+      tinggi_badan: tinggi
+    })
   })
-  .then(r => r.json())
+  .then(r => {
+    if (!r.ok) throw new Error("HTTP error " + r.status);
+    return r.json();
+  })
   .then(data => {
     if (data.success) {
       window.location.href = data.redirect_url;
+    } else {
+      alert("Gagal menyimpan data");
     }
   })
   .catch(err => {
-    alert("Gagal menyimpan data");
     console.error(err);
+    alert("Gagal menyimpan data");
   });
 }
 
