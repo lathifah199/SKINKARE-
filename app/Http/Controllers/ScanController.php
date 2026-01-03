@@ -112,6 +112,7 @@ class ScanController extends Controller
 // ===================== HASIL DETEKSI (Random Forest) =====================
 public function hasil($id)
 {
+    dd('masuk hasil');
     $pemeriksaan = Pemeriksaan::findOrFail($id);
     $anak = $pemeriksaan->anak; // relasi ke tabel anaks
 
