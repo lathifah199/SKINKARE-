@@ -253,7 +253,7 @@ def home():
         "status": "online",
         "message": "Flask AI Server Running",
         "model_loaded": USE_ML_MODEL,
-        "endpoints": ["/precheck", "/predict"]
+        "endpoints": ["/precheck"]
     })
 
 @app.route("/precheck", methods=["POST", "OPTIONS"])
