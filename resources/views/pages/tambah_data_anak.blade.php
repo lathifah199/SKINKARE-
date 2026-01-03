@@ -3,8 +3,6 @@
         $layout = 'layouts.orangtuanofooter';
     } elseif (Auth::guard('nakes')->check()) {
         $layout = 'layouts.app_nakesnofooter';
-    } else {
-        $layout = 'layouts.guest'; {{-- fallback --}}
     }
 @endphp
 
