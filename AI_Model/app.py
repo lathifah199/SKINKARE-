@@ -368,7 +368,4 @@ if __name__ == "__main__":
     print(f"\n⚠️  Press CTRL+C to stop server")
     print("="*60 + "\n")
     
-if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+
