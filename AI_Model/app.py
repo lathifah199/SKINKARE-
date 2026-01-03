@@ -23,7 +23,13 @@ register_rf_routes(app)
 # MEDIAPIPE SETUP
 # =====================================================
 mp_pose = mp.solutions.pose
-pose = mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.5)
+pose = mp_pose.Pose(
+    static_image_mode=True,
+    min_detection_confidence=0.5,
+    model_complexity=0,
+    enable_segmentation=False
+)
+
 
 # =====================================================
 # TENSORFLOW MODEL SETUP (OPTIONAL)
