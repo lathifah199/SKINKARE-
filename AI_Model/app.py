@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 
 app = Flask(__name__)
-
+register_rf_routes(app)
 
 # CORS Configuration
 CORS(app, 
