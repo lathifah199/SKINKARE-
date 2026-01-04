@@ -113,10 +113,7 @@ class ScanController extends Controller
                 'pemeriksaan_id' => $id_pemeriksaan,
                 'berat' => $request->berat_badan
             ]);
-        return response()->json([
-            'success' => true,
-            'redirect_url' => route('scan.hasil', $id_pemeriksaan)
-        ]);
+        return redirect()->route('scan.hasil', $id_pemeriksaan);
 
         } catch (\Exception $e) {
             Log::error('Gagal simpan berat: ' . $e->getMessage());
@@ -129,11 +126,6 @@ class ScanController extends Controller
 
     public function hasil($id)
     {
-        dd([
-            'orangtua' => auth('orangtua')->check(),
-            'nakes' => auth('nakes')->check(),
-            'default' => auth()->check(),
-        ]);
         $pemeriksaan = Pemeriksaan::findOrFail($id);
         $anak = $pemeriksaan->anak; // relasi ke tabel anaks
 
