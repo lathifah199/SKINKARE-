@@ -1,8 +1,8 @@
 import os
 os.environ["MEDIAPIPE_DISABLE_GPU"] = "1"
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-from app_flask_rf import register_rf_routes
 from flask import Flask, request, jsonify
+from app_flask_rf import register_rf_routes
 from flask_cors import CORS
 import cv2
 import numpy as np

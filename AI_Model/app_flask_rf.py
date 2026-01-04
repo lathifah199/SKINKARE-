@@ -1,8 +1,6 @@
 import pandas as pd
 import joblib, os
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
+from flask import request, jsonify
 
 # =====================  Global Placeholder =====================
 model = None
@@ -108,7 +106,6 @@ def get_saran_otomatis(status, z, risiko):
     return saran, warna
 
 # ===================== 6️⃣ ENDPOINT PREDIKSI =====================
-@app.route('/predict_rf', methods=['POST'])
 def predict_rf():
     try:
         load_rf_assets()
