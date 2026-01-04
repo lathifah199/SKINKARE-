@@ -4,6 +4,9 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 from app_flask_rf import register_rf_routes
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import cv2
+import numpy as np
+
 app = Flask(__name__)
 
 
@@ -51,8 +54,7 @@ def get_model():
 # HELPER FUNCTIONS
 # =====================================================
 def read_image(file):
-    import cv2
-    import numpy as np
+    
     """Baca file gambar dari request"""
     file_bytes = np.frombuffer(file.read(), np.uint8)
     return cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
