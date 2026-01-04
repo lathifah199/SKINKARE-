@@ -1,4 +1,13 @@
-@extends('layouts.app')
+@php
+    if (Auth::guard('orangtua')->check()) {
+        $layout = 'layouts.app';
+    } else {
+        $layout = 'layouts.app_nakes';
+    }
+@endphp
+
+@extends($layout)
+
 @section('content')
 <div class="min-h-[calc(100vh-160px)] bg-white px-4 py-6">
 

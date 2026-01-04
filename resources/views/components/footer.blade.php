@@ -22,7 +22,7 @@
         <img src="https://img.icons8.com/?size=100&id=447&format=png&color=000000" 
              alt="LinkedIn" class="w-[30px] h-[30px] filter invert">
       </a>
-      <a href="https://chat.whatsapp.com/FEM3SNcya4qFfjOh6qEqEk">
+      <a href="https://chat.whatsapp.com/IsBcz9YCmwLBWRIUwjFgLf">
         <img src="https://img.icons8.com/?size=100&id=16712&format=png&color=000000" 
              alt="WhatsApp" class="w-[30px] h-[30px] filter invert">
       </a>    
