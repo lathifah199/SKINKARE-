@@ -99,6 +99,7 @@ class ScanController extends Controller
                 'pemeriksaan_id' => $id_pemeriksaan,
                 'berat' => $request->berat_badan
             ]);
+        dd('Berhasil simpan! Redirect ke:', route('scan.hasil', $id_pemeriksaan));
         return redirect()->route('scan.hasil', $id_pemeriksaan)
                         ->with('success', 'Data berat berhasil disimpan!');
 
