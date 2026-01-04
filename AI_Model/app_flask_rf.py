@@ -4,23 +4,17 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# ===================== 1️⃣ LOAD MODEL (TANPA TRAINING) =====================
+# =====================  Global Placeholder =====================
+model = None
+le = None
+z_laki = None
+z_perempuan = None
+assets_loaded = False
 MODEL_PATH = "model_rf_stunting.pkl"
 ENCODER_PATH = "label_encoder.pkl"
 
-model = None
-le = None
-
 print("✅ Model RF & LabelEncoder berhasil di-load")
-
-# ===================== 2️⃣ BACA DATA WHO Z-SCORE =====================
 file_path = 'dataset_rf_stunting.xlsx'
-
-z_laki = None
-z_perempuan = None
-
-for zdf in [z_laki, z_perempuan]:
-    zdf.rename(columns=lambda c: str(c).strip(), inplace=True)
 
 # ==================== Fungsi Loader ==========================
 def load_rf_assets():
