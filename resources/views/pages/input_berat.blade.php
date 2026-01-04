@@ -37,41 +37,6 @@
         </a>
     </div>
 </form>
-@push('scripts')
-<script>
-console.log('JS FORM BERAT LOADED');
-document.getElementById('formBerat').addEventListener('submit', async function (e) {
-    console.log('FORM DISUBMIT');
-    e.preventDefault(); 
-
-    const form = e.target;
-    const formData = new FormData(form);
-
-    try {
-        const response = await fetch(form.action, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: formData
-        });
-
-        const data = await response.json();
-
-        if (data.success && data.redirect_url) {
-            window.location.href = data.redirect_url;
-        } else {
-            alert('Gagal menyimpan berat badan');
-        }
-
-    } catch (error) {
-        console.error(error);
-        alert('Terjadi kesalahan saat menyimpan data');
-    }
-});
-</script>
-@endpush
-
 </div>
 </div>
 @endsection
