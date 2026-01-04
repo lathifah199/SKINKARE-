@@ -1,6 +1,6 @@
-from flask import Flask, request, jsonify
 import pandas as pd
 import joblib, os
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -8,25 +8,48 @@ app = Flask(__name__)
 MODEL_PATH = "model_rf_stunting.pkl"
 ENCODER_PATH = "label_encoder.pkl"
 
-if not os.path.exists(MODEL_PATH) or not os.path.exists(ENCODER_PATH):
-    raise FileNotFoundError("❌ File model atau label encoder tidak ditemukan!")
-
-model = joblib.load(MODEL_PATH)
-le = joblib.load(ENCODER_PATH)
+model = None
+le = None
 
 print("✅ Model RF & LabelEncoder berhasil di-load")
 
 # ===================== 2️⃣ BACA DATA WHO Z-SCORE =====================
 file_path = 'dataset_rf_stunting.xlsx'
 
-if not os.path.exists(file_path):
-    raise FileNotFoundError("❌ File dataset_rf_stunting.xlsx tidak ditemukan!")
-
-z_laki = pd.read_excel(file_path, sheet_name='Anak Laki-laki', skiprows=2)
-z_perempuan = pd.read_excel(file_path, sheet_name='Anak Perempuan', skiprows=2)
+z_laki = None
+z_perempuan = None
 
 for zdf in [z_laki, z_perempuan]:
     zdf.rename(columns=lambda c: str(c).strip(), inplace=True)
+
+# ==================== Fungsi Loader ==========================
+def load_rf_assets():
+    global model, le, z_laki, z_perempuan, assets_loaded
+
+    if assets_loaded:
+        return
+
+    # === Load model & encoder ===
+    if not os.path.exists(MODEL_PATH) or not os.path.exists(ENCODER_PATH):
+        raise FileNotFoundError("Model RF atau LabelEncoder tidak ditemukan")
+
+    model = joblib.load(MODEL_PATH)
+    le = joblib.load(ENCODER_PATH)
+
+    # === Load dataset Z-score ===
+    if not os.path.exists(file_path):
+        raise FileNotFoundError("Dataset Z-score tidak ditemukan")
+
+    df = pd.read_excel(file_path)
+
+    z_laki = df[df['Jenis_Kelamin'].str.lower().str.contains('laki')].copy()
+    z_perempuan = df[df['Jenis_Kelamin'].str.lower().str.contains('perempuan')].copy()
+
+    for zdf in [z_laki, z_perempuan]:
+        zdf.rename(columns=lambda c: str(c).strip(), inplace=True)
+
+    assets_loaded = True
+    print("✅ RF assets loaded successfully")
 
 # ===================== 3️⃣ HITUNG Z-SCORE =====================
 def hitung_zscore(umur, tinggi, jenis_kelamin):
@@ -103,6 +126,7 @@ def get_saran_otomatis(status, z, risiko):
 @app.route('/predict_rf', methods=['POST'])
 def predict_rf():
     try:
+        load_rf_assets()
         data = request.get_json()
 
         umur = float(data.get('umur', 0))
