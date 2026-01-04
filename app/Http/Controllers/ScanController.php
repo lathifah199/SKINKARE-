@@ -99,9 +99,11 @@ class ScanController extends Controller
                 'pemeriksaan_id' => $id_pemeriksaan,
                 'berat' => $request->berat_badan
             ]);
-        return redirect()->route('scan.hasil', $id_pemeriksaan)
-                        ->with('success', 'Data berat berhasil disimpan!');
-
+        return response()->json([
+            'success' => true,
+            'redirect_url' => route('scan.hasil', $id_pemeriksaan)
+        ]);
+        
         } catch (\Exception $e) {
             Log::error('Gagal simpan berat: ' . $e->getMessage());
             return back()->with('error', 'Gagal menyimpan berat badan');
@@ -117,7 +119,7 @@ public function hasil($id)
 
     try {
         // Kirim data ke Flask
-        $response = Http::timeout(60)->post('http://127.0.0.1:5001/predict_rf', [
+        $response = Http::timeout(60)->post('http://127.0.0.1:5000/predict_rf', [
             'umur' => (float) $anak->umur,
             'tinggi_badan' => (float) $pemeriksaan->tinggi_badan,
             'berat_badan' => (float) $pemeriksaan->berat_badan,
