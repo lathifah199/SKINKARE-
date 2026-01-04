@@ -17,8 +17,8 @@ CORS(app,
     supports_credentials=True,
     expose_headers=["Content-Type"]
 )
-register_rf_routes(app)
 
+register_rf_routes(app)
 # =====================================================
 # MEDIAPIPE SETUP
 # =====================================================
@@ -248,11 +248,14 @@ def predict_height(image):
 @app.route("/", methods=["GET"])
 def home():
     """Endpoint untuk cek server hidup"""
+    routes = []
+    for rule in app.url_map.iter_rules():
+        routes.append(str(rule))
     return jsonify({
         "status": "online",
         "message": "Flask AI Server Running",
         "model_loaded": USE_ML_MODEL,
-        "endpoints": ["/precheck", "/predict"]
+        "endpoints": routes
     })
 
 @app.route("/precheck", methods=["POST", "OPTIONS"])
