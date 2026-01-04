@@ -37,8 +37,11 @@
         </a>
     </div>
 </form>
+@push('scripts')
 <script>
+console.log('JS FORM BERAT LOADED');
 document.getElementById('formBerat').addEventListener('submit', async function (e) {
+    console.log('FORM DISUBMIT');
     e.preventDefault(); 
 
     const form = e.target;
@@ -67,6 +70,7 @@ document.getElementById('formBerat').addEventListener('submit', async function (
     }
 });
 </script>
+@endpush
 
 </div>
 </div>
