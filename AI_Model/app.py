@@ -385,5 +385,4 @@ if __name__ == "__main__":
     print(f"   - POST /predict   (prediksi tinggi)")
     print(f"\n⚠️  Press CTRL+C to stop server")
     print("="*60 + "\n")
-app.run(host="0.0.0.0", port=8080, debug=False)
 
