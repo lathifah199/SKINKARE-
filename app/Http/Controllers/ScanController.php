@@ -11,6 +11,20 @@ use App\Models\HasilDeteksi;
 
 class ScanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (
+                auth('orangtua')->check() ||
+                auth('nakes')->check()
+            ) {
+                return $next($request);
+            }
+
+            return redirect('/login');
+        });
+    }
+
     // ===================== PREDICT TINGGI (CNN) =====================
     public function predict(Request $request)
     {
@@ -103,7 +117,7 @@ class ScanController extends Controller
             'success' => true,
             'redirect_url' => route('scan.hasil', $id_pemeriksaan)
         ]);
-        
+
         } catch (\Exception $e) {
             Log::error('Gagal simpan berat: ' . $e->getMessage());
             return back()->with('error', 'Gagal menyimpan berat badan');
@@ -111,53 +125,59 @@ class ScanController extends Controller
     }
 
 // ===================== HASIL DETEKSI (Random Forest) =====================
-public function hasil($id)
-{
     
-    $pemeriksaan = Pemeriksaan::findOrFail($id);
-    $anak = $pemeriksaan->anak; // relasi ke tabel anaks
 
-    try {
-        // Kirim data ke Flask
-        $response = Http::timeout(60)->post('http://127.0.0.1:5000/predict_rf', [
-            'umur' => (float) $anak->umur,
-            'tinggi_badan' => (float) $pemeriksaan->tinggi_badan,
-            'berat_badan' => (float) $pemeriksaan->berat_badan,
-            'jenis_kelamin' => $anak->jenis_kelamin === 'L' ? 'laki-laki' : 'perempuan',
+    public function hasil($id)
+    {
+        dd([
+            'orangtua' => auth('orangtua')->check(),
+            'nakes' => auth('nakes')->check(),
+            'default' => auth()->check(),
         ]);
+        $pemeriksaan = Pemeriksaan::findOrFail($id);
+        $anak = $pemeriksaan->anak; // relasi ke tabel anaks
 
-        if ($response->failed()) {
-            Log::error('Flask RF error:', [$response->body()]);
-            return back()->with('error', 'Gagal memproses data di server AI.');
+        try {
+            // Kirim data ke Flask
+            $response = Http::timeout(60)->post('http://127.0.0.1:5000/predict_rf', [
+                'umur' => (float) $anak->umur,
+                'tinggi_badan' => (float) $pemeriksaan->tinggi_badan,
+                'berat_badan' => (float) $pemeriksaan->berat_badan,
+                'jenis_kelamin' => $anak->jenis_kelamin === 'L' ? 'laki-laki' : 'perempuan',
+            ]);
+
+            if ($response->failed()) {
+                Log::error('Flask RF error:', [$response->body()]);
+                return back()->with('error', 'Gagal memproses data di server AI.');
+            }
+
+            $data = $response->json();
+
+            // Simpan ke tabel hasil_deteksi
+            $hasil = \App\Models\HasilDeteksi::create([
+                'id_pemeriksaan' => $pemeriksaan->id_pemeriksaan,
+                'id' => $anak->id,
+                'status_prediksi' => $data['status_prediksi'] ?? 'Tidak diketahui',
+                'zscore' => $data['zscore'] ?? null,
+                'risiko_persen' => $data['risiko_persen'] ?? null,
+                'kategori_risiko' => $data['kategori_risiko'] ?? null,
+                'warna_risiko' => $data['warna_risiko'] ?? '#808080',
+                'hasil' => $data['hasil'] ?? 'Tidak diketahui',
+            ]);
+
+            Log::info('Hasil deteksi tersimpan', $hasil->toArray());
+
+            // Tampilkan di view hasil_deteksi.blade.php
+            return view('pages.hasil_deteksi', compact(
+                'anak',
+                'pemeriksaan',
+                'hasil',
+                'data'
+            ));
+
+        } catch (\Exception $e) {
+            Log::error('Gagal terhubung ke Flask RF: ' . $e->getMessage());
+            return back()->with('error', 'Tidak dapat terhubung ke server AI.');
         }
-
-        $data = $response->json();
-
-        // Simpan ke tabel hasil_deteksi
-        $hasil = \App\Models\HasilDeteksi::create([
-            'id_pemeriksaan' => $pemeriksaan->id_pemeriksaan,
-            'id' => $anak->id,
-            'status_prediksi' => $data['status_prediksi'] ?? 'Tidak diketahui',
-            'zscore' => $data['zscore'] ?? null,
-            'risiko_persen' => $data['risiko_persen'] ?? null,
-            'kategori_risiko' => $data['kategori_risiko'] ?? null,
-            'warna_risiko' => $data['warna_risiko'] ?? '#808080',
-            'hasil' => $data['hasil'] ?? 'Tidak diketahui',
-        ]);
-
-        Log::info('Hasil deteksi tersimpan', $hasil->toArray());
-
-        // Tampilkan di view hasil_deteksi.blade.php
-        return view('pages.hasil_deteksi', compact(
-            'anak',
-            'pemeriksaan',
-            'hasil',
-            'data'
-        ));
-
-    } catch (\Exception $e) {
-        Log::error('Gagal terhubung ke Flask RF: ' . $e->getMessage());
-        return back()->with('error', 'Tidak dapat terhubung ke server AI.');
     }
-}
 }
