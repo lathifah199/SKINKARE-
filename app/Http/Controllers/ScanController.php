@@ -11,20 +11,7 @@ use App\Models\HasilDeteksi;
 
 class ScanController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            if (
-                auth('orangtua')->check() ||
-                auth('nakes')->check()
-            ) {
-                return $next($request);
-            }
-
-            return redirect('/login');
-        });
-    }
-
+   
     // ===================== PREDICT TINGGI (CNN) =====================
     public function predict(Request $request)
     {
