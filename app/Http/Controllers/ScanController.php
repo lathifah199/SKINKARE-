@@ -85,6 +85,7 @@ class ScanController extends Controller
     // ===================== SIMPAN BERAT =====================
     public function storeBerat(Request $request, $id_pemeriksaan)
     {
+        dd('Method dipanggil!', $id_pemeriksaan, $request->all());
         $request->validate([
             'berat_badan' => 'required|numeric|min:1|max:100',
         ]);
