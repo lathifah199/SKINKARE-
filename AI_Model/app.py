@@ -8,7 +8,13 @@ app = Flask(__name__)
 
 
 # CORS Configuration
-CORS(app)
+CORS(app, 
+    resources={r"/*": {"origins": "*"}},
+    allow_headers=["Content-Type", "Authorization"],
+    methods=["GET", "POST", "OPTIONS"],
+    supports_credentials=True,
+    expose_headers=["Content-Type"]
+)
 register_rf_routes(app)
 
 # =====================================================
