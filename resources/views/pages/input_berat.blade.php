@@ -19,7 +19,7 @@
             Masukkan berat badan anak (dalam kg).
         </p>
 
-<form method="POST" action="{{ route('scan.berat.store', $pemeriksaan->id_pemeriksaan) }}">
+<form method="POST" action="{{ url('/input-berat/' . $pemeriksaan->id_pemeriksaan . '/store') }}">
     @csrf
     <input type="number" name="berat_badan"
            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-center text-lg mb-6 focus:ring-2 focus:ring-pink-300"
