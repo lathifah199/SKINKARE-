@@ -85,7 +85,6 @@ class ScanController extends Controller
     // ===================== SIMPAN BERAT =====================
     public function storeBerat(Request $request, $id_pemeriksaan)
     {
-        dd('Method dipanggil!', $id_pemeriksaan, $request->all());
         $request->validate([
             'berat_badan' => 'required|numeric|min:1|max:100',
         ]);
@@ -93,15 +92,14 @@ class ScanController extends Controller
         try {
             $pemeriksaan = Pemeriksaan::findOrFail($id_pemeriksaan);
 
-            $pemeriksaan->update([
-                'berat_badan' => $request->berat_badan,
-            ]);
+            $pemeriksaan->berat_badan = $request->berat_badan; // Pakai cara ini
+            $pemeriksaan->save(); // Simpan
 
             Log::info('Berat tersimpan', [
                 'pemeriksaan_id' => $id_pemeriksaan,
                 'berat' => $request->berat_badan
             ]);
-        return redirect()->route('scan.hasil', ['id' => $id_pemeriksaan])
+        return redirect()->route('scan.hasil', $id_pemeriksaan)
                         ->with('success', 'Data berat berhasil disimpan!');
 
         } catch (\Exception $e) {
