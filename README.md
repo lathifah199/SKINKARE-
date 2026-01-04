@@ -29,7 +29,14 @@ Start the server
 ```bash
   php artisan serve
 ```
+Start the AI server
 
+```bash
+  python app.py
+```
+```bash
+  python app_flask_rf.py
+```
 Create Storage symlink
 
 ```bash
@@ -49,10 +56,29 @@ Import the Database
   The skinkare.sql file is located in a folder named /database.
 ```
 
+## 🛠 Dependencies
+
+This project uses the following Python packages and versions:
+
+- **Python:** 3.12.3
+- **Mediapipe:** 0.10.20
+- **TensorFlow:** 2.19.1
+- **Pandas:** 2.3.3
+- **scikit-learn:** 1.8.0
+- **Protobuf:** 4.25.8
+- **Pillow:** 12.0.0
+- **openpyxl:** 3.1.5
+- **OpenCV (opencv-python & opencv-contrib-python):** 4.11.0.86
+- **NumPy:** 1.26.4
+- **Flask:** 3.1.2
+
+> 💡 Note: Make sure to use Python 3.12.3 for compatibility with these packages.
+
+
 ## Usage
 
 * Open the homepage in your browser.
-* Click the “Add Child Data” , fiiling the form and klik scan button to begin the scanning process.
+* Click the “Tambah Anak” , fiiling the form and klik scan button to begin the scanning process.
 * Capture or upload the child’s full-body image using the camera.
 * The system detects the child’s height automatically using MediaPipe and a Convolutional Neural Network (CNN) model.
 * Input additional anthropometric data such as weight, age, and gender.
@@ -71,10 +97,6 @@ Import the Database
 
 Local version:  
 http://127.0.0.1:8000/SKINKARE  
-
-Online version (under development):  
-https://skinkare-production.up.railway.app/SKINKARE
-
 
 ---
 
