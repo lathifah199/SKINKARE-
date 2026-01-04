@@ -12,7 +12,7 @@ class Pemeriksaan extends Model
     protected $primaryKey = 'id_pemeriksaan';
 
     protected $fillable = [
-        'id', // ini FK ke anaks
+        'id', 
         'tanggal_pemeriksaan',
         'tinggi_badan',
         'berat_badan',

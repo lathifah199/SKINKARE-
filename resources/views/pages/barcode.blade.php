@@ -18,15 +18,15 @@
 
         <div class="border border-gray-300 rounded-xl p-4 flex justify-center mb-6">
             <div class="flex justify-center mb-6">
-    {!! $qrcode !!}
-</div>
+                {!! $qrcode !!}
+            </div>
         </div>
 
         <div class="flex justify-center gap-4">
-        <a href="{{ url()->previous() }}"
-        class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-full shadow-md">
-            Kembali
-        </a>
+            <a href="{{ url()->previous() }}"
+            class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-full shadow-md">
+                Kembali
+            </a>
             <a href="{{ route('barcode.download', $anak->id) }}"
                class="bg-pink-300 hover:bg-pink-400 text-white px-6 py-3 rounded-full shadow-md">
                 Unduh

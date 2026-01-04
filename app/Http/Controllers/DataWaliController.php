@@ -48,28 +48,21 @@ class DataWaliController extends Controller
         return view('pages.profil', compact('orangtua'));
     }
     public function halaman_orangtua()
-{
-    // Ambil ID user login
-    $id = session('user_id');
+    {
+        $id = session('user_id');
+        if (!$id) {
+            return redirect()->route('login')->with('error', 'Silakan login dulu');
+        }
 
-    // Kalau tidak ada session → suruh login dulu
-    if (!$id) {
-        return redirect()->route('login')->with('error', 'Silakan login dulu');
+        $orangtua = Orangtua::with('anak')->find($id);
+
+        if (!$orangtua) {
+            return redirect()->route('login')->with('error', 'Data orangtua tidak ditemukan');
+        }
+
+        $anak = $orangtua->anak; 
+
+        return view('pages.halaman_orang_tua', compact('orangtua', 'anak'));
     }
-
-    // Ambil data orangtua beserta anak
-    $orangtua = Orangtua::with('anak')->find($id);
-
-    // Kalau data orangtua tidak ditemukan → error login
-    if (!$orangtua) {
-        return redirect()->route('login')->with('error', 'Data orangtua tidak ditemukan');
-    }
-
-    // Ambil anak (pasti ada, minimal collection kosong)
-    $anak = $orangtua->anak;
-
-    // Kirim ke view
-    return view('pages.halaman_orang_tua', compact('orangtua', 'anak'));
-}
 }
 

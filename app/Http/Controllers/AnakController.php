@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class AnakController extends Controller
 {
-    // ➤ FORM TAMBAH DATA ANAK
+    //  FORM TAMBAH DATA ANAK
     public function create()
     {
         if (Auth::guard('orangtua')->check()) {
@@ -26,7 +26,7 @@ class AnakController extends Controller
         return view('pages.tambah_data_anak', compact('layout'));
     }
 
-    // ➤ SIMPAN DATA AWAL ANAK
+    //  SIMPAN DATA AWAL ANAK
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -35,6 +35,17 @@ class AnakController extends Controller
             'umur'          => 'required|integer',
             'tempat_lahir'  => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
+        ], [
+            'nama_lengkap.required'  => 'Nama lengkap anak wajib diisi',
+            'jenis_kelamin.required' => 'Jenis kelamin wajib dipilih',
+            'jenis_kelamin.in'       => 'Jenis kelamin tidak valid',
+            'umur.required'          => 'Umur wajib diisi',
+            'umur.integer'           => 'Umur harus berupa angka',
+            'umur.min'               => 'Umur tidak boleh kurang dari 0',
+            'tempat_lahir.required'  => 'Tempat lahir wajib diisi',
+            'tanggal_lahir.required' => 'Tanggal lahir wajib diisi',
+            'tanggal_lahir.date'     => 'Format tanggal lahir tidak valid',
+            'tanggal_lahir.before'   => 'Tanggal lahir tidak boleh di masa depan',
         ]);
 
         if (Auth::guard('orangtua')->check()) {
@@ -47,6 +58,10 @@ class AnakController extends Controller
                 'ortu_nama'  => 'required|string|max:255',
                 'ortu_no_hp' => 'required|string|max:20',
                 'domisili'   => 'required|string|max:255',
+            ], [
+                'ortu_nama.required'  => 'Nama orang tua wajib diisi',
+                'ortu_no_hp.required' => 'No HP orang tua wajib diisi',
+                'domisili.required'   => 'Domisili wajib dipilih',
             ]);
 
             $orangtua = Orangtua::create([
@@ -64,14 +79,14 @@ class AnakController extends Controller
         return redirect()->route('scan_tinggi', $anak->id);
     }
 
-    // ➤ HALAMAN SCAN TINGGI
+    //  HALAMAN SCAN TINGGI
     public function scanTinggi($id)
     {
         $anak = Anak::findOrFail($id);
         return view('pages.scan_tinggi', compact('anak'));
     }
 
-    // ➤ SIMPAN TINGGI (masuk ke tabel pemeriksaan)
+    //  SIMPAN TINGGI (masuk ke tabel pemeriksaan)
     public function storeTinggi(Request $request, $id)
     {
         $request->validate([

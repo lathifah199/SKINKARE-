@@ -24,7 +24,7 @@ class AuthController extends Controller
     }
 
     // =================== LOGIN PROCESS ====================
-  public function login(Request $request)
+    public function login(Request $request)
     {
         $request->validate([
             'email' => 'required',
@@ -58,7 +58,7 @@ class AuthController extends Controller
             return redirect()->route('halaman_nakes')->with('success', 'Login berhasil!');
         }
 
-        // ⚠ Jika gagal login, kirim error
+        //  Jika gagal login, kirim error
         return back()->withErrors([
             'email' => 'Email yang dimasukkan salah',
             'kata_sandi' => 'Kata sandi anda salah',
@@ -89,13 +89,13 @@ class AuthController extends Controller
         $orangtua->kata_sandi = bcrypt($request->kata_sandi);
         $orangtua->save();
 
-        // ✅ Ubah session key agar bisa dibedakan
+        //  Ubah session key agar bisa dibedakan
         return redirect()->route('login')->with('success_reset', 'Reset kata sandi berhasil! Silakan login.');
     }
 
     // =================== REGISTRASI VIEW ====================
     public function showRegisterForm()
-    {
+    { 
         return view('pages.registrasi');
     }
 
@@ -118,7 +118,7 @@ class AuthController extends Controller
             'kata_sandi' => bcrypt($validated['kata_sandi']),
         ]);
 
-        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
+        return redirect()->route('login')->with('success_regis', 'Registrasi berhasil! Silakan login.');
     }
 
     // =================== LOGOUT ====================

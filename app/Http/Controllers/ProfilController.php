@@ -32,7 +32,7 @@ class ProfilController extends Controller
         $orangtua->no_hp = $request->no_hp;
         $orangtua->domisili = $request->domisili;
 
-        // Kalau user isi kata sandi baru, update juga
+        // update kata sandi
         if ($request->filled('kata_sandi')) {
             $orangtua->kata_sandi = bcrypt($request->kata_sandi);
         }

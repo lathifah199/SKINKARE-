@@ -116,4 +116,3 @@ Route::get('/SKINKARE', function () {
 });
 Route::get('/barcode/{id}', [BarcodeController::class, 'showBarcode'])->name('barcode.show');
 Route::get('/barcode/download/{id}', [BarcodeController::class, 'download'])->name('barcode.download');
-

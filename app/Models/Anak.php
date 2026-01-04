@@ -40,12 +40,10 @@ class Anak extends Model
     {
         return $this->belongsTo(Nakes::class, 'id_nakes', 'id_nakes');
     }
-    // Relasi: 1 anak bisa punya banyak pemeriksaan
+    // 1 anak bisa punya banyak pemeriksaan
     public function pemeriksaan()
     {
         return $this->hasMany(Pemeriksaan::class, 'id', 'id');
-        // kolom foreign di pemeriksaan: id (FK)
-        // kolom lokal di anaks: id
     }
 
     public function hasilDeteksi()

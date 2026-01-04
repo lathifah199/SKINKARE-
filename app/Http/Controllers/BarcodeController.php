@@ -37,25 +37,23 @@ class BarcodeController extends Controller
 
     // Download QR
 
-public function download($id)
-{
-    $anak = Anak::findOrFail($id);
-    $pemeriksaanTerakhir = $anak->pemeriksaan()->latest()->first();
+    public function download($id)
+    {
+        $anak = Anak::findOrFail($id);
+        $pemeriksaanTerakhir = $anak->pemeriksaan()->latest()->first();
 
-    if ($pemeriksaanTerakhir) {
-        $qrUrl = route('scan.hasil', ['id' => $pemeriksaanTerakhir->id_pemeriksaan]);
-    } else {
-        $qrUrl = route('scan_tinggi', ['id' => $anak->id]);
+        if ($pemeriksaanTerakhir) {
+            $qrUrl = route('scan.hasil', ['id' => $pemeriksaanTerakhir->id_pemeriksaan]);
+        } else {
+            $qrUrl = route('scan_tinggi', ['id' => $anak->id]);
+        }
+
+        // Hasilkan QR Code dalam format SVG
+        $qrcode = \SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(300)->generate($qrUrl);
+
+        return \Illuminate\Support\Facades\Response::make($qrcode, 200, [
+            'Content-Type' => 'image/svg+xml',
+            'Content-Disposition' => 'attachment; filename="barcode-anak-' . $anak->id . '.svg"',
+        ]);
     }
-
-    // Hasilkan QR Code dalam format SVG
-    $qrcode = \SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(300)->generate($qrUrl);
-
-    return \Illuminate\Support\Facades\Response::make($qrcode, 200, [
-        'Content-Type' => 'image/svg+xml',
-        'Content-Disposition' => 'attachment; filename="barcode-anak-' . $anak->id . '.svg"',
-    ]);
 }
-
-
-    }

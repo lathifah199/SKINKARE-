@@ -124,10 +124,18 @@
     <div id="hasilBox" class="w-full bg-green-100 rounded-t-3xl py-6 px-6 text-center shadow-inner mt-6 hidden">
       <h2 id="hasilTinggiBox" class="text-2xl font-bold text-gray-700 mb-3"></h2> 
       <div class="flex flex-col sm:flex-row justify-center gap-3"> 
+        
         <button id="btnNext" onclick="openPopup()" class="btn-pink px-6 py-2 rounded-full font-semibold"> 
           Lanjut 
         </button> 
-        <button onclick="window.history.back()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-full font-semibold"> 
+        @php
+            if (Auth::guard('orangtua')->check()) {
+                $backUrl = route('halaman_orangtua');
+            } else {
+                $backUrl = route('halaman_nakes');
+            }
+        @endphp
+        <button onclick="window.location.href='{{ $backUrl }}'" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-full font-semibold"> 
           Kembali 
         </button> 
       </div> 
@@ -208,7 +216,7 @@ const checkPosisi = document.getElementById("checkPosisi");
 const checkJarak = document.getElementById("checkJarak");
 
 // ⚙️ CONFIG - Ganti URL ini sesuai server AI Anda
-const AI_SERVER_URL = "https://successful-charisma-production.up.railway.app";
+const AI_SERVER_URL = "http://127.0.0.1:5000";
 
 let stream = null;
 let tinggiTerakhir = null;
@@ -602,30 +610,23 @@ function simpanDanLanjut() {
     return;
   }
 
-  fetch("/scan_tinggi/{{ request()->route('id') }}/store", {
+  fetch("{{ route('scan_tinggi.store', ['id' => request()->route('id')]) }}", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-CSRF-TOKEN": "{{ csrf_token() }}"
     },
-    body: JSON.stringify({
-      tinggi_badan: tinggi
-    })
+    body: JSON.stringify({ tinggi_badan: tinggi })
   })
-  .then(r => {
-    if (!r.ok) throw new Error("HTTP error " + r.status);
-    return r.json();
-  })
+  .then(r => r.json())
   .then(data => {
     if (data.success) {
       window.location.href = data.redirect_url;
-    } else {
-      alert("Gagal menyimpan data");
     }
   })
   .catch(err => {
-    console.error(err);
     alert("Gagal menyimpan data");
+    console.error(err);
   });
 }
 

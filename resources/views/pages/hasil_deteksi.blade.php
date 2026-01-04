@@ -44,7 +44,7 @@
                     Prediksi AI (Random Forest): 
                     <strong>
                     {{ $data['model_rf'] ?? '-' }}</strong> 
-({{ $data['probabilitas_rf'] ?? 0 }}%)
+                    ({{ $data['probabilitas_rf'] ?? 0 }}%)
                 </p>
             </div>
         </div>

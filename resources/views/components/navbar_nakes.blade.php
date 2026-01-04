@@ -48,11 +48,8 @@
 
           <div class="py-2 px-2 bg-white rounded-b-lg">
             <!--<a href="profil" class="block w-full text-sm font-medium text-white bg-blue-950 px-4 py-2 rounded mb-2 text-center">Lihat Profil</a>-->
-            <button type="button"
-              onclick="document.getElementById('logout-form').submit();"
-                   class="block w-full text-sm font-medium text-center text-white bg-[#be6178] hover:bg-[#a55269]
-      px-4 py-2 rounded-full transition-all duration-300 shadow-sm">
-      <i class="fa-solid fa-right-from-bracket me-1"></i> Keluar
+            <button type="button" onclick="document.getElementById('logout-form').submit();" class="block w-full text-sm font-medium text-center text-white bg-[#be6178] hover:bg-[#a55269] px-4 py-2 rounded-full transition-all duration-300 shadow-sm">
+              <i class="fa-solid fa-right-from-bracket me-1"></i> Keluar
             </button>
 
             <!-- FORM LOGOUT -->

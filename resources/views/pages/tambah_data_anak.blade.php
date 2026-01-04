@@ -1,7 +1,7 @@
 @php
     if (Auth::guard('orangtua')->check()) {
         $layout = 'layouts.orangtuanofooter';
-    } elseif (Auth::guard('nakes')->check()) {
+    } else {
         $layout = 'layouts.app_nakesnofooter';
     }
 @endphp
@@ -25,6 +25,17 @@
 
             <form action="{{ route('anak.store') }}" method="POST" class="space-y-4">
                 @csrf
+                {{--TAMBAH DISPLAY ERROR DI SINI --}}
+                @if($errors->any())
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                        <strong>Field kosong wajib diisi:</strong>
+                        <ul class="mt-2 ml-4 list-disc">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 {{-- DATA ANAK --}}
                 <div>
@@ -123,6 +134,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const tanggalInput = document.getElementById('tanggal_lahir');
     const umurInput = document.getElementById('umur');
+    const form = document.querySelector('form');
 
     tanggalInput.addEventListener('change', function() {
         const tglLahir = new Date(this.value);
@@ -145,6 +157,80 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Tampilkan hasilnya di input umur
         umurInput.value = totalBulan;
+    });
+    // Validasi form sebelum submit
+    formDataAnak.addEventListener('submit', function(e) {
+        let isValid = true;
+        let errorMessages = [];
+
+        // Validasi nama lengkap
+        const nama = document.querySelector('[name="nama_lengkap"]');
+        if (!nama.value.trim()) {
+            isValid = false;
+            errorMessages.push('Nama lengkap anak wajib diisi');
+            nama.classList.add('border-red-500');
+        }
+
+        // Validasi jenis kelamin
+        const jenisKelamin = document.querySelector('[name="jenis_kelamin"]');
+        if (!jenisKelamin.value) {
+            isValid = false;
+            errorMessages.push('Jenis kelamin wajib dipilih');
+            jenisKelamin.classList.add('border-red-500');
+        }
+
+        // Validasi tempat lahir
+        const tempatLahir = document.querySelector('[name="tempat_lahir"]');
+        if (!tempatLahir.value.trim()) {
+            isValid = false;
+            errorMessages.push('Tempat lahir wajib diisi');
+            tempatLahir.classList.add('border-red-500');
+        }
+
+        // Validasi tanggal lahir
+        if (!tanggalInput.value) {
+            isValid = false;
+            errorMessages.push('Tanggal lahir wajib diisi');
+            tanggalInput.classList.add('border-red-500');
+        }
+
+        // Validasi umur
+        if (!umurInput.value) {
+            isValid = false;
+            errorMessages.push('Umur belum terisi (pilih tanggal lahir dulu)');
+            umurInput.classList.add('border-red-500');
+        }
+
+        // Validasi khusus nakes
+        @if(!Auth::guard('orangtua')->check())
+        const ortuNama = document.querySelector('[name="ortu_nama"]');
+        const ortuNoHp = document.querySelector('[name="ortu_no_hp"]');
+        const domisili = document.querySelector('[name="domisili"]');
+
+        if (!ortuNama.value.trim()) {
+            isValid = false;
+            errorMessages.push('Nama orang tua wajib diisi');
+            ortuNama.classList.add('border-red-500');
+        }
+
+        if (!ortuNoHp.value.trim()) {
+            isValid = false;
+            errorMessages.push('No HP orang tua wajib diisi');
+            ortuNoHp.classList.add('border-red-500');
+        }
+
+        if (!domisili.value) {
+            isValid = false;
+            errorMessages.push('Domisili wajib dipilih');
+            domisili.classList.add('border-red-500');
+        }
+        @endif
+
+        // Jika tidak valid, tampilkan pesan error dan prevent submit
+        if (!isValid) {
+            e.preventDefault();
+            alert('Field kosong wajib diisi:\n\n' + errorMessages.join('\n'));
+        }
     });
 });
 </script>

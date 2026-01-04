@@ -30,9 +30,7 @@ class Nakes extends Authenticatable
         return $this->kata_sandi;
     }
 
-    /**
-     * RELASI: Nakes punya banyak Anak
-     */
+    //nakes bisa punya banyak anak
     public function anaks()
     {
         return $this->hasMany(Anak::class, 'id_nakes', 'id_nakes');
