@@ -10,10 +10,9 @@ le = None
 z_laki = None
 z_perempuan = None
 assets_loaded = False
+
 MODEL_PATH = "model_rf_stunting.pkl"
 ENCODER_PATH = "label_encoder.pkl"
-
-print("✅ Model RF & LabelEncoder berhasil di-load")
 file_path = 'dataset_rf_stunting.xlsx'
 
 # ==================== Fungsi Loader ==========================
@@ -22,17 +21,9 @@ def load_rf_assets():
 
     if assets_loaded:
         return
-
-    # === Load model & encoder ===
-    if not os.path.exists(MODEL_PATH) or not os.path.exists(ENCODER_PATH):
-        raise FileNotFoundError("Model RF atau LabelEncoder tidak ditemukan")
-
+    
     model = joblib.load(MODEL_PATH)
     le = joblib.load(ENCODER_PATH)
-
-    # === Load dataset Z-score ===
-    if not os.path.exists(file_path):
-        raise FileNotFoundError("Dataset Z-score tidak ditemukan")
 
     df = pd.read_excel(file_path)
 
@@ -41,7 +32,7 @@ def load_rf_assets():
 
     for zdf in [z_laki, z_perempuan]:
         zdf.rename(columns=lambda c: str(c).strip(), inplace=True)
-
+        
     assets_loaded = True
     print("✅ RF assets loaded successfully")
 
