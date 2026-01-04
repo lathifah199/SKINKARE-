@@ -19,7 +19,7 @@
             Masukkan berat badan anak (dalam kg).
         </p>
 
-<form method="POST" action="{{ url('/input-berat/' . $pemeriksaan->id_pemeriksaan . '/store') }}">
+<form id="formBerat" method="POST" action="{{ route('scan.berat.store', $pemeriksaan->id_pemeriksaan) }}">
     @csrf
     <input type="number" name="berat_badan"
            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-center text-lg mb-6 focus:ring-2 focus:ring-pink-300"
@@ -37,6 +37,37 @@
         </a>
     </div>
 </form>
+<script>
+document.getElementById('formBerat').addEventListener('submit', async function (e) {
+    e.preventDefault(); 
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success && data.redirect_url) {
+            window.location.href = data.redirect_url;
+        } else {
+            alert('Gagal menyimpan berat badan');
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert('Terjadi kesalahan saat menyimpan data');
+    }
+});
+</script>
+
 </div>
 </div>
 @endsection
